@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simpleproductsmanager;
+package console.java.main;
 
 /**
  *
  * @author DongHo
  */
-public class SimpleProductsManager {
+public class Main {
 
     /**
      * @param args the command line arguments
