@@ -15,7 +15,17 @@ public class Product {
     private String description;
     private int quantity;
     private float price;
+    private float discount;
     private int categoryId;
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+    
 
     public String getBarCode() {
         return barCode;
