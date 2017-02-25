@@ -10,60 +10,58 @@ package console.java.entity;
  * @author Thang
  */
 public class Product {
-    private static String barCode;
-    private static String name;
-    private static String description;
-    private static int quantity;
-    private static float price;
-    private static int categoryId;
+    private String barCode;
+    private String name;
+    private String description;
+    private int quantity;
+    private float price;
+    private int categoryId;
 
-    public static String getBarCode() {
+    public String getBarCode() {
         return barCode;
     }
 
-    public static void setBarCode(String barCode) {
-        Product.barCode = barCode;
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static void setName(String name) {
-        Product.name = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public static void setDescription(String description) {
-        Product.description = description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public static int getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public static void setQuantity(int quantity) {
-        Product.quantity = quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public static float getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public static void setPrice(float price) {
-        Product.price = price;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
-    public static int getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public static void setCategoryId(int categoryId) {
-        Product.categoryId = categoryId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
-    
-    
 }
