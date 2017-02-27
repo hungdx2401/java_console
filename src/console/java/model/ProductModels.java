@@ -5,6 +5,7 @@
  */
 package console.java.model;
 
+import console.java.entity.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -45,5 +46,9 @@ public class ProductModels {
             return null;
         }
         return rs;
+    }
+    
+    public static void update(Product product){
+        
     }
 }

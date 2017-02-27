@@ -59,7 +59,9 @@ public class ProductControllers {
     }
 
     public static boolean processUpdate() {
-        try {
+        boolean continueBoolean = true;
+        while (continueBoolean) {
+            try {
                 int count = 0;
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
@@ -81,7 +83,7 @@ public class ProductControllers {
                     System.out.printf("%-10s %s\n", "Chung loai  :", categoryId);
                     ++count;
                 }
-                
+
                 if (count == 0) {
                     System.err.println("Khong co san pham !!!");
                     return false;
@@ -105,9 +107,13 @@ public class ProductControllers {
                 product.setQuantity(newQuantity);
                 product.setPrice(newPrice);
                 product.setCategoryId(newCategoryId);
-                //Call update method in productModel class
-        } catch (SQLException e) {
-            System.err.println("Khong the update !!!");
+                
+                ProductModels.update(product);
+                continueBoolean = ProductViews.continueBoolean();
+                
+            } catch (SQLException e) {
+                System.err.println("Khong the update !!!");
+            }
         }
         return true;
     }
