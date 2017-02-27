@@ -8,6 +8,7 @@ package console.java.model;
 import console.java.entity.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Class này chứa các hàm thao tác với Database
@@ -49,6 +50,17 @@ public class ProductModels {
     }
     
     public static void update(Product product){
-        
+        try {
+            String sql = "UPDATE products SET name = '" + product.getName()+
+                    "',description ='" + product.getDescription() +
+                    "',quantity = "+ product.getQuantity() +
+                    ",price = "+ product.getPrice() +
+                    ",category_id=" + product.getCategoryId();
+            Statement stt = DAO.getConnection().createStatement();
+            stt.execute(sql);
+            System.out.println("Update thanh cong !!!");
+        } catch (Exception e) {
+            System.err.println("Da xay ra loi !!!");
+        }
     }
 }
