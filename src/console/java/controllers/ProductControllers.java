@@ -55,4 +55,31 @@ public class ProductControllers {
             continueBoolean = ProductViews.continueBoolean();
         }
     }
+
+    /*
+    hàm insert product lấy giá trị từ bàn phím
+    */
+    public static void productsInsert() {
+        System.out.println("them san pham moi");
+        System.out.println("nhap Barcode ");
+        String barCode = ScannerUtilities.getString();
+        System.out.println("nhap name ");
+        String name = ScannerUtilities.getString();
+        System.out.println("nhap description");
+        String description = ScannerUtilities.getString();
+        System.out.println("nhap quantity ");
+        int quantity = ScannerUtilities.getInt();
+        System.out.println("nhap price ");
+        float price = ScannerUtilities.getFloat();
+        System.out.println("nhap categoryId ");
+        int categoryId = ScannerUtilities.getInt();
+        Product product = new Product();
+        product.setBarCode(barCode);
+        product.setName(name);
+        product.setDescription(description);
+        product.setQuantity(quantity);
+        product.setPrice(price);
+        product.setCategoryId(categoryId);
+        ProductModels.productsinsert(product);
+    }
 }

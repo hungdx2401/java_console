@@ -5,6 +5,8 @@
  */
 package console.java.model;
 
+import console.java.entity.Product;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -45,5 +47,25 @@ public class ProductModels {
             return null;
         }
         return rs;
+    }
+
+    //Model insert a new product
+    public static void productsinsert(Product product) {
+        try {
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into products values(?,?,?,?,?,?)");
+            pstmt.setString(1, product.getBarCode());
+            pstmt.setString(2, product.getName());
+            pstmt.setString(3, product.getDescription());
+            pstmt.setInt(4, product.getQuantity());
+            pstmt.setFloat(5, product.getPrice());
+            pstmt.setInt(6, product.getCategoryId());
+            int rs = pstmt.executeUpdate();
+            if (rs > 0) {
+                System.out.println("them thanh cong.");
+            }
+        } catch (Exception e) {
+            System.out.println("Loi them san pham.");
+        }
+
     }
 }

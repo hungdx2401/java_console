@@ -26,7 +26,7 @@ public class ScannerUtilities {
                 inputInt = new Scanner(System.in).nextInt();
                 break;
             } catch (Exception e) {
-                System.err.println("Vui lòng chỉ nhập số! ");
+                System.err.println("vui long nhap so! ");
             }
         }
         return inputInt;
@@ -52,7 +52,7 @@ public class ScannerUtilities {
         while (true) {
             inputString = new Scanner(System.in).nextLine();
             if (inputString.length() < length) {
-                System.err.printf("Vui lòng nhập lại tối thiểu " + length + " ký tự! ");
+                System.err.printf("vui long nhap lai toi thieu " + length + " ky tu! ");
             } else {
                 break;
             }
@@ -70,12 +70,26 @@ public class ScannerUtilities {
         while (true) {
             input = new Scanner(System.in).nextLine();
             if (input.length() != 1) {
-                System.err.println("Vui lòng nhập định dạng chỉ một ký tự! ");
+                System.err.println("vui long nhap dinh dang mot ki tu! ");
             } else {
                 break;
             }
         }
         return input.charAt(0);
     }
-
+    /*
+    *hàm trả về giá trị float từ bàn phím.
+    */
+    public static float getFloat(){
+        Float inputFloat = null;
+        while (true) {
+            try {
+                inputFloat = new Scanner(System.in).nextFloat();
+                break;
+            } catch (Exception e) {
+                System.err.println("vui long nhap so thuc ");
+            }
+        }
+        return inputFloat;
+    }
 } // END - class
