@@ -31,6 +31,19 @@ public class ScannerUtilities {
         }
         return inputInt;
     }
+    
+    public static float getFloat() {
+        float inputInt = 0;
+        while (true) {
+            try {
+                inputInt = new Scanner(System.in).nextFloat();
+                break;
+            } catch (Exception e) {
+                System.err.println("Vui lòng chỉ nhập số! ");
+            }
+        }
+        return inputInt;
+    }
 
     /**
      * Hàm này trả về một chuỗi mà người dùng nhập vào từ bàn phím
