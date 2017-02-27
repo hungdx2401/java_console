@@ -26,7 +26,7 @@ public class ScannerUtilities {
                 inputInt = new Scanner(System.in).nextInt();
                 break;
             } catch (Exception e) {
-                System.err.println("vui long nhap so! ");
+                System.err.println("Vui long nhap so! ");
             }
         }
         return inputInt;
@@ -52,7 +52,7 @@ public class ScannerUtilities {
         while (true) {
             inputString = new Scanner(System.in).nextLine();
             if (inputString.length() < length) {
-                System.err.printf("vui long nhap lai toi thieu " + length + " ky tu! ");
+                System.err.printf("Vui long nhap lai toi thieu " + length + " ky tu! ");
             } else {
                 break;
             }
@@ -70,7 +70,7 @@ public class ScannerUtilities {
         while (true) {
             input = new Scanner(System.in).nextLine();
             if (input.length() != 1) {
-                System.err.println("vui long nhap dinh dang mot ki tu! ");
+                System.err.println("Vui long nhap dinh dang mot ki tu! ");
             } else {
                 break;
             }
@@ -87,7 +87,7 @@ public class ScannerUtilities {
                 inputFloat = new Scanner(System.in).nextFloat();
                 break;
             } catch (Exception e) {
-                System.err.println("vui long nhap so thuc ");
+                System.err.println("Vui long nhap so thuc ");
             }
         }
         return inputFloat;

@@ -50,7 +50,7 @@ public class ProductModels {
     }
 
     //Model insert a new product
-    public static void productsinsert(Product product) {
+    public static void productsInsert(Product product) {
         try {
             PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into products values(?,?,?,?,?,?)");
             pstmt.setString(1, product.getBarCode());
@@ -61,7 +61,7 @@ public class ProductModels {
             pstmt.setInt(6, product.getCategoryId());
             int rs = pstmt.executeUpdate();
             if (rs > 0) {
-                System.out.println("them thanh cong.");
+                System.out.println("Them thanh cong.");
             }
         } catch (Exception e) {
             System.out.println("Loi them san pham.");

@@ -60,18 +60,18 @@ public class ProductControllers {
     hàm insert product lấy giá trị từ bàn phím
     */
     public static void productsInsert() {
-        System.out.println("them san pham moi");
-        System.out.println("nhap Barcode ");
+        System.out.println("Them san pham moi");
+        System.out.println("Nhap Barcode ");
         String barCode = ScannerUtilities.getString();
-        System.out.println("nhap name ");
+        System.out.println("Nhap name ");
         String name = ScannerUtilities.getString();
-        System.out.println("nhap description");
+        System.out.println("Nhap description");
         String description = ScannerUtilities.getString();
-        System.out.println("nhap quantity ");
+        System.out.println("Nhap quantity ");
         int quantity = ScannerUtilities.getInt();
-        System.out.println("nhap price ");
+        System.out.println("Nhap price ");
         float price = ScannerUtilities.getFloat();
-        System.out.println("nhap categoryId ");
+        System.out.println("Nhap categoryId ");
         int categoryId = ScannerUtilities.getInt();
         Product product = new Product();
         product.setBarCode(barCode);
@@ -80,6 +80,6 @@ public class ProductControllers {
         product.setQuantity(quantity);
         product.setPrice(price);
         product.setCategoryId(categoryId);
-        ProductModels.productsinsert(product);
+        ProductModels.productsInsert(product);
     }
 }
