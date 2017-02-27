@@ -39,7 +39,7 @@ public class ScannerUtilities {
                 inputInt = new Scanner(System.in).nextFloat();
                 break;
             } catch (Exception e) {
-                System.err.println("Vui lòng chỉ nhập số! ");
+                System.err.println("Vui long chi nhap so! ");
             }
         }
         return inputInt;

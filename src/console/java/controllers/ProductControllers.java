@@ -59,6 +59,11 @@ public class ProductControllers {
     }
 
     public static boolean processUpdate() {
+        String oldName= "";
+        String oldDescription= "";
+        String oldQuantity = "";
+        String oldPrice ="";
+        String oldCategoryId ="";
         boolean continueBoolean = true;
         while (continueBoolean) {
             try {
@@ -66,29 +71,28 @@ public class ProductControllers {
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
                 Statement stt = DAO.getConnection().createStatement();
-
                 String sql = "SELECT * FROM products WHERE barcode = '" + barCode + "'";
                 ResultSet rs = stt.executeQuery(sql);
-
+                //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
-                    String name = rs.getString("name");
-                    String description = rs.getString("description");
-                    String quantity = rs.getString("quantity");
-                    String price = rs.getString("price");
-                    String categoryId = rs.getString("categoryId");
-                    System.out.printf("%-10s %s\n", "Ten         :", name);
-                    System.out.printf("%-10s %s\n", "Mo ta       :", description);
-                    System.out.printf("%-10s %s\n", "So luong    :", quantity);
-                    System.out.printf("%-10s %s\n", "Gia         :", price);
-                    System.out.printf("%-10s %s\n", "Chung loai  :", categoryId);
+                    oldName = rs.getString("name");
+                    oldDescription = rs.getString("description");
+                    oldQuantity = rs.getString("quantity");
+                    oldPrice = rs.getString("price");
+                    oldCategoryId = rs.getString("categoryId");
+                    System.out.printf("%-10s %s\n", "Ten         :", oldName);
+                    System.out.printf("%-10s %s\n", "Mo ta       :", oldDescription);
+                    System.out.printf("%-10s %s\n", "So luong    :", oldQuantity);
+                    System.out.printf("%-10s %s\n", "Gia         :", oldPrice);
+                    System.out.printf("%-10s %s\n", "Chung loai  :", oldCategoryId);
                     ++count;
                 }
-
+                //Kiem tra xem co san pham hay khong
                 if (count == 0) {
                     System.err.println("Khong co san pham !!!");
                     return false;
                 }
-
+                //Nhap thong tin moi cua san pham
                 System.out.println("Chu y : Neu ban khong muon sua ,hay de trong va tiep tuc !!!");
                 System.out.println("Nhap ten moi           :");
                 String newName = ScannerUtilities.getString();
@@ -100,17 +104,32 @@ public class ProductControllers {
                 float newPrice = ScannerUtilities.getFloat();
                 System.out.println("Nhap ma chung loai moi :");
                 int newCategoryId = ScannerUtilities.getInt();
-
+                //Gan gia tri cu neu de trong
                 Product product = new Product();
+                if (newName.isEmpty()) {
+                    newName = oldName;
+                }
+                if (newDescription.isEmpty()) {
+                    newDescription = oldDescription;
+                }
+                if (String.valueOf(newQuantity).isEmpty()) {
+                    newQuantity = Integer.parseInt(oldQuantity);
+                }
+                if (String.valueOf(newPrice).isEmpty()){
+                    newPrice = Float.parseFloat(oldPrice);
+                }
+                if (String.valueOf(newCategoryId).isEmpty()){
+                    newCategoryId = Integer.parseInt(oldCategoryId);
+                }
                 product.setName(newName);
                 product.setDescription(newDescription);
                 product.setQuantity(newQuantity);
                 product.setPrice(newPrice);
                 product.setCategoryId(newCategoryId);
-                
+
                 ProductModels.update(product);
                 continueBoolean = ProductViews.continueBoolean();
-                
+
             } catch (SQLException e) {
                 System.err.println("Khong the update !!!");
             }
