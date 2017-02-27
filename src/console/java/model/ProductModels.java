@@ -51,13 +51,10 @@ public class ProductModels {
     
     public static void update(Product product){
         try {
-            String sql = "UPDATE products SET name = '" + product.getName()+
-                    "',description ='" + product.getDescription() +
-                    "',quantity = "+ product.getQuantity() +
-                    ",price = "+ product.getPrice() +
-                    ",category_id=" + product.getCategoryId();
+            String updateQuery = "UPDATE products SET name='%s',description='%s',quantity=%d,price=%f,category_id=%d";
+            String update = String.format(updateQuery,product.getName(),product.getDescription(),product.getQuantity(),product.getPrice(),product.getCategoryId());
             Statement stt = DAO.getConnection().createStatement();
-            stt.execute(sql);
+            stt.execute(update);
             System.out.println("Update thanh cong !!!");
         } catch (Exception e) {
             System.err.println("Da xay ra loi !!!");
