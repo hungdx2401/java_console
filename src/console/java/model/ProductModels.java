@@ -9,6 +9,7 @@ import console.java.entity.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Class này chứa các hàm thao tác với Database
@@ -50,7 +51,14 @@ public class ProductModels {
     }
   
     public static void update(Product product){
-
+        try {
+            String updateQuery = "UPDATE products SET name='%s',description='%s',quantity=%d,price=%f,category_id=%d";
+            String update = String.format(updateQuery,product.getName(),product.getDescription(),product.getQuantity(),product.getPrice(),product.getCategoryId());
+            Statement stt = DAO.getConnection().createStatement();
+            stt.execute(update);
+            System.out.println("Update thanh cong !!!");
+        } catch (Exception e) {
+            System.err.println("Da xay ra loi !!!");
     }
 
     //Model insert a new product
