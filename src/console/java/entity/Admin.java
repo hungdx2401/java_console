@@ -11,10 +11,10 @@ package console.java.entity;
  */
 public class Admin {
 
-    int id;
-    String name;
-    String email;
-    String password;
+    private int id;
+    private String name;
+    private String email;
+    private String password;
 
     public int getId() {
         return id;
