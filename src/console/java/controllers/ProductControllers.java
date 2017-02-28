@@ -71,7 +71,7 @@ public class ProductControllers {
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
                 Statement stt = DAO.getConnection().createStatement();
-                String sql = "SELECT * FROM products WHERE barcode = '" + barCode + "'";
+                String sql = String.format("SELECT * FROM products WHERE barcode = '%s'",barCode);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
@@ -80,11 +80,11 @@ public class ProductControllers {
                     oldQuantity = rs.getString("quantity");
                     oldPrice = rs.getString("price");
                     oldCategoryId = rs.getString("category_id");
-                    System.out.printf("%-10s %s\n", "Ten            :", oldName);
-                    System.out.printf("%-10s %s\n", "Mo ta          :", oldDescription);
-                    System.out.printf("%-10s %s\n", "So luong       :", oldQuantity);
-                    System.out.printf("%-10s %s\n", "Gia            :", oldPrice);
-                    System.out.printf("%-10s %s\n", "Ma chung loai  :", oldCategoryId);
+                    System.out.printf("Ten            :" + oldName);
+                    System.out.printf("Mo ta          :" + oldDescription);
+                    System.out.printf("So luong       :" + oldQuantity);
+                    System.out.printf("Gia            :" + oldPrice);
+                    System.out.printf("Ma chung loai  :" + oldCategoryId);
                     ++count;
                 }
                 //Kiem tra xem co san pham hay khong
