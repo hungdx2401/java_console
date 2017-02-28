@@ -49,11 +49,11 @@ public class ProductModels {
         }
         return rs;
     }
-
-    public static void update(Product product) {
+    
+    public static void update(Product product){
         try {
             String updateQuery = "UPDATE products SET name='%s',description='%s',quantity=%d,price=%f,category_id=%d";
-            String update = String.format(updateQuery, product.getName(), product.getDescription(), product.getQuantity(), product.getPrice(), product.getCategoryId());
+            String update = String.format(updateQuery,product.getName(),product.getDescription(),product.getQuantity(),product.getPrice(),product.getCategoryId());
             Statement stt = DAO.getConnection().createStatement();
             stt.execute(update);
             System.out.println("Update thanh cong !!!");
