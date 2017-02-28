@@ -5,12 +5,12 @@
  */
 package console.java.controllers;
 
-import console.java.entity.Admin;
-import console.java.model.AdminsModel;
-import console.java.model.DAO;
-import static console.java.model.ProductModels.update;
+import console.java.entities.Admin;
+import console.java.models.AdminsModel;
+import console.java.models.DAO;
+import static console.java.models.ProducstModel.update;
 import console.java.utilities.ScannerUtilities;
-import console.java.views.ProductViews;
+import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,7 +31,8 @@ public class AdminsController {
                 System.out.println("Nhap id admin : ");
                 int id = ScannerUtilities.getInt();
                 Statement stt = DAO.getConnection().createStatement();
-                String sql = String.format("SELECT * FROM admin WHERE id = '%d'", id);
+                String sql = String.format("SELECT * "
+                        + "FROM admin WHERE id = '%d'", id);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
@@ -49,7 +50,8 @@ public class AdminsController {
                     return false;
                 }
                 //Nhap thong tin moi cua admin
-                System.out.println("Chu y : Neu ban khong muon sua ,hay de trong va tiep tuc !!!");
+                System.out.println("Chu y : Neu ban khong muon sua "
+                        + ",hay de trong va tiep tuc !!!");
                 System.out.println("Nhap ten moi           :");
                 String newName = ScannerUtilities.getString();
                 System.out.println("Nhap email moi         :");
@@ -67,17 +69,22 @@ public class AdminsController {
                 if (newPassword.isEmpty()) {
                     newPassword = oldPassword;
                 }
+                admin.setId(id);
                 admin.setName(newName);
                 admin.setEmail(newEmail);
                 admin.setPassword(newPassword);
                 //Goi den model va hoi co muon tiep tuc khong
                 AdminsModel.update(admin);
-                continueBoolean = ProductViews.continueBoolean();
+                continueBoolean = ProductsViews.continueBoolean();
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.err.println("Khong the update !!!");
             }
         }
         return true;
+    }
+    
+    public static void main(String[] args) {
+        processUpdate();
     }
 }

@@ -5,7 +5,7 @@
  */
 package console.java.views;
 
-import console.java.entity.Product;
+import console.java.entities.Product;
 import java.util.Scanner;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author DongHo
  */
-public class ProductViews {
+public class ProductsViews {
 
     /**
      * Hàm này thực hiện việc in chi tiết sản phẩm ra ngoài màn hình

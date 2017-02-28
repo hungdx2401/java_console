@@ -5,11 +5,11 @@
  */
 package console.java.controllers;
 
-import console.java.entity.Product;
-import console.java.model.DAO;
-import console.java.model.ProductModels;
+import console.java.entities.Product;
+import console.java.models.DAO;
+import console.java.models.ProducstModel;
 import console.java.utilities.ScannerUtilities;
-import console.java.views.ProductViews;
+import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ import java.sql.Statement;
  *
  * @author DongHo
  */
-public class ProductControllers {
+public class ProductsController {
 
     public static void searchProduct() {
 
@@ -31,11 +31,11 @@ public class ProductControllers {
         boolean continueBoolean = true;
 
         while (continueBoolean) {
-            ProductViews.searchOption();
+            ProductsViews.searchOption();
             int option = ScannerUtilities.getInt();
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
             String keywordName = ScannerUtilities.getString(3);
-            rs = ProductModels.searchProduct(keywordName, option);
+            rs = ProducstModel.searchProduct(keywordName, option);
             try {
                 while (rs.next()) {
                     product.setBarCode(rs.getString("barCode"));
@@ -45,7 +45,7 @@ public class ProductControllers {
                     product.setPrice(rs.getFloat("price"));
                     product.setDiscount(rs.getFloat("discount"));
                     product.setCategoryId(rs.getInt("category_id"));
-                    ProductViews.printProduct(product);
+                    ProductsViews.printProduct(product);
                     ++count;
                 }
             } catch (SQLException ex) {
@@ -56,7 +56,7 @@ public class ProductControllers {
             } else {
                 System.out.println("Tim thay " + count + " san pham.");
             }
-            continueBoolean = ProductViews.continueBoolean();
+            continueBoolean = ProductsViews.continueBoolean();
         }
     }
 
@@ -73,7 +73,8 @@ public class ProductControllers {
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
                 Statement stt = DAO.getConnection().createStatement();
-                String sql = String.format("SELECT * FROM products WHERE barcode = '%s'", barCode);
+                String sql = String.format("SELECT * FROM products "
+                        + "WHERE barcode = '%s'", barCode);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
@@ -95,7 +96,8 @@ public class ProductControllers {
                     return false;
                 }
                 //Nhap thong tin moi cua san pham
-                System.out.println("Chu y : Neu ban khong muon sua ,hay de trong va tiep tuc !!!");
+                System.out.println("Chu y : Neu ban khong muon sua ,"
+                        + "hay de trong va tiep tuc !!!");
                 System.out.println("Nhap ten moi           :");
                 String newName = ScannerUtilities.getString();
                 System.out.println("Nhap mo ta moi         :");
@@ -123,14 +125,15 @@ public class ProductControllers {
                 if (newCategoryId.isEmpty()) {
                     newCategoryId = oldCategoryId;
                 }
+                product.setBarCode(barCode);
                 product.setName(newName);
                 product.setDescription(newDescription);
                 product.setQuantity(Integer.parseInt(newQuantity));
                 product.setPrice(Float.parseFloat(newPrice));
                 product.setCategoryId(Integer.parseInt(newCategoryId));
                 //Goi den model va hoi co muon tiep tuc khong
-                ProductModels.update(product);
-                continueBoolean = ProductViews.continueBoolean();
+                ProducstModel.update(product);
+                continueBoolean = ProductsViews.continueBoolean();
             } catch (SQLException e) {
                 System.err.println("Khong the update !!!");
             }
@@ -162,11 +165,11 @@ public class ProductControllers {
         product.setQuantity(quantity);
         product.setPrice(price);
         product.setCategoryId(categoryId);
-        ProductModels.productsInsert(product);
+        ProducstModel.productsInsert(product);
     }
 //hàm controller print all products 
     public static void productsPrintAll() {
-        ResultSet rs = ProductModels.productsPrintAll();
+        ResultSet rs = ProducstModel.productsPrintAll();
         Product product = new Product();
         try {
             while (rs.next()) {
@@ -177,7 +180,7 @@ public class ProductControllers {
                 product.setPrice(rs.getFloat("price"));
                 product.setDiscount(rs.getFloat("discount"));
                 product.setCategoryId(rs.getInt("category_id"));
-                ProductViews.printProduct(product);
+                ProductsViews.printProduct(product);
             }
         } catch (SQLException ex) {
             System.err.println("Co loi xay ra! " + ex);

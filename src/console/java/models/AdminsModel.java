@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package console.java.model;
+package console.java.models;
 
-import console.java.entity.Admin;
+import console.java.entities.Admin;
 import java.sql.Statement;
 
 /**
@@ -15,8 +15,13 @@ import java.sql.Statement;
 public class AdminsModel {
     public static void update(Admin admin){
         try {
-            String updateQuery = "UPDATE admin SET name='%s',email='%s',pass='%s',updated_at=NOW()";
-            String update = String.format(updateQuery,admin.getName(),admin.getEmail(),admin.getPassword());
+            String updateQuery = "UPDATE admin SET name='%s'"
+                    + ",email='%s',pass='%s',updated_at=NOW() "
+                    + "WHERE id =" + admin.getId();
+            String update = String.format(updateQuery
+                    ,admin.getName(),
+                    admin.getEmail(),
+                    admin.getPassword());
             Statement stt = DAO.getConnection().createStatement();
             stt.execute(update);
             System.out.println("Update thanh cong !!!");
