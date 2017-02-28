@@ -55,7 +55,7 @@ public class ProductModels {
             String update = String.format(updateQuery,product.getName(),product.getDescription(),product.getQuantity(),product.getPrice(),product.getCategoryId());
             Statement stt = DAO.getConnection().createStatement();
             stt.execute(update);
-            System.out.println("Update thanh cong !!!");
+            System.out.println("Update thanh cong roi!!!");
         } catch (Exception e) {
             System.err.println("Da xay ra loi !!!");
         }
