@@ -13,7 +13,7 @@ public class GlobalConfig {
 
     private static final String CONNECTION_URL_PREFIX = "jdbc:mysql://";
     private static final String HOST = "localhost:3306/";
-    private static final String DATABASE = "products";
+    private static final String DATABASE = "online_shop";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 

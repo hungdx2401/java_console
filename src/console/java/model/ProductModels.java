@@ -48,6 +48,10 @@ public class ProductModels {
         }
         return rs;
     }
+  
+    public static void update(Product product){
+
+    }
 
     //Model insert a new product
     public static void productsInsert(Product product) {
@@ -66,6 +70,5 @@ public class ProductModels {
         } catch (Exception e) {
             System.out.println("Loi them san pham.");
         }
-
     }
 }
