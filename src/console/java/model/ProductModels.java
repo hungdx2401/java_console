@@ -80,4 +80,17 @@ public class ProductModels {
             System.out.println("Loi them san pham.");
         }
     }
+
+    //Model get all products
+    public static ResultSet productsPrintAll() {
+        ResultSet rs;
+        try {
+            rs = DAO.getConnection().createStatement().executeQuery("SELECT * FROM products;");
+        } catch (Exception e) {
+            System.err.println("Co loi xay ra! " + e);
+            return null;
+        }
+        return rs;
+    }
+
 }
