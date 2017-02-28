@@ -49,7 +49,7 @@ public class ProductModels {
         }
         return rs;
     }
-  
+    
     public static void update(Product product){
         try {
             String updateQuery = "UPDATE products SET name='%s',description='%s',quantity=%d,price=%f,category_id=%d";
@@ -59,6 +59,7 @@ public class ProductModels {
             System.out.println("Update thanh cong !!!");
         } catch (Exception e) {
             System.err.println("Da xay ra loi !!!");
+        }
     }
 
     //Model insert a new product
