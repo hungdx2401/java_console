@@ -6,11 +6,13 @@
 package console.java.controllers;
 
 import console.java.entity.Product;
+import console.java.model.DAO;
 import console.java.model.ProductModels;
 import console.java.utilities.ScannerUtilities;
 import console.java.views.ProductViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Class này chứa các hàm xử lý sản phẩm
@@ -54,5 +56,84 @@ public class ProductControllers {
             }
             continueBoolean = ProductViews.continueBoolean();
         }
+    }
+
+    public static boolean processUpdate() {
+        String oldName= "";
+        String oldDescription= "";
+        String oldQuantity = "";
+        String oldPrice ="";
+        String oldCategoryId ="";
+        boolean continueBoolean = true;
+        while (continueBoolean) {
+            try {
+                int count = 0;
+                System.out.println("Nhap ma so : ");
+                String barCode = ScannerUtilities.getString();
+                Statement stt = DAO.getConnection().createStatement();
+                String sql = "SELECT * FROM products WHERE barcode = '" + barCode + "'";
+                ResultSet rs = stt.executeQuery(sql);
+                //In ra thong tin san pham truoc khi sua
+                while (rs.next()) {
+                    oldName = rs.getString("name");
+                    oldDescription = rs.getString("description");
+                    oldQuantity = rs.getString("quantity");
+                    oldPrice = rs.getString("price");
+                    oldCategoryId = rs.getString("categoryId");
+                    System.out.printf("%-10s %s\n", "Ten         :", oldName);
+                    System.out.printf("%-10s %s\n", "Mo ta       :", oldDescription);
+                    System.out.printf("%-10s %s\n", "So luong    :", oldQuantity);
+                    System.out.printf("%-10s %s\n", "Gia         :", oldPrice);
+                    System.out.printf("%-10s %s\n", "Chung loai  :", oldCategoryId);
+                    ++count;
+                }
+                //Kiem tra xem co san pham hay khong
+                if (count == 0) {
+                    System.err.println("Khong co san pham !!!");
+                    return false;
+                }
+                //Nhap thong tin moi cua san pham
+                System.out.println("Chu y : Neu ban khong muon sua ,hay de trong va tiep tuc !!!");
+                System.out.println("Nhap ten moi           :");
+                String newName = ScannerUtilities.getString();
+                System.out.println("Nhap mo ta moi         :");
+                String newDescription = ScannerUtilities.getString();
+                System.out.println("Nhap so luong moi      :");
+                int newQuantity = ScannerUtilities.getInt();
+                System.out.println("Nhap gia moi           :");
+                float newPrice = ScannerUtilities.getFloat();
+                System.out.println("Nhap ma chung loai moi :");
+                int newCategoryId = ScannerUtilities.getInt();
+                //Gan gia tri cu neu de trong
+                Product product = new Product();
+                if (newName.isEmpty()) {
+                    newName = oldName;
+                }
+                if (newDescription.isEmpty()) {
+                    newDescription = oldDescription;
+                }
+                if (String.valueOf(newQuantity).isEmpty()) {
+                    newQuantity = Integer.parseInt(oldQuantity);
+                }
+                if (String.valueOf(newPrice).isEmpty()){
+                    newPrice = Float.parseFloat(oldPrice);
+                }
+                if (String.valueOf(newCategoryId).isEmpty()){
+                    newCategoryId = Integer.parseInt(oldCategoryId);
+                }
+                product.setName(newName);
+                product.setDescription(newDescription);
+                product.setQuantity(newQuantity);
+                product.setPrice(newPrice);
+                product.setCategoryId(newCategoryId);
+
+                ProductModels.update(product);
+                continueBoolean = ProductViews.continueBoolean();
+
+            } catch (SQLException e) {
+                System.err.println("Khong the update !!!");
+            }
+        }
+        return true;
     }
 }
