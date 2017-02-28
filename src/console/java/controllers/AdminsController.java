@@ -5,12 +5,12 @@
  */
 package console.java.controllers;
 
-import console.java.entity.Admin;
-import console.java.model.AdminsModel;
-import console.java.model.DAO;
-import static console.java.model.ProductModels.update;
+import console.java.entities.Admin;
+import console.java.models.AdminsModel;
+import console.java.models.DAO;
+import static console.java.models.ProducstModel.update;
 import console.java.utilities.ScannerUtilities;
-import console.java.views.ProductViews;
+import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -72,7 +72,7 @@ public class AdminsController {
                 admin.setPassword(newPassword);
                 //Goi den model va hoi co muon tiep tuc khong
                 AdminsModel.update(admin);
-                continueBoolean = ProductViews.continueBoolean();
+                continueBoolean = ProductsViews.continueBoolean();
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.err.println("Khong the update !!!");

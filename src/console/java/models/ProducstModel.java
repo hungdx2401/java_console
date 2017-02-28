@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package console.java.model;
+package console.java.models;
 
-import console.java.entity.Product;
+import console.java.entities.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import java.sql.Statement;
  *
  * @author DongHo
  */
-public class ProductModels {
+public class ProducstModel {
 
     /**
      * Hàm này tìm kiếm sản phẩm theo tên sản phẩm với tham số là từ khóa tìm
@@ -65,7 +65,7 @@ public class ProductModels {
     //Model insert a new product
     public static void productsInsert(Product product) {
         try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into products values(?,?,?,?,?,?)");
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into products(barcode,name,description,quantity,price,category_id,status) values(?,?,?,?,?,?,1)");
             pstmt.setString(1, product.getBarCode());
             pstmt.setString(2, product.getName());
             pstmt.setString(3, product.getDescription());
@@ -77,6 +77,7 @@ public class ProductModels {
                 System.out.println("Them thanh cong.");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Loi them san pham.");
         }
     }
@@ -91,6 +92,24 @@ public class ProductModels {
             return null;
         }
         return rs;
+    }
+    
+    public static void insert(Product product) {
+        try {
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into user values(?,?,?,?,?,?)");
+            pstmt.setString(1, product.getBarCode());
+            pstmt.setString(2, product.getName());
+            pstmt.setString(3, product.getDescription());
+            pstmt.setInt(4, product.getQuantity());
+            pstmt.setFloat(5, product.getPrice());
+            pstmt.setInt(6, product.getCategoryId());
+            int rs = pstmt.executeUpdate();
+            if (rs > 0) {
+                System.out.println("thêm thành công");
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi khi insert.");
+        }
     }
 
 }
