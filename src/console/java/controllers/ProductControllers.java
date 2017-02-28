@@ -59,11 +59,11 @@ public class ProductControllers {
     }
 
     public static boolean processUpdate() {
-        String oldName= "";
-        String oldDescription= "";
+        String oldName = "";
+        String oldDescription = "";
         String oldQuantity = "";
-        String oldPrice ="";
-        String oldCategoryId ="";
+        String oldPrice = "";
+        String oldCategoryId = "";
         boolean continueBoolean = true;
         while (continueBoolean) {
             try {
@@ -71,7 +71,7 @@ public class ProductControllers {
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
                 Statement stt = DAO.getConnection().createStatement();
-                String sql = String.format("SELECT * FROM products WHERE barcode = '%s'",barCode);
+                String sql = String.format("SELECT * FROM products WHERE barcode = '%s'", barCode);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
@@ -115,10 +115,10 @@ public class ProductControllers {
                 if (newQuantity.isEmpty()) {
                     newQuantity = oldQuantity;
                 }
-                if (newPrice.isEmpty()){
+                if (newPrice.isEmpty()) {
                     newPrice = oldPrice;
                 }
-                if (newCategoryId.isEmpty()){
+                if (newCategoryId.isEmpty()) {
                     newCategoryId = oldCategoryId;
                 }
                 product.setName(newName);
@@ -134,30 +134,5 @@ public class ProductControllers {
             }
         }
         return true;
-    /*
-    hàm insert product lấy giá trị từ bàn phím
-    */
-    public static void productsInsert() {
-        System.out.println("Them san pham moi");
-        System.out.println("Nhap Barcode ");
-        String barCode = ScannerUtilities.getString();
-        System.out.println("Nhap name ");
-        String name = ScannerUtilities.getString();
-        System.out.println("Nhap description");
-        String description = ScannerUtilities.getString();
-        System.out.println("Nhap quantity ");
-        int quantity = ScannerUtilities.getInt();
-        System.out.println("Nhap price ");
-        float price = ScannerUtilities.getFloat();
-        System.out.println("Nhap categoryId ");
-        int categoryId = ScannerUtilities.getInt();
-        Product product = new Product();
-        product.setBarCode(barCode);
-        product.setName(name);
-        product.setDescription(description);
-        product.setQuantity(quantity);
-        product.setPrice(price);
-        product.setCategoryId(categoryId);
-        ProductModels.productsInsert(product);
     }
 }
