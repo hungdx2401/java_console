@@ -80,11 +80,11 @@ public class ProductControllers {
                     oldQuantity = rs.getString("quantity");
                     oldPrice = rs.getString("price");
                     oldCategoryId = rs.getString("category_id");
-                    System.out.printf("Ten            :" + oldName);
-                    System.out.printf("Mo ta          :" + oldDescription);
-                    System.out.printf("So luong       :" + oldQuantity);
-                    System.out.printf("Gia            :" + oldPrice);
-                    System.out.printf("Ma chung loai  :" + oldCategoryId);
+                    System.out.println("Ten            :" + oldName);
+                    System.out.println("Mo ta          :" + oldDescription);
+                    System.out.println("So luong       :" + oldQuantity);
+                    System.out.println("Gia            :" + oldPrice);
+                    System.out.println("Ma chung loai  :" + oldCategoryId);
                     ++count;
                 }
                 //Kiem tra xem co san pham hay khong
