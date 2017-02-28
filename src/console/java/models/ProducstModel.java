@@ -39,7 +39,8 @@ public class ProducstModel {
                 column = "description";
                 break;
         }
-        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%" + keyword + "%';";
+        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%" 
+                + keyword + "%';";
         ResultSet rs;
         try {
             rs = DAO.getConnection().createStatement().executeQuery(strQuery);
@@ -52,8 +53,16 @@ public class ProducstModel {
     
     public static void update(Product product){
         try {
-            String updateQuery = "UPDATE products SET name='%s',description='%s',quantity=%d,price=%f,category_id=%d";
-            String update = String.format(updateQuery,product.getName(),product.getDescription(),product.getQuantity(),product.getPrice(),product.getCategoryId());
+            String updateQuery = "UPDATE products "
+                    + "SET name='%s',description='%s'"
+                    + ",quantity=%d,price=%f,category_id=%d,updated_at=NOW()"
+                    + " WHERE barcode = '"+ product.getBarCode()+"'" ;
+            String update = String.format(updateQuery,
+                    product.getName(),
+                    product.getDescription(),
+                    product.getQuantity(),
+                    product.getPrice(),
+                    product.getCategoryId());
             Statement stt = DAO.getConnection().createStatement();
             stt.execute(update);
             System.out.println("Update thanh cong !!!");
@@ -65,7 +74,9 @@ public class ProducstModel {
     //Model insert a new product
     public static void productsInsert(Product product) {
         try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into products(barcode,name,description,quantity,price,category_id,status) values(?,?,?,?,?,?,1)");
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
+                    + "Insert into products(barcode,name,description,quantity"
+                    + ",price,category_id,status) values(?,?,?,?,?,?,1)");
             pstmt.setString(1, product.getBarCode());
             pstmt.setString(2, product.getName());
             pstmt.setString(3, product.getDescription());
@@ -86,7 +97,8 @@ public class ProducstModel {
     public static ResultSet productsPrintAll() {
         ResultSet rs;
         try {
-            rs = DAO.getConnection().createStatement().executeQuery("SELECT * FROM products;");
+            rs = DAO.getConnection().createStatement().executeQuery("SELECT * "
+                    + "FROM products;");
         } catch (Exception e) {
             System.err.println("Co loi xay ra! " + e);
             return null;
@@ -96,7 +108,8 @@ public class ProducstModel {
     
     public static void insert(Product product) {
         try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement("Insert into user values(?,?,?,?,?,?)");
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
+                    + "Insert into user values(?,?,?,?,?,?)");
             pstmt.setString(1, product.getBarCode());
             pstmt.setString(2, product.getName());
             pstmt.setString(3, product.getDescription());

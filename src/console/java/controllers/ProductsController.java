@@ -73,7 +73,8 @@ public class ProductsController {
                 System.out.println("Nhap ma so : ");
                 String barCode = ScannerUtilities.getString();
                 Statement stt = DAO.getConnection().createStatement();
-                String sql = String.format("SELECT * FROM products WHERE barcode = '%s'", barCode);
+                String sql = String.format("SELECT * FROM products "
+                        + "WHERE barcode = '%s'", barCode);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {
@@ -95,7 +96,8 @@ public class ProductsController {
                     return false;
                 }
                 //Nhap thong tin moi cua san pham
-                System.out.println("Chu y : Neu ban khong muon sua ,hay de trong va tiep tuc !!!");
+                System.out.println("Chu y : Neu ban khong muon sua ,"
+                        + "hay de trong va tiep tuc !!!");
                 System.out.println("Nhap ten moi           :");
                 String newName = ScannerUtilities.getString();
                 System.out.println("Nhap mo ta moi         :");
@@ -123,6 +125,7 @@ public class ProductsController {
                 if (newCategoryId.isEmpty()) {
                     newCategoryId = oldCategoryId;
                 }
+                product.setBarCode(barCode);
                 product.setName(newName);
                 product.setDescription(newDescription);
                 product.setQuantity(Integer.parseInt(newQuantity));
