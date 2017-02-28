@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class AdminModel {
+public class AdminsModel {
 
     public static void insert() {
         String id = "";
@@ -14,7 +14,7 @@ public class AdminModel {
         String email = "";
         String pass = "";
         String status = "";
-        
+
         System.out.println("Nhap ID: ");
         id = new Scanner(System.in).nextLine();
         System.out.println("Nhap Ho va Ten: ");
@@ -27,10 +27,11 @@ public class AdminModel {
         status = new Scanner(System.in).nextLine();
         try {
             Statement statement = DAO.getConnection().createStatement();
-            String sqlString = "INSERT INTO admin (id, name, email, pass , creat_at, update_at) "
-                    + "VALUES('" + id + "', '" + name + "', '" + email + "', '" + pass + "', '" + status + "')";
+            String sqlString = "INSERT INTO admin (name, email, pass, status) "
+                    + "VALUES('" + name + "', '" + email + "', '" + pass + "', " + status + ")";
             statement.execute(sqlString);
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Loi khi them Admin!");
         }
     }
@@ -55,6 +56,10 @@ public class AdminModel {
         } catch (Exception e) {
             System.out.println("Loi Hien Thi Admin!");
         }
+    }
+
+    public static void update() {
+
     }
 
     public static void delete() {
@@ -94,9 +99,5 @@ public class AdminModel {
         } catch (Exception e) {
             System.out.println("Error!");
         }
-    }
-    
-    public static void main(String[] args){
-        insert();
     }
 }

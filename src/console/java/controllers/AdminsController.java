@@ -8,7 +8,7 @@ package console.java.controllers;
 import console.java.entity.Admin;
 import console.java.model.AdminsModel;
 import console.java.model.DAO;
-import static console.java.model.ProductModels.update;
+import static console.java.model.ProducstModels.update;
 import console.java.utilities.ScannerUtilities;
 import console.java.views.ProductViews;
 import java.sql.ResultSet;
