@@ -83,8 +83,4 @@ public class AdminsController {
         }
         return true;
     }
-    
-    public static void main(String[] args) {
-        processUpdate();
-    }
 }
