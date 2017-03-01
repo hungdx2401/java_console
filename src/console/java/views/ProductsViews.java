@@ -5,7 +5,9 @@
  */
 package console.java.views;
 
+import console.java.controllers.ProductsController;
 import console.java.entities.Product;
+import console.java.utilities.ScannerUtilities;
 import java.util.Scanner;
 
 /**
@@ -63,6 +65,37 @@ public class ProductsViews {
             }
         }
         return "yY".contains(choice);
+    }
+    
+    public static void productsMenu(){
+        while(true){
+            System.out.println("1.Them moi san pham");
+            System.out.println("2.Danh sach san pham");
+            System.out.println("3.Sua thong tin san pham");
+            System.out.println("4.Tim kiem san pham");
+            System.out.println("5.Xoa san pham");
+            System.out.println("6.Quay lai");
+            System.out.println("Chon : ");
+            int choice = ScannerUtilities.getInt();
+            if(choice == 1){
+                ProductsController.productsInsert();
+            }
+            if(choice == 2){
+                ProductsController.productsPrintAll();
+            }
+            if(choice == 3){
+                ProductsController.processUpdate();
+            }
+            if(choice == 4){
+                ProductsController.searchProduct();
+            }
+            if(choice == 5){
+                
+            }
+            if(choice == 6){
+                break;
+            }
+        }
     }
 
 }
