@@ -39,7 +39,7 @@ public class ProducstModel {
                 column = "description";
                 break;
         }
-        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%" 
+        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%"
                 + keyword + "%';";
         ResultSet rs;
         try {
@@ -50,13 +50,13 @@ public class ProducstModel {
         }
         return rs;
     }
-    
-    public static void update(Product product){
+
+    public static void update(Product product) {
         try {
             String updateQuery = "UPDATE products "
                     + "SET name='%s',description='%s'"
                     + ",quantity=%d,price=%f,category_id=%d,updated_at=NOW()"
-                    + " WHERE barcode = '"+ product.getBarCode()+"'" ;
+                    + " WHERE barcode = '" + product.getBarCode() + "'";
             String update = String.format(updateQuery,
                     product.getName(),
                     product.getDescription(),
@@ -76,7 +76,7 @@ public class ProducstModel {
         try {
             PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
                     + "Insert into products(barcode,name,description,quantity"
-                    + ",price,category_id,status) values(?,?,?,?,?,?,1)");
+                    + ",price,category_id,status) values(?,?,?,?,?,?,'1')");
             pstmt.setString(1, product.getBarCode());
             pstmt.setString(2, product.getName());
             pstmt.setString(3, product.getDescription());
@@ -105,23 +105,29 @@ public class ProducstModel {
         }
         return rs;
     }
-    
-    public static void insert(Product product) {
+
+    public static void productsDelete(String keyword, int option) {
+        String column;
+        switch (option) {
+            case 1:
+                column = "barCode";
+                break;
+            case 2:
+                column = "name";
+                break;
+            default:
+                column = "description";
+                break;
+        }
         try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
-                    + "Insert into user values(?,?,?,?,?,?)");
-            pstmt.setString(1, product.getBarCode());
-            pstmt.setString(2, product.getName());
-            pstmt.setString(3, product.getDescription());
-            pstmt.setInt(4, product.getQuantity());
-            pstmt.setFloat(5, product.getPrice());
-            pstmt.setInt(6, product.getCategoryId());
+            String sql = "DELETE FROM products WHERE " + column + " like '%" + keyword + "%'";
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement(sql);
             int rs = pstmt.executeUpdate();
             if (rs > 0) {
-                System.out.println("thêm thành công");
-            }
+                        System.out.println("Da xoa thanh cong");
+                    }
         } catch (Exception e) {
-            System.out.println("Lỗi khi insert.");
+            
         }
     }
 

@@ -5,6 +5,8 @@
  */
 package console.java.main;
 
+import console.java.controllers.ProductsController;
+
 /**
  *
  * @author DongHo
@@ -16,6 +18,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        ProductsController.productsDelete();
+        
     }
     
 }
