@@ -21,15 +21,16 @@ public class MainMenu {
             System.out.println("2.Menu admins");
             System.out.println("3.Thoat");
             System.out.println("-----------------------------------------");
-            System.out.println("Chon : ");
-            int choice = ScannerUtilities.getInt();
-            if(choice == 1){
-                ProductsViews.productsMenu();
+            int choice = ScannerUtilities.choiceInput(1, 2, 3);
+            switch (choice) {
+                case 1:
+                    ProductsViews.productsMenu();
+                    break;
+                case 2:
+                    AdminViews.menuAdmin();
+                    break;
             }
-            if(choice == 2){
-                AdminViews.menuAdmin();
-            }
-            if(choice == 3){
+            if (choice == 3) {
                 break;
             }
         }
