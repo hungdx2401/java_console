@@ -121,10 +121,10 @@ public class AdminsModel {
     }
     
     public static int loginAdmin(String name,String password){
-        int count=0;
+        int count = 0;
         try {
-            String checklogin = "SELECT * FROM admin WHERE name LIKE '%"
-                + name + "%' AND pass LIKE '%" + password + "%'";
+            String checklogin = "SELECT * FROM admin WHERE name = '%"
+                + name + "%' AND pass = '%" + password + "%'";
             ResultSet rs  = DAO.getConnection().createStatement().executeQuery(checklogin);
                 while (rs.next()) {
                     ++count;
