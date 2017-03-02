@@ -33,10 +33,10 @@ public class ProductsController {
 
         while (continueBoolean) {
             ProductsViews.searchOption();
-            int option = ScannerUtilities.getInt();
+            int option = ScannerUtilities.choiceInput(1,2,3);
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
-            String keywordName = ScannerUtilities.getString(3);
-            rs = ProducstModel.searchProduct(keywordName, option);
+            String keywordStr = ScannerUtilities.getString(3);
+            rs = ProducstModel.searchProduct(keywordStr, option);
             try {
                 while (rs.next()) {
                     product = ProducstModel.getProductFromResultSet(rs);

@@ -30,12 +30,15 @@ public class ProducstModel {
         String column;
         switch (option) {
             case 1:
+                System.out.println("--- Tìm kiếm theo mã sản phẩm ---");
                 column = "barCode";
                 break;
             case 2:
+                System.out.println("--- Tìm kiếm theo tên sản phẩm ---");
                 column = "name";
                 break;
             default:
+                System.out.println("--- Tìm kiếm theo mô tả sản phẩm ---");
                 column = "description";
                 break;
         }
