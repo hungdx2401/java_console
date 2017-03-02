@@ -114,6 +114,12 @@ public class ProductsViews {
                     break;
                 case 5:
                     System.out.println("Đang chờ hoàn thiện...");
+                    break;
+                case 6:
+                    break;
+                default:
+                    System.err.println("Vui long chon lai !!!");
+                    break;
             }
             if (choice == 6) {
                 break;
