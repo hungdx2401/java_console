@@ -30,12 +30,15 @@ public class ProducstModel {
         String column;
         switch (option) {
             case 1:
+                System.out.println("--- Tìm kiếm theo mã sản phẩm ---");
                 column = "barCode";
                 break;
             case 2:
+                System.out.println("--- Tìm kiếm theo tên sản phẩm ---");
                 column = "name";
                 break;
             default:
+                System.out.println("--- Tìm kiếm theo mô tả sản phẩm ---");
                 column = "description";
                 break;
         }
@@ -118,7 +121,8 @@ public class ProducstModel {
             default:
                 column = "description";
                 break;
-        }
+     
+    public static void insert(Product product) {
         try {
             String sql = "DELETE FROM products WHERE " + column + " like '%" + keyword + "%'";
             PreparedStatement pstmt = DAO.getConnection().prepareStatement(sql);
@@ -129,6 +133,28 @@ public class ProducstModel {
         } catch (Exception e) {
             
         }
+    }
+
+    /**
+     * Hàm này lấy dữ liệu từ một ResultSet và gán vào một đối tượng Product
+     * @param rs
+     * @return Product Object
+     */
+    public static Product getProductFromResultSet(ResultSet rs) {
+        Product product = new Product();
+        try {
+            product.setBarCode(rs.getString("barCode"));
+            product.setName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setQuantity(rs.getInt("quantity"));
+            product.setPrice(rs.getFloat("price"));
+            product.setDiscount(rs.getFloat("discount"));
+            product.setCategoryId(rs.getInt("category_id"));
+        } catch (SQLException ex) {
+            System.err.println("Lỗi gì đó! " + ex);
+        }
+
+        return product;
     }
 
 }

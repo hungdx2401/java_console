@@ -12,8 +12,6 @@ import console.java.utilities.ScannerUtilities;
 import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.Statement;
 
 /**
@@ -23,10 +21,13 @@ import java.sql.Statement;
  */
 public class ProductsController {
 
+    /**
+     * Hàm này thực hiện việc tìm kiếm theo các tùy chọn (tìm theo mã, tên, mô tả...)
+     */
     public static void searchProduct() {
 
         ResultSet rs;
-        Product product = new Product();
+        Product product;
         int count = 0;
         boolean continueBoolean = true;
 
@@ -42,17 +43,11 @@ public class ProductsController {
                 }
             }
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
-            String keywordName = ScannerUtilities.getString(3);
-            rs = ProducstModel.searchProduct(keywordName, option);
+            String keywordStr = ScannerUtilities.getString(3);
+            rs = ProducstModel.searchProduct(keywordStr, option);
             try {
                 while (rs.next()) {
-                    product.setBarCode(rs.getString("barCode"));
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    product.setPrice(rs.getFloat("price"));
-                    product.setDiscount(rs.getFloat("discount"));
-                    product.setCategoryId(rs.getInt("category_id"));
+                    product = ProducstModel.getProductFromResultSet(rs);
                     ProductsViews.printProduct(product);
                     ++count;
                 }
