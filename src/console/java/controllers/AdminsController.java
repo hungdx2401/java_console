@@ -33,9 +33,9 @@ public class AdminsController {
 
         while (continueBoolean) {
             AdminViews.searchOption();
-            int option = ScannerUtilities.choiceInput(1,2);
+            int option = ScannerUtilities.choiceInput(1,2,3);
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
-            String keywordStr = ScannerUtilities.getString(3);
+            String keywordStr = ScannerUtilities.getString();
             rs = AdminsModel.searchAdmin(keywordStr, option);
             try {
                 while (rs.next()) {
@@ -49,7 +49,7 @@ public class AdminsController {
             if (count == 0) {
                 System.out.println("Khong tim thay san pham!");
             } else {
-                System.out.println("Tim thay " + count + " san pham.");
+                System.out.println("Tim thay " + count + " Admin.");
             }
             continueBoolean = AdminViews.continueBoolean();
         }

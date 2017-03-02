@@ -50,7 +50,6 @@ public class AdminViews {
         System.out.println("1. Tìm theo mã Admin");
         System.out.println("2. Tìm theo tên Admin");
         System.out.println("2. Tìm theo email");
-        System.out.print("--- Vui lòng chọn (1/2/3): ");
     }
 
     public static void printAdmin(Admin admin) {
