@@ -83,7 +83,7 @@ public class AdminsModel {
             System.out.println("Loi Hien Thi Admin!");
         }
     }
-    
+
     public static void delete() {
         int id;
 
@@ -96,10 +96,10 @@ public class AdminsModel {
             if (rs.next() == false) {
                 System.out.println("Khong co ID nhu tren!");
             } else {
-                
+
                 String choice = "";
                 boolean loop = true;
-           
+
                 System.out.println("-------------------------");
                 System.out.println("----ID: " + rs.getString("id"));
                 System.out.println("----Ho va Ten: " + rs.getString("name"));
@@ -109,7 +109,7 @@ public class AdminsModel {
                 System.out.println("----Ngay Tao: " + rs.getString("created_at"));
                 System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
                 System.out.println("-------------------------");
-                
+
                 while (true) {
                     System.out.println("------------------------------------------");
                     System.out.print("Ban muon tiep tuc khong? (yes/no): ");
@@ -137,8 +137,8 @@ public class AdminsModel {
             System.out.println("Error!");
         }
     }
-    
-    public static int loginAdmin(String name,String password){
+
+    public static int loginAdmin(String name, String password) {
         int count = 0;
         try {
             String checklogin = "SELECT * FROM admin WHERE name = '"
@@ -149,8 +149,7 @@ public class AdminsModel {
                 }
             if (count > 0) {
                 System.out.println("Dang nhap thanh cong.");
-            }
-            else{
+            } else {
                 System.out.println("Khong co Admin hoac Password sai ");
                 System.out.println("-----------------------------------");
                 System.out.println("Vui long dien lai");
@@ -161,8 +160,8 @@ public class AdminsModel {
         }
         return count;
     }
-    
-      public static ResultSet searchAdmin(String keyword, int option) {
+  
+    public static ResultSet searchAdmin(String keyword, int option) {
         String column;
         switch (option) {
             case 1:
@@ -189,7 +188,7 @@ public class AdminsModel {
         }
         return rs;
     }
-    
+
     public static Admin getAdminFromResultSet(ResultSet rs) {
         Admin admin = new Admin();
         try {

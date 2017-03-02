@@ -125,6 +125,7 @@ public class ProducstModel {
     }
     /**
      * Hàm này lấy dữ liệu từ một ResultSet và gán vào một đối tượng Product
+     *
      * @param rs
      * @return Product Object
      */
