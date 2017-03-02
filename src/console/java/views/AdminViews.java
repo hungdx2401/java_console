@@ -87,6 +87,11 @@ public class AdminViews {
                 case 5:
                     AdminsController.processDelete();
                     break;
+                case 6:
+                    break;
+                default:
+                    System.err.println("Vui long chon lai !!!");
+                    break;
             }
             if (choice == 6) {
                 break;
