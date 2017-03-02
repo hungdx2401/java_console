@@ -123,7 +123,6 @@ public class ProducstModel {
                 break;
         }
     }
-
     /**
      * Hàm này lấy dữ liệu từ một ResultSet và gán vào một đối tượng Product
      *

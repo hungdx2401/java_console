@@ -141,12 +141,12 @@ public class AdminsModel {
     public static int loginAdmin(String name, String password) {
         int count = 0;
         try {
-            String checklogin = "SELECT * FROM admin WHERE name = '%"
-                    + name + "%' AND pass = '%" + password + "%'";
-            ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
-            while (rs.next()) {
-                ++count;
-            }
+            String checklogin = "SELECT * FROM admin WHERE name = '"
+                + name + "' AND pass = '" + password + "'";
+            ResultSet rs  = DAO.getConnection().createStatement().executeQuery(checklogin);
+                while (rs.next()) {
+                    ++count;
+                }
             if (count > 0) {
                 System.out.println("Dang nhap thanh cong.");
             } else {
@@ -160,7 +160,7 @@ public class AdminsModel {
         }
         return count;
     }
-
+  
     public static ResultSet searchAdmin(String keyword, int option) {
         String column;
         switch (option) {
