@@ -121,22 +121,12 @@ public class ProducstModel {
             default:
                 column = "description";
                 break;
-     
-    public static void insert(Product product) {
-        try {
-            String sql = "DELETE FROM products WHERE " + column + " like '%" + keyword + "%'";
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement(sql);
-            int rs = pstmt.executeUpdate();
-            if (rs > 0) {
-                        System.out.println("Da xoa thanh cong");
-                    }
-        } catch (Exception e) {
-            
         }
     }
 
     /**
      * Hàm này lấy dữ liệu từ một ResultSet và gán vào một đối tượng Product
+     *
      * @param rs
      * @return Product Object
      */
