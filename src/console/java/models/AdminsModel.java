@@ -6,6 +6,7 @@
 package console.java.models;
 
 import console.java.entities.Admin;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,5 +118,29 @@ public class AdminsModel {
         } catch (Exception e) {
             System.out.println("Error!");
         }
+    }
+    
+    public static int loginAdmin(String name,String password){
+        int count=0;
+        try {
+            String checklogin = "SELECT * FROM admin WHERE name LIKE '%"
+                + name + "%' AND pass LIKE '%" + password + "%'";
+            ResultSet rs  = DAO.getConnection().createStatement().executeQuery(checklogin);
+                while (rs.next()) {
+                    ++count;
+                }
+            if (count > 0) {
+                System.out.println("Dang nhap thanh cong.");
+            }
+            else{
+                System.out.println("Khong co Admin hoac Password sai ");
+                System.out.println("-----------------------------------");
+                System.out.println("Vui long dien lai");
+                System.out.println("-----------------------------------");
+            }
+        } catch (Exception e) {
+            System.out.println("Loi kiem tra Admin");
+        }
+        return count;
     }
 }

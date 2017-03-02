@@ -10,6 +10,8 @@ import console.java.models.AdminsModel;
 import console.java.models.DAO;
 import static console.java.models.ProducstModel.update;
 import console.java.utilities.ScannerUtilities;
+import console.java.views.AdminViews;
+import console.java.views.MainMenu;
 import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +22,8 @@ import java.sql.Statement;
  * @author Thang
  */
 public class AdminsController {
-    public static boolean processUpdate(){
+
+    public static boolean processUpdate() {
         String oldName = "";
         String oldEmail = "";
         String oldPassword = "";
@@ -82,5 +85,19 @@ public class AdminsController {
             }
         }
         return true;
+    }
+
+    public static void loginAdmin() {
+        while (true) {
+            System.out.println("Dien name admin");
+            String name = ScannerUtilities.getString();
+            System.out.println("Dien pass");
+            String password = ScannerUtilities.getString();
+            int login = AdminsModel.loginAdmin(name, password);
+            if (login >0 ) {
+                break;
+            }
+        }
+        MainMenu.mainMenu();
     }
 }
