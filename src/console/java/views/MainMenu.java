@@ -29,8 +29,9 @@ public class MainMenu {
                 case 2:
                     AdminViews.menuAdmin();
                     break;
-                default:
-                    break;
+            }
+            if (choice == 3) {
+                break;
             }
         }
     }

@@ -97,7 +97,7 @@ public class ProductsViews {
                     ProductsController.searchProduct();
                     break;
                 case 5:
-                    System.out.println("Hàm xóa sản phẩm đang chờ hoàn thiện...");
+                    System.out.println("Đang chờ hoàn thiện...");
             }
             if (choice == 6) {
                 break;
