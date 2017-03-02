@@ -55,6 +55,7 @@ public class AdminsModel {
                     + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
             statement.execute(sqlString);
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Loi khi them Admin!");
         }
     }

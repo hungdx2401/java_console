@@ -40,10 +40,10 @@ public class AdminViews {
             int choice = ScannerUtilities.choiceInput(1,2,3,4,5,6);
             switch (choice) {
                 case 1:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processInsert();
                     break;
                 case 2:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processList();
                     break;
                 case 3:
                      AdminsController.processUpdate();
@@ -52,7 +52,13 @@ public class AdminViews {
                     System.out.println("Đang chờ hoàn thiện...");
                     break;
                 case 5:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processDelete();
+                    break;
+                case 6:
+                    break;
+                default:
+                    System.err.println("Vui long chon lai !!!");
+                    break;
             }
             if (choice == 6) {
                 break;
