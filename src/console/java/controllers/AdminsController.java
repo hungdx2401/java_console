@@ -10,6 +10,7 @@ import console.java.models.AdminsModel;
 import console.java.models.DAO;
 import static console.java.models.ProducstModel.update;
 import console.java.utilities.ScannerUtilities;
+import console.java.views.AdminViews;
 import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +23,37 @@ import java.util.Scanner;
  */
 public class AdminsController {
 
+    public static void searchAdmin() {
+
+        ResultSet rs;
+        Admin admin;
+        int count = 0;
+        boolean continueBoolean = true;
+
+        while (continueBoolean) {
+            AdminViews.searchOption();
+            int option = ScannerUtilities.choiceInput(1,2);
+            System.out.print("Nhap vao tu khoa muon tim kiem: ");
+            String keywordStr = ScannerUtilities.getString(3);
+            rs = AdminsModel.searchAdmin(keywordStr, option);
+            try {
+                while (rs.next()) {
+                    admin = AdminsModel.getAdminFromResultSet(rs);
+                    AdminViews.printAdmin(admin);
+                    ++count;
+                }
+            } catch (SQLException ex) {
+                System.err.println("Co loi xay ra! " + ex);
+            }
+            if (count == 0) {
+                System.out.println("Khong tim thay san pham!");
+            } else {
+                System.out.println("Tim thay " + count + " san pham.");
+            }
+            continueBoolean = AdminViews.continueBoolean();
+        }
+    } 
+    
     public static void processInsert() {
         String name = "";
         String email = "";

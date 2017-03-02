@@ -135,4 +135,45 @@ public class AdminsModel {
             System.out.println("Error!");
         }
     }
+    
+    public static ResultSet searchAdmin(String keyword, int option) {
+        String column;
+        switch (option) {
+            case 1:
+                System.out.println("--- Tìm kiếm theo mã admin ---");
+                column = "id";
+                break;
+            case 2:
+                System.out.println("--- Tìm kiếm theo tên admin ---");
+                column = "name";
+                break;
+            default:
+                System.out.println("--- Tìm kiếm theo email admin ---");
+                column = "email";
+                break;
+        }
+        String strQuery = "SELECT * FROM admin WHERE " + column + " LIKE '%"
+                + keyword + "%';";
+        ResultSet rs;
+        try {
+            rs = DAO.getConnection().createStatement().executeQuery(strQuery);
+        } catch (SQLException ex) {
+            System.err.println("Có lỗi xảy ra! " + ex);
+            return null;
+        }
+        return rs;
+    }
+    
+    public static Admin getAdminFromResultSet(ResultSet rs) {
+        Admin admin = new Admin();
+        try {
+            admin.setId(rs.getInt("id"));
+            admin.setName(rs.getString("name"));
+            admin.setEmail(rs.getString("email"));
+            admin.setPassword(rs.getString("password"));
+        } catch (SQLException ex) {
+            System.err.println("Lỗi gì đó! " + ex);
+        }
+        return admin;
+    }
 }
