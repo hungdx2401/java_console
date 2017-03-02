@@ -77,10 +77,13 @@ public class ScannerUtilities {
         }
         return input.charAt(0);
     }
-    /*
-    *hàm trả về giá trị float từ bàn phím.
-    */
-    public static float getFloat(){
+
+    /**
+     * Hàm này trả về giá trị float được người dùng nhập vào
+     *
+     * @return
+     */
+    public static float getFloat() {
         Float inputFloat = null;
         while (true) {
             try {
@@ -92,4 +95,30 @@ public class ScannerUtilities {
         }
         return inputFloat;
     }
+
+    /**
+     * Hàm này bắt buộc người dùng phải chọn một trong các số truyền vào
+     *
+     * @param inputInt
+     * @return lựa chọn của người dùng
+     */
+    public static int choiceInput(int... inputInt) {
+        String str1 = "";
+        String str2 = "";
+        for (int i = 0; i < inputInt.length; i++) {
+            if (i != 0) {
+                str1 += "/";
+            }
+            str1 += Integer.toString(inputInt[i]);
+            str2 += Integer.toString(inputInt[i]);
+        }
+        int choice;
+        do {
+            System.out.println("Vui lòng chọn (" + str1 + ") : ");
+            choice = ScannerUtilities.getInt();
+        } while (!(str2.contains(Integer.toString(choice).toCharArray()[0] + "")));
+
+        return choice;
+    }
+
 } // END - class
