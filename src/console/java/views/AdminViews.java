@@ -1,6 +1,7 @@
 package console.java.views;
 
 import console.java.controllers.AdminsController;
+import console.java.entities.Admin;
 import console.java.utilities.ScannerUtilities;
 import java.util.Scanner;
 
@@ -26,7 +27,39 @@ public class AdminViews {
         System.out.println("-------------------------------");
         System.out.println("-------------------------------");
     }
+    
+    public static boolean continueBoolean() {
+        String choice = "";
+        boolean loop = true;
 
+        while (true) {
+            System.out.println("------------------------------------------");
+            System.out.print("Bạn có muốn tiếp tục không? (y/n): ");
+            choice = new Scanner(System.in).nextLine();
+            if (!"yYnN".contains(choice)) {
+                System.err.println("Vui lòng chỉ nhập 'y' hoặc 'n'");
+            } else {
+                break;
+            }
+        }
+        return "yY".contains(choice);
+    }
+    
+    public static void searchOption() {
+        System.out.println("--------------------- TÙY CHỌN TÌM KIẾM -------------------------------");
+        System.out.println("1. Tìm theo mã Admin");
+        System.out.println("2. Tìm theo tên Admin");
+        System.out.println("2. Tìm theo email");
+        System.out.print("--- Vui lòng chọn (1/2/3): ");
+    }
+
+    public static void printAdmin(Admin admin) {
+        System.out.println("----------------------------------------------------");
+        System.out.println("- Mã Admin " + admin.getId());
+        System.out.println("- Tên Admin: " + admin.getName());
+        System.out.println("- Email Admin: " + admin.getEmail());
+        System.out.println(""); // Dòng trống
+    }
     public static void menuAdmin() {
         while (true) {
             System.out.println("----------------------------------");
@@ -40,19 +73,20 @@ public class AdminViews {
             int choice = ScannerUtilities.choiceInput(1,2,3,4,5,6);
             switch (choice) {
                 case 1:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processInsert();
                     break;
                 case 2:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processList();
                     break;
                 case 3:
                      AdminsController.processUpdate();
                     break;
                 case 4:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.searchAdmin();
                     break;
                 case 5:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    AdminsController.processDelete();
+                    break;
             }
             if (choice == 6) {
                 break;
