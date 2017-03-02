@@ -170,7 +170,6 @@ public class AdminsModel {
             admin.setId(rs.getInt("id"));
             admin.setName(rs.getString("name"));
             admin.setEmail(rs.getString("email"));
-            admin.setPassword(rs.getString("password"));
         } catch (SQLException ex) {
             System.err.println("Lỗi gì đó! " + ex);
         }
