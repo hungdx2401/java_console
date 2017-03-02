@@ -31,7 +31,7 @@ public class MainMenu {
                     break;
                 default:
                     break;
-            }            
+            }
         }
     }
 }
