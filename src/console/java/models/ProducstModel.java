@@ -39,7 +39,7 @@ public class ProducstModel {
                 column = "description";
                 break;
         }
-        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%" 
+        String strQuery = "SELECT * FROM products WHERE " + column + " LIKE '%"
                 + keyword + "%';";
         ResultSet rs;
         try {
@@ -50,13 +50,13 @@ public class ProducstModel {
         }
         return rs;
     }
-    
-    public static void update(Product product){
+
+    public static void update(Product product) {
         try {
             String updateQuery = "UPDATE products "
                     + "SET name='%s',description='%s'"
                     + ",quantity=%d,price=%f,category_id=%d,updated_at=NOW()"
-                    + " WHERE barcode = '"+ product.getBarCode()+"'" ;
+                    + " WHERE barcode = '" + product.getBarCode() + "'";
             String update = String.format(updateQuery,
                     product.getName(),
                     product.getDescription(),
@@ -105,7 +105,7 @@ public class ProducstModel {
         }
         return rs;
     }
-    
+
     public static void insert(Product product) {
         try {
             PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
@@ -123,6 +123,28 @@ public class ProducstModel {
         } catch (Exception e) {
             System.out.println("Lỗi khi insert.");
         }
+    }
+
+    /**
+     * Hàm này lấy dữ liệu từ một ResultSet và gán vào một đối tượng Product
+     * @param rs
+     * @return Product Object
+     */
+    public static Product getProductFromResultSet(ResultSet rs) {
+        Product product = new Product();
+        try {
+            product.setBarCode(rs.getString("barCode"));
+            product.setName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setQuantity(rs.getInt("quantity"));
+            product.setPrice(rs.getFloat("price"));
+            product.setDiscount(rs.getFloat("discount"));
+            product.setCategoryId(rs.getInt("category_id"));
+        } catch (SQLException ex) {
+            System.err.println("Lỗi gì đó! " + ex);
+        }
+
+        return product;
     }
 
 }
