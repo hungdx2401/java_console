@@ -79,7 +79,7 @@ public class ProducstModel {
         try {
             PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
                     + "Insert into products(barcode,name,description,quantity"
-                    + ",price,category_id,status) values(?,?,?,?,?,?,1)");
+                    + ",price,category_id,status) values(?,?,?,?,?,?,'1')");
             pstmt.setString(1, product.getBarCode());
             pstmt.setString(2, product.getName());
             pstmt.setString(3, product.getDescription());
@@ -109,22 +109,29 @@ public class ProducstModel {
         return rs;
     }
 
+    public static void productsDelete(String keyword, int option) {
+        String column;
+        switch (option) {
+            case 1:
+                column = "barCode";
+                break;
+            case 2:
+                column = "name";
+                break;
+            default:
+                column = "description";
+                break;
+     
     public static void insert(Product product) {
         try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
-                    + "Insert into user values(?,?,?,?,?,?)");
-            pstmt.setString(1, product.getBarCode());
-            pstmt.setString(2, product.getName());
-            pstmt.setString(3, product.getDescription());
-            pstmt.setInt(4, product.getQuantity());
-            pstmt.setFloat(5, product.getPrice());
-            pstmt.setInt(6, product.getCategoryId());
+            String sql = "DELETE FROM products WHERE " + column + " like '%" + keyword + "%'";
+            PreparedStatement pstmt = DAO.getConnection().prepareStatement(sql);
             int rs = pstmt.executeUpdate();
             if (rs > 0) {
-                System.out.println("thêm thành công");
-            }
+                        System.out.println("Da xoa thanh cong");
+                    }
         } catch (Exception e) {
-            System.out.println("Lỗi khi insert.");
+            
         }
     }
 

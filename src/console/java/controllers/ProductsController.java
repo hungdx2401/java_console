@@ -33,7 +33,15 @@ public class ProductsController {
 
         while (continueBoolean) {
             ProductsViews.searchOption();
-            int option = ScannerUtilities.choiceInput(1,2,3);
+            int option = 0;
+            while (continueBoolean) {
+                option = ScannerUtilities.getInt();
+                if (option < 1 || option > 3) {
+                    System.out.println("Vui long nhap trong 1,2,3");
+                } else {
+                    break;
+                }
+            }
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
             String keywordStr = ScannerUtilities.getString(3);
             rs = ProducstModel.searchProduct(keywordStr, option);
@@ -135,7 +143,7 @@ public class ProductsController {
         }
         return true;
     }
-    
+
     /*
     hàm insert product lấy giá trị từ bàn phím
      */
@@ -163,6 +171,7 @@ public class ProductsController {
         ProducstModel.productsInsert(product);
     }
 //hàm controller print all products 
+
     public static void productsPrintAll() {
         ResultSet rs = ProducstModel.productsPrintAll();
         Product product = new Product();
@@ -180,5 +189,54 @@ public class ProductsController {
         } catch (SQLException ex) {
             System.err.println("Co loi xay ra! " + ex);
         }
+    }
+
+    //ham xoa products
+    public static void productsDelete() {
+        ResultSet rs;
+        Product product = new Product();
+        int count = 0;
+        boolean continueBoolean = true;
+        int option = 0;
+        while (continueBoolean) {
+            ProductsViews.searchOption();
+            while (continueBoolean) {
+                option = ScannerUtilities.getInt();
+                if (option < 1 || option > 3) {
+                    System.out.println("Vui long nhap trong 1,2,3");
+                } else {
+                    break;
+                }
+            }
+            System.out.print("Nhap vao tu khoa muon tim kiem de xoa : ");
+            String keywordName = ScannerUtilities.getString(3);
+            rs = ProducstModel.searchProduct(keywordName, option);
+            try {
+                while (rs.next()) {
+                    product.setBarCode(rs.getString("barCode"));
+                    product.setName(rs.getString("name"));
+                    product.setDescription(rs.getString("description"));
+                    product.setQuantity(rs.getInt("quantity"));
+                    product.setPrice(rs.getFloat("price"));
+                    product.setDiscount(rs.getFloat("discount"));
+                    product.setCategoryId(rs.getInt("category_id"));
+                    ProductsViews.printProduct(product);
+                    ++count;
+                }
+            } catch (SQLException ex) {
+                System.err.println("Co loi xay ra! " + ex);
+            }
+            if (count == 0) {
+                System.out.println("Khong tim thay san pham!");
+            } else {
+                System.out.println("Tim thay " + count + " san pham.");
+                continueBoolean = ProductsViews.agreementBoolean();
+                if (continueBoolean) {
+                    ProducstModel.productsDelete(keywordName, option);
+                }
+            }
+            continueBoolean = ProductsViews.continueBoolean();
+        }
+
     }
 }
