@@ -14,13 +14,71 @@ import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 /**
  *
  * @author Thang
  */
 public class AdminsController {
-    public static boolean processUpdate(){
+
+    public static void processInsert() {
+        String name = "";
+        String email = "";
+        String password = "";
+        try {
+            int count = 0;
+            System.out.println("Nhap id admin : ");
+            int id = ScannerUtilities.getInt();
+            Statement stt = DAO.getConnection().createStatement();
+            String sql = String.format("SELECT * "
+                    + "FROM admin WHERE id = '%d'", id);
+            ResultSet rs = stt.executeQuery(sql);
+            //In ra thong tin san pham truoc khi sua
+            while (rs.next()) {
+                name = rs.getString("name");
+                email = rs.getString("email");
+                password = rs.getString("pass");
+                System.out.println("Ten            :" + name);
+                System.out.println("Email          :" + email);
+                System.out.println("Password       :" + password);
+                ++count;
+            }
+            //Kiem tra xem co admin hay khong
+            if (count == 0) {
+                String choice = "";
+                    System.out.println("------------------------------------------");
+                    System.out.print("Ban muon them admin khong? (yes/no): ");
+                    choice = new Scanner(System.in).nextLine();
+                    if(!"yYnN".contains(choice)){
+                        System.out.println("Ban hay nhap (Y/N)");
+                    }
+                    if (!"yY".contains(choice)) {
+                        System.out.println("Ban da thoat!");
+                    } else {
+                        try {
+                            AdminsModel.insert();
+                            AdminsModel.getAllAdmin();
+                        } catch (Exception e) {
+                            System.out.println("Loi Them Admin!");
+                        }
+                    }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Khong the them !!!");
+        }
+    }
+
+    public static void processDelete() {
+        AdminsModel.delete();
+    }
+
+    public static void processList() {
+        AdminsModel.getAllAdmin();
+    }
+
+    public static boolean processUpdate() {
         String oldName = "";
         String oldEmail = "";
         String oldPassword = "";
@@ -49,9 +107,7 @@ public class AdminsController {
                     System.err.println("Khong co admin !!!");
                     return false;
                 }
-                //Nhap thong tin moi cua admin
-                System.out.println("Chu y : Neu ban khong muon sua "
-                        + ",hay de trong va tiep tuc !!!");
+                //Nhap thong tin cua admin moi
                 System.out.println("Nhap ten moi           :");
                 String newName = ScannerUtilities.getString();
                 System.out.println("Nhap email moi         :");

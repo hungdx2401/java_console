@@ -10,19 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import console.java.utilities.ScannerUtilities;
 
 /**
  *
  * @author Thang
  */
 public class AdminsModel {
-    public static void update(Admin admin){
+
+    public static void update(Admin admin) {
         try {
             String updateQuery = "UPDATE admin SET name='%s'"
                     + ",email='%s',pass='%s',updated_at=NOW() "
                     + "WHERE id =" + admin.getId();
-            String update = String.format(updateQuery
-                    ,admin.getName(),
+            String update = String.format(updateQuery,
+                    admin.getName(),
                     admin.getEmail(),
                     admin.getPassword());
             Statement stt = DAO.getConnection().createStatement();
@@ -33,7 +35,7 @@ public class AdminsModel {
             System.err.println("Da xay ra loi !!!");
         }
     }
-    
+
     public static void insert() {
         String id = "";
         String name = "";
@@ -42,11 +44,11 @@ public class AdminsModel {
         String status = "";
 
         System.out.println("Nhap Ho va Ten: ");
-        name = new Scanner(System.in).nextLine();
+        name = ScannerUtilities.getString();
         System.out.println("Nhap Email: ");
-        email = new Scanner(System.in).nextLine();
+        email = ScannerUtilities.getString();
         System.out.println("Nhap Mat Khau: ");
-        pass = new Scanner(System.in).nextLine();
+        pass = ScannerUtilities.getString();
         try {
             Statement statement = DAO.getConnection().createStatement();
             String sqlString = "INSERT INTO admin (name, email, pass) "
@@ -66,51 +68,66 @@ public class AdminsModel {
 
             while (rs.next()) {
                 System.out.println("-------------------------");
-                System.out.println("ID: " + rs.getString("ID"));
-                System.out.println("Ho va Ten: " + rs.getString("name"));
-                System.out.println("Email: " + rs.getString("email"));
-                System.out.println("Mat Khau: " + rs.getString("pass"));
-                System.out.println("Tinh Trang: " + rs.getString("status"));
-                System.out.println("Ngay Tao: " + rs.getString("created_at"));
-                System.out.println("Ngay Sua: " + rs.getString("updated_at"));
+                System.out.println("----ID: " + rs.getString("id"));
+                System.out.println("----Ho va Ten: " + rs.getString("name"));
+                System.out.println("----Email: " + rs.getString("email"));
+                System.out.println("----Mat Khau: " + rs.getString("pass"));
+                System.out.println("----Tinh Trang: " + rs.getString("status"));
+                System.out.println("----Ngay Tao: " + rs.getString("created_at"));
+                System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
                 System.out.println("-------------------------");
             }
         } catch (Exception e) {
             System.out.println("Loi Hien Thi Admin!");
         }
     }
-
+    
     public static void delete() {
-        String id = "";
+        int id;
 
         System.out.println("Nhap ID Admin muon xoa: ");
-        id = new Scanner(System.in).nextLine();
+        id = ScannerUtilities.getInt();
         try {
             Statement statement = DAO.getConnection().createStatement();
-            String sqlString1 = "SELECT * FROM admin Where ID = '" + id + "'";
+            String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
             ResultSet rs = statement.executeQuery(sqlString1);
             if (rs.next() == false) {
                 System.out.println("Khong co ID nhu tren!");
             } else {
-
+                
                 String choice = "";
                 boolean loop = true;
-
+           
+                System.out.println("-------------------------");
+                System.out.println("----ID: " + rs.getString("id"));
+                System.out.println("----Ho va Ten: " + rs.getString("name"));
+                System.out.println("----Email: " + rs.getString("email"));
+                System.out.println("----Mat Khau: " + rs.getString("pass"));
+                System.out.println("----Tinh Trang: " + rs.getString("status"));
+                System.out.println("----Ngay Tao: " + rs.getString("created_at"));
+                System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
+                System.out.println("-------------------------");
+                
                 while (true) {
                     System.out.println("------------------------------------------");
                     System.out.print("Ban muon tiep tuc khong? (yes/no): ");
                     choice = new Scanner(System.in).nextLine();
                     if (!"yYnN".contains(choice)) {
-                        System.err.println("Vui Long Nhap (y/n)");
+                        System.out.println("Ban hay nhap (Y/N)");
+                    }
+                    if (!"yY".contains(choice)) {
+                        System.out.println("Ban da thoat!");
+                    } else {
                         try {
                             String sqlString = "DELETE FROM admin Where id = " + id;
                             statement.execute(sqlString);
+                            System.out.println("Xoa thanh cong Admin!");
+                            break;
                         } catch (Exception e) {
-                            System.out.println("Loi Xoa Admin!");
+                            System.out.println("Loi Them Admin!");
                         }
-                    } else {
-                        break;
                     }
+
                 }
 
             }
