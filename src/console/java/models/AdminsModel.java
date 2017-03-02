@@ -141,8 +141,8 @@ public class AdminsModel {
     public static int loginAdmin(String name,String password){
         int count = 0;
         try {
-            String checklogin = "SELECT * FROM admin WHERE name = '%"
-                + name + "%' AND pass = '%" + password + "%'";
+            String checklogin = "SELECT * FROM admin WHERE name = '"
+                + name + "' AND pass = '" + password + "'";
             ResultSet rs  = DAO.getConnection().createStatement().executeQuery(checklogin);
                 while (rs.next()) {
                     ++count;
@@ -160,7 +160,8 @@ public class AdminsModel {
             System.out.println("Loi kiem tra Admin");
         }
         return count;
-
+    }
+    
       public static ResultSet searchAdmin(String keyword, int option) {
         String column;
         switch (option) {
