@@ -176,9 +176,9 @@ public class AdminsController {
     public static void loginAdmin() {
         while (true) {
             System.out.println("Name Admin:");
-            String name = ScannerUtilities.getString();
+            String name = ScannerUtilities.getString(1);
             System.out.println("Pass Admin:");
-            String password = ScannerUtilities.getString();
+            String password = ScannerUtilities.getString(1);
             int login = AdminsModel.loginAdmin(name, password);
             if (login >0 ) {
                 break;
