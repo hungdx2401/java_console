@@ -49,7 +49,8 @@ public class AdminViews {
         System.out.println("--------------------- TÙY CHỌN TÌM KIẾM -------------------------------");
         System.out.println("1. Tìm theo mã Admin");
         System.out.println("2. Tìm theo tên Admin");
-        System.out.println("2. Tìm theo email");
+        System.out.println("3. Tìm theo email");
+        System.out.println("4. Quay lai");
     }
 
     public static void printAdmin(Admin admin) {

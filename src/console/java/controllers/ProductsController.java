@@ -22,7 +22,8 @@ import java.sql.Statement;
 public class ProductsController {
 
     /**
-     * Hàm này thực hiện việc tìm kiếm theo các tùy chọn (tìm theo mã, tên, mô tả...)
+     * Hàm này thực hiện việc tìm kiếm theo các tùy chọn (tìm theo mã, tên, mô
+     * tả...)
      */
     public static void searchProduct() {
 
@@ -172,22 +173,66 @@ public class ProductsController {
     }
 //hàm controller print all products 
 
-    public static void productsPrintAll() {
-        ResultSet rs = ProducstModel.productsPrintAll();
-        Product product = new Product();
+    /**
+     * Hàm này in ra toàn bộ sản phẩm có tùy chọn phân trang
+     *
+     * @throws java.sql.SQLException
+     */
+    public static void productsPrintAll() throws SQLException {
+        ResultSet rs;
+        // LẤY Tổng bản ghi
+        int total;
         try {
-            while (rs.next()) {
-                product.setBarCode(rs.getString("barCode"));
-                product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setQuantity(rs.getInt("quantity"));
-                product.setPrice(rs.getFloat("price"));
-                product.setDiscount(rs.getFloat("discount"));
-                product.setCategoryId(rs.getInt("category_id"));
-                ProductsViews.printProduct(product);
-            }
+            rs = DAO.getConnection().createStatement().executeQuery("select count(*) from products");
+            rs.next();
+            total = rs.getInt(1);
         } catch (SQLException ex) {
-            System.err.println("Co loi xay ra! " + ex);
+            System.err.println("Có lỗi! " + ex);
+            return;
+        }
+        // NHẬP Số bản ghi mỗi trang
+        int perPage;
+        // TÍNH Số trang theo perPage
+        int totalPages;
+        // offset
+        int offset;
+        // strQuery
+        String strQuery;
+        // Nhập trang muốn xem
+        int pageNumber;
+        Product product;
+        if (total == 0) {
+            System.out.println("Không có dữ liệu!");
+        } else {
+            System.out.println("Bạn muốn xem bao nhiêu sản phẩm / mỗi trang?");
+            perPage = ScannerUtilities.getInt();
+            if (perPage == 0) {
+                System.err.println("0 sản phẩm mỗi trang!");
+                System.err.println("...quay lại");
+                return;
+            }
+            if (total % perPage == 0) {
+                totalPages = total / perPage;
+
+            } else {
+                totalPages = total / perPage + 1;
+            }
+            // Hiển thị tổng số trang
+            System.out.printf("Bạn có [%d] trang để hiển thị!\n", totalPages);
+            boolean continueBoolean = true;
+            while (continueBoolean) {
+                System.out.print("Bạn muốn xem trang mấy? ");
+                pageNumber = ScannerUtilities.getInt(1, totalPages);
+                offset = (pageNumber - 1) * perPage;
+                ResultSet results = ProducstModel.pagination(offset, perPage);
+
+                while (results.next()) {
+                    product = ProducstModel.getProductFromResultSet(results);
+                    ProductsViews.printProduct(product);
+                }
+                results.first();
+                continueBoolean = ProductsViews.continueBoolean();
+            }
         }
     }
 
@@ -237,6 +282,5 @@ public class ProductsController {
             }
             continueBoolean = ProductsViews.continueBoolean();
         }
-
     }
 }

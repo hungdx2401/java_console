@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 import console.java.utilities.ScannerUtilities;
 import console.java.utilities.ValidateUtilities;
+import console.java.views.ProductsViews;
 
 /**
  *
@@ -43,6 +44,7 @@ public class AdminsModel {
         String email = "";
         String pass = "";
         String status = "";
+
         do {
             System.out.println("Nhap Ho va Ten: ");
             name = ScannerUtilities.getString();
@@ -61,7 +63,6 @@ public class AdminsModel {
             String sqlString = "INSERT INTO admin (name, email, pass) "
                     + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
             statement.execute(sqlString);
-            System.out.println("Them moi thanh cong !");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Loi khi them Admin!");
@@ -69,26 +70,74 @@ public class AdminsModel {
     }
 
     public static void getAllAdmin() {
-        String leftAlignFormat = "| %-10s | %-30s | %-20s | %-20s | %-10s | %-20s | %-20s | %n";
-        System.out.println("Danh Sach Admin");
-        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
-        System.out.format(leftAlignFormat, "ID", "Name", "Email", "Password", "Status", "Created at", "Updated at");
-        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+        ResultSet rs;
+        // LẤY Tổng bản ghi
+        int total;
         try {
-            Statement statement = DAO.getConnection().createStatement();
-            String sqlString = "SELECT * FROM admin";
-            ResultSet rs = statement.executeQuery(sqlString);
-
-            while (rs.next()) {
-                System.out.printf(leftAlignFormat, rs.getString("id"),
-                        rs.getString("name"), rs.getString("email"),
-                        rs.getString("pass"), rs.getString("status"),
-                        rs.getString("created_at"), rs.getString("updated_at"));
-            }
-        } catch (Exception e) {
-            System.out.println("Loi Hien Thi Admin!");
+            rs = DAO.getConnection().createStatement().executeQuery("select count(*) from admin");
+            rs.next();
+            total = rs.getInt(1);
+        } catch (SQLException ex) {
+            System.err.println("Có lỗi! " + ex);
+            return;
         }
-        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+        // NHẬP Số bản ghi mỗi trang
+        int perPage;
+        // TÍNH Số trang theo perPage
+        int totalPages;
+        // offset
+        int offset;
+        // strQuery
+        String strQuery;
+        // Nhập trang muốn xem
+        int pageNumber;
+        Admin admin;
+        if (total == 0) {
+            System.out.println("Không có dữ liệu!");
+        } else {
+            System.out.println("Bạn muốn xem bao nhiêu tài khoản / mỗi trang?");
+            perPage = ScannerUtilities.getInt();
+            if (perPage == 0) {
+                System.err.println("0 tài khoản mỗi trang!");
+                System.err.println("...quay lại");
+                return;
+            }
+            if (total % perPage == 0) {
+                totalPages = total / perPage;
+
+            } else {
+                totalPages = total / perPage + 1;
+            }
+            // Hiển thị tổng số trang
+            System.out.printf("Bạn có [%d] trang để hiển thị\n", totalPages);
+            boolean continueBoolean = true;
+            while (continueBoolean) {
+                System.out.print("Bạn muốn xem trang mấy? ");
+                pageNumber = ScannerUtilities.getInt(1, totalPages);
+                offset = (pageNumber - 1) * perPage;
+
+                String Query = String.format("SELECT * FROM admin LIMIT %s OFFSET %s;", perPage, offset);
+                ResultSet results;
+                String leftAlignFormat = "| %-10s | %-30s | %-20s | %-20s | %-10s | %-20s | %-20s | %n";
+                System.out.println("Danh Sach Admin");
+                System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format(leftAlignFormat, "ID", "Name", "Email", "Password", "Status", "Created at", "Updated at");
+                System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                try {
+                    results = DAO.getConnection().createStatement().executeQuery(Query);
+                    while (results.next()) {
+                        System.out.printf(leftAlignFormat, rs.getString("id"),
+                                rs.getString("name"), rs.getString("email"),
+                                rs.getString("pass"), rs.getString("status"),
+                                rs.getString("created_at"), rs.getString("updated_at"));
+                    }
+                    results.first();
+                } catch (SQLException ex) {
+                    System.err.println("Có lỗi xảy ra! " + ex);
+                }
+                continueBoolean = ProductsViews.continueBoolean();
+            }
+        }
     }
 
     public static void delete() {
@@ -96,6 +145,10 @@ public class AdminsModel {
 
         System.out.println("Nhap ID Admin muon xoa: ");
         id = ScannerUtilities.getInt();
+        if (id == SessionAmin.getId()) {
+            System.err.println("Bạn không thể xóa chính mình!");
+            return;
+        }
         try {
             Statement statement = DAO.getConnection().createStatement();
             String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
@@ -148,21 +201,29 @@ public class AdminsModel {
     public static int loginAdmin(String name, String password) {
         int count = 0;
         try {
-            String checklogin = "SELECT * FROM admin WHERE name = '"
-                    + name + "' AND pass = '" + password + "'";
+            String checklogin = String.format("SELECT * FROM admin WHERE name = '%s' AND pass = '%s'", name, password);
+
             ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
             while (rs.next()) {
                 ++count;
+                SessionAmin.setId(rs.getInt("id"));
+                SessionAmin.setName(rs.getString("name"));
+                SessionAmin.setEmail(rs.getString("email"));
             }
             if (count > 0) {
-                System.out.println("Dang nhap thanh cong.");
+                System.out.println("Đăng nhập thành công.");
             } else {
-                System.out.println("Khong co Admin hoac Password sai ");
+                System.out.println("Thông tin không chính xác!");
                 System.out.println("-----------------------------------");
-                System.out.println("Vui long dien lai");
+                System.out.println("Chọn 1: Đăng nhập lại");
+                System.out.println("Chọn 2: Đóng chương trình");
                 System.out.println("-----------------------------------");
+                int choice = ScannerUtilities.choiceInput(1, 2);
+                if (choice == 2) {
+                    System.exit(0);
+                }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Loi kiem tra Admin");
         }
         return count;
@@ -182,6 +243,10 @@ public class AdminsModel {
             default:
                 System.out.println("--- Tìm kiếm theo email admin ---");
                 column = "email";
+                break;
+            case 4:
+                System.out.println("Quay lai Menu Admin!");
+                column = "";
                 break;
         }
         String strQuery = "SELECT * FROM admin WHERE " + column + " LIKE '%"
