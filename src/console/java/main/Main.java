@@ -5,10 +5,7 @@
  */
 package console.java.main;
 
-import console.java.controllers.ProductsController;
 import console.java.controllers.AdminsController;
-import console.java.views.AdminViews;
-import console.java.views.MainMenu;
 
 /**
  *
