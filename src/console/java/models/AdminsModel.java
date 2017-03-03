@@ -6,12 +6,12 @@
 package console.java.models;
 
 import console.java.entities.Admin;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import console.java.utilities.ScannerUtilities;
+import console.java.utilities.ValidateUtilities;
 
 /**
  *
@@ -43,18 +43,25 @@ public class AdminsModel {
         String email = "";
         String pass = "";
         String status = "";
-
-        System.out.println("Nhap Ho va Ten: ");
-        name = ScannerUtilities.getString();
-        System.out.println("Nhap Email: ");
-        email = ScannerUtilities.getString();
-        System.out.println("Nhap Mat Khau: ");
-        pass = ScannerUtilities.getString();
+        do {
+            System.out.println("Nhap Ho va Ten: ");
+            name = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(name) == false);
+        do {
+            System.out.println("Nhap Email: ");
+            email = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(email) == false
+                || ValidateUtilities.validateEmail(email) == false);
+        do {
+            System.out.println("Nhap Mat Khau: ");
+            pass = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(pass) == false);
         try {
             Statement statement = DAO.getConnection().createStatement();
             String sqlString = "INSERT INTO admin (name, email, pass) "
                     + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
             statement.execute(sqlString);
+            System.out.println("Them moi thanh cong !");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Loi khi them Admin!");
@@ -62,26 +69,26 @@ public class AdminsModel {
     }
 
     public static void getAllAdmin() {
-        System.out.println("_________Danh Sach Admin_________");
+        String leftAlignFormat = "| %-10s | %-30s | %-20s | %-20s | %-10s | %-20s | %-20s | %n";
+        System.out.println("Danh Sach Admin");
+        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+        System.out.format(leftAlignFormat, "ID", "Name", "Email", "Password", "Status", "Created at", "Updated at");
+        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
         try {
             Statement statement = DAO.getConnection().createStatement();
             String sqlString = "SELECT * FROM admin";
             ResultSet rs = statement.executeQuery(sqlString);
 
             while (rs.next()) {
-                System.out.println("-------------------------");
-                System.out.println("----ID: " + rs.getString("id"));
-                System.out.println("----Ho va Ten: " + rs.getString("name"));
-                System.out.println("----Email: " + rs.getString("email"));
-                System.out.println("----Mat Khau: " + rs.getString("pass"));
-                System.out.println("----Tinh Trang: " + rs.getString("status"));
-                System.out.println("----Ngay Tao: " + rs.getString("created_at"));
-                System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
-                System.out.println("-------------------------");
+                System.out.printf(leftAlignFormat, rs.getString("id"),
+                        rs.getString("name"), rs.getString("email"),
+                        rs.getString("pass"), rs.getString("status"),
+                        rs.getString("created_at"), rs.getString("updated_at"));
             }
         } catch (Exception e) {
             System.out.println("Loi Hien Thi Admin!");
         }
+        System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
     }
 
     public static void delete() {
@@ -142,11 +149,11 @@ public class AdminsModel {
         int count = 0;
         try {
             String checklogin = "SELECT * FROM admin WHERE name = '"
-                + name + "' AND pass = '" + password + "'";
-            ResultSet rs  = DAO.getConnection().createStatement().executeQuery(checklogin);
-                while (rs.next()) {
-                    ++count;
-                }
+                    + name + "' AND pass = '" + password + "'";
+            ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
+            while (rs.next()) {
+                ++count;
+            }
             if (count > 0) {
                 System.out.println("Dang nhap thanh cong.");
             } else {
@@ -160,7 +167,7 @@ public class AdminsModel {
         }
         return count;
     }
-  
+
     public static ResultSet searchAdmin(String keyword, int option) {
         String column;
         switch (option) {

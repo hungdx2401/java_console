@@ -149,17 +149,17 @@ public class ProductsController {
      */
     public static void productsInsert() {
         System.out.println("Them san pham moi");
-        System.out.println("Nhap Barcode ");
+        System.out.println("Nhap ma so san pham ");
         String barCode = ScannerUtilities.getString();
-        System.out.println("Nhap name ");
+        System.out.println("Nhap ten ");
         String name = ScannerUtilities.getString();
-        System.out.println("Nhap description");
+        System.out.println("Nhap mo ta");
         String description = ScannerUtilities.getString();
-        System.out.println("Nhap quantity ");
+        System.out.println("Nhap so luong ");
         int quantity = ScannerUtilities.getInt();
-        System.out.println("Nhap price ");
+        System.out.println("Nhap gia ");
         float price = ScannerUtilities.getFloat();
-        System.out.println("Nhap categoryId ");
+        System.out.println("Nhap id chung loai ");
         int categoryId = ScannerUtilities.getInt();
         Product product = new Product();
         product.setBarCode(barCode);
