@@ -33,8 +33,7 @@ public class AdminsModel {
             stt.execute(update);
             System.out.println("Update thanh cong !!!");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Da xay ra loi !!!");
+            System.err.println("Da xay ra loi !!!" + e);
         }
     }
 
@@ -44,28 +43,28 @@ public class AdminsModel {
         String email = "";
         String pass = "";
         String status = "";
-
-        do {
-            System.out.println("Nhap Ho va Ten: ");
-            name = ScannerUtilities.getString();
-        } while (ValidateUtilities.checkBlank(name) == false);
-        do {
-            System.out.println("Nhap Email: ");
-            email = ScannerUtilities.getString();
-        } while (ValidateUtilities.checkBlank(email) == false
-                || ValidateUtilities.validateEmail(email) == false);
-        do {
-            System.out.println("Nhap Mat Khau: ");
-            pass = ScannerUtilities.getString();
-        } while (ValidateUtilities.checkBlank(pass) == false);
         try {
             Statement statement = DAO.getConnection().createStatement();
+            do {
+                System.out.println("Nhap Ho va Ten: ");
+                name = ScannerUtilities.getString();
+            } while (ValidateUtilities.checkBlank(name) == false || ValidateUtilities.checkExistance(name) == false);
+            do {
+                System.out.println("Nhap Email: ");
+                email = ScannerUtilities.getString();
+            } while (ValidateUtilities.checkBlank(email) == false
+                    || ValidateUtilities.validateEmail(email) == false);
+            do {
+                System.out.println("Nhap Mat Khau: ");
+                pass = ScannerUtilities.getString(5);
+            } while (ValidateUtilities.checkBlank(pass) == false);
+
             String sqlString = "INSERT INTO admin (name, email, pass) "
                     + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
             statement.execute(sqlString);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Loi khi them Admin!");
+            System.out.println("Them thanh cong");
+        } catch (Exception e) {
+            System.err.println("Loi " + e);
         }
     }
 
@@ -104,7 +103,6 @@ public class AdminsModel {
             }
             if (total % perPage == 0) {
                 totalPages = total / perPage;
-
             } else {
                 totalPages = total / perPage + 1;
             }
@@ -118,23 +116,24 @@ public class AdminsModel {
 
                 String Query = String.format("SELECT * FROM admin LIMIT %s OFFSET %s;", perPage, offset);
                 ResultSet results;
-                String leftAlignFormat = "| %-10s | %-30s | %-20s | %-20s | %-10s | %-20s | %-20s | %n";
+                String leftAlignFormat = "| %-10s | %-30s | %-30s | %-20s | %-10s | %-20s | %-20s | %n";
                 System.out.println("Danh Sach Admin");
-                System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 System.out.format(leftAlignFormat, "ID", "Name", "Email", "Password", "Status", "Created at", "Updated at");
-                System.out.format("--------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 try {
                     results = DAO.getConnection().createStatement().executeQuery(Query);
                     while (results.next()) {
-                        System.out.printf(leftAlignFormat, rs.getString("id"),
-                                rs.getString("name"), rs.getString("email"),
-                                rs.getString("pass"), rs.getString("status"),
-                                rs.getString("created_at"), rs.getString("updated_at"));
+                        System.out.printf(leftAlignFormat, results.getString("id"),
+                                results.getString("name"), results.getString("email"),
+                                results.getString("pass"), results.getString("status"),
+                                results.getString("created_at"), results.getString("updated_at"));
                     }
                     results.first();
                 } catch (SQLException ex) {
                     System.err.println("Có lỗi xảy ra! " + ex);
                 }
+                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 continueBoolean = ProductsViews.continueBoolean();
             }
         }
@@ -142,59 +141,53 @@ public class AdminsModel {
 
     public static void delete() {
         int id;
+        while (true) {
+            System.out.println("Nhap ID Admin muon xoa: ");
+            id = ScannerUtilities.getInt();
+            if (id == SessionAmin.getId()) {
+                System.err.println("Bạn không thể xóa chính mình!");
+                return;
+            }
+            try {
+                Statement statement = DAO.getConnection().createStatement();
+                String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
+                ResultSet rs = statement.executeQuery(sqlString1);
+                if (rs.next() == false) {
+                    System.out.println("Khong co ID nhu tren!");
+                } else {
+                    String choice = "";
+                    boolean loop = true;
+                    System.out.println("-------------------------");
+                    System.out.println("----ID: " + rs.getString("id"));
+                    System.out.println("----Ho va Ten: " + rs.getString("name"));
+                    System.out.println("----Email: " + rs.getString("email"));
+                    System.out.println("----Mat Khau: " + rs.getString("pass"));
+                    System.out.println("----Tinh Trang: " + rs.getString("status"));
+                    System.out.println("----Ngay Tao: " + rs.getString("created_at"));
+                    System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
+                    System.out.println("-------------------------");
 
-        System.out.println("Nhap ID Admin muon xoa: ");
-        id = ScannerUtilities.getInt();
-        if (id == SessionAmin.getId()) {
-            System.err.println("Bạn không thể xóa chính mình!");
-            return;
-        }
-        try {
-            Statement statement = DAO.getConnection().createStatement();
-            String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
-            ResultSet rs = statement.executeQuery(sqlString1);
-            if (rs.next() == false) {
-                System.out.println("Khong co ID nhu tren!");
-            } else {
-
-                String choice = "";
-                boolean loop = true;
-
-                System.out.println("-------------------------");
-                System.out.println("----ID: " + rs.getString("id"));
-                System.out.println("----Ho va Ten: " + rs.getString("name"));
-                System.out.println("----Email: " + rs.getString("email"));
-                System.out.println("----Mat Khau: " + rs.getString("pass"));
-                System.out.println("----Tinh Trang: " + rs.getString("status"));
-                System.out.println("----Ngay Tao: " + rs.getString("created_at"));
-                System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
-                System.out.println("-------------------------");
-
-                while (true) {
                     System.out.println("------------------------------------------");
-                    System.out.print("Ban muon tiep tuc khong? (yes/no): ");
+                    System.out.print("Ban muon xoa khong? (y/n): ");
                     choice = new Scanner(System.in).nextLine();
                     if (!"yYnN".contains(choice)) {
                         System.out.println("Ban hay nhap (Y/N)");
-                    }
-                    if (!"yY".contains(choice)) {
-                        System.out.println("Ban da thoat!");
                     } else {
                         try {
                             String sqlString = "DELETE FROM admin Where id = " + id;
                             statement.execute(sqlString);
                             System.out.println("Xoa thanh cong Admin!");
-                            break;
                         } catch (Exception e) {
                             System.out.println("Loi Them Admin!");
                         }
                     }
-
+                    if (ProductsViews.continueBoolean() == false) {
+                        break;
+                    }
                 }
-
+            } catch (Exception e) {
+                System.out.println("Error!");
             }
-        } catch (Exception e) {
-            System.out.println("Error!");
         }
     }
 
