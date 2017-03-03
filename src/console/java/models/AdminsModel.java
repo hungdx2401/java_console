@@ -44,11 +44,11 @@ public class AdminsModel {
 		String status = "";
 
 		System.out.println("Nhap Ho va Ten: ");
-		name = ScannerUtilities.getString();
+		name = ScannerUtilities.getString(8);
 		System.out.println("Nhap Email: ");
 		email = ScannerUtilities.getString();
 		System.out.println("Nhap Mat Khau: ");
-		pass = ScannerUtilities.getString();
+		pass = ScannerUtilities.getString(5);
 		try {
 			Statement statement = DAO.getConnection().createStatement();
 			String sqlString = "INSERT INTO admin (name, email, pass) "
@@ -180,6 +180,10 @@ public class AdminsModel {
 				System.out.println("--- Tìm kiếm theo email admin ---");
 				column = "email";
 				break;
+                        case 4:
+                                System.out.println("Quay lai Menu Admin!");
+                                column = "";
+                                break;
 		}
 		String strQuery = "SELECT * FROM admin WHERE " + column + " LIKE '%"
 			+ keyword + "%';";
