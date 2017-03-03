@@ -8,6 +8,7 @@ package console.java.views;
 import console.java.controllers.ProductsController;
 import console.java.entities.Product;
 import console.java.utilities.ScannerUtilities;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -87,8 +88,9 @@ public class ProductsViews {
 
     /**
      * Hàm này hiện menu chính để thực hiện các thao tác với sản phẩm
+     * @throws java.sql.SQLException
      */
-    public static void productsMenu() {
+    public static void productsMenu() throws SQLException {
         while (true) {
             System.out.println("------------------------------------");
             System.out.println("1.Them moi san pham");
@@ -126,5 +128,4 @@ public class ProductsViews {
             }
         }
     }
-
 }
