@@ -6,6 +6,7 @@
 package console.java.main;
 
 import console.java.controllers.AdminsController;
+import java.sql.SQLException;
 
 /**
  *
@@ -16,7 +17,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         AdminsController.loginAdmin();
     }
 }
