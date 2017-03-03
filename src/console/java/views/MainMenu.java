@@ -6,6 +6,7 @@
 package console.java.views;
 
 import console.java.utilities.ScannerUtilities;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,7 +14,7 @@ import console.java.utilities.ScannerUtilities;
  */
 public class MainMenu {
 
-    public static void mainMenu() {
+    public static void mainMenu() throws SQLException {
         while (true) {
             System.out.println("-----------------------------------------");
             System.out.println("--Phan mem quan ly san pham va don hang--");

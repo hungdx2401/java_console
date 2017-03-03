@@ -136,6 +136,10 @@ public class AdminsModel {
 
 		System.out.println("Nhap ID Admin muon xoa: ");
 		id = ScannerUtilities.getInt();
+		if (id == SessionAmin.getId()) {
+			System.err.println("Bạn không thể xóa chính mình!");
+			return;
+		}
 		try {
 			Statement statement = DAO.getConnection().createStatement();
 			String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
@@ -193,9 +197,12 @@ public class AdminsModel {
 			ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
 			while (rs.next()) {
 				++count;
+				SessionAmin.setId(rs.getInt("id"));
+				SessionAmin.setName(rs.getString("name"));
+				SessionAmin.setEmail(rs.getString("email"));
 			}
 			if (count > 0) {
-				System.out.println("Dang nhap thanh cong.");
+				System.out.println("Đăng nhập thành công.");
 			} else {
 				System.out.println("Thông tin không chính xác!");
 				System.out.println("-----------------------------------");
@@ -207,7 +214,7 @@ public class AdminsModel {
 					System.exit(0);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			System.out.println("Loi kiem tra Admin");
 		}
 		return count;
