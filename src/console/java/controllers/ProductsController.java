@@ -216,7 +216,7 @@ public class ProductsController {
 				totalPages = total / perPage + 1;
 			}
 			// Hiển thị tổng số trang
-			System.out.printf("Bạn có [%d] trang để hiển thị (mỗi trang [%d] sản phẩm)\n", totalPages, perPage);
+			System.out.printf("Bạn có [%d] trang để hiển thị!\n", totalPages);
 			boolean continueBoolean = true;
 			while (continueBoolean) {
 				System.out.print("Bạn muốn xem trang mấy? ");

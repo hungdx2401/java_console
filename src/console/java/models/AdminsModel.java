@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import console.java.utilities.ScannerUtilities;
+import console.java.views.ProductsViews;
 
 /**
  *
@@ -21,12 +22,12 @@ public class AdminsModel {
 	public static void update(Admin admin) {
 		try {
 			String updateQuery = "UPDATE admin SET name='%s'"
-				+ ",email='%s',pass='%s',updated_at=NOW() "
-				+ "WHERE id =" + admin.getId();
+				   + ",email='%s',pass='%s',updated_at=NOW() "
+				   + "WHERE id =" + admin.getId();
 			String update = String.format(updateQuery,
-				admin.getName(),
-				admin.getEmail(),
-				admin.getPassword());
+				   admin.getName(),
+				   admin.getEmail(),
+				   admin.getPassword());
 			Statement stt = DAO.getConnection().createStatement();
 			stt.execute(update);
 			System.out.println("Update thanh cong !!!");
@@ -52,7 +53,7 @@ public class AdminsModel {
 		try {
 			Statement statement = DAO.getConnection().createStatement();
 			String sqlString = "INSERT INTO admin (name, email, pass) "
-				+ "VALUES('" + name + "', '" + email + "', '" + pass + "')";
+				   + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
 			statement.execute(sqlString);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,25 +62,72 @@ public class AdminsModel {
 	}
 
 	public static void getAllAdmin() {
-		System.out.println("_________Danh Sach Admin_________");
+		ResultSet rs;
+		// LẤY Tổng bản ghi
+		int total;
 		try {
-			Statement statement = DAO.getConnection().createStatement();
-			String sqlString = "SELECT * FROM admin";
-			ResultSet rs = statement.executeQuery(sqlString);
-
-			while (rs.next()) {
-				System.out.println("-------------------------");
-				System.out.println("----ID: " + rs.getString("id"));
-				System.out.println("----Ho va Ten: " + rs.getString("name"));
-				System.out.println("----Email: " + rs.getString("email"));
-				System.out.println("----Mat Khau: " + rs.getString("pass"));
-				System.out.println("----Tinh Trang: " + rs.getString("status"));
-				System.out.println("----Ngay Tao: " + rs.getString("created_at"));
-				System.out.println("----Ngay Sua: " + rs.getString("updated_at"));
-				System.out.println("-------------------------");
+			rs = DAO.getConnection().createStatement().executeQuery("select count(*) from admin");
+			rs.next();
+			total = rs.getInt(1);
+		} catch (SQLException ex) {
+			System.err.println("Có lỗi! " + ex);
+			return;
+		}
+		// NHẬP Số bản ghi mỗi trang
+		int perPage;
+		// TÍNH Số trang theo perPage
+		int totalPages;
+		// offset
+		int offset;
+		// strQuery
+		String strQuery;
+		// Nhập trang muốn xem
+		int pageNumber;
+		Admin admin;
+		if (total == 0) {
+			System.out.println("Không có dữ liệu!");
+		} else {
+			System.out.println("Bạn muốn xem bao nhiêu tài khoản / mỗi trang?");
+			perPage = ScannerUtilities.getInt();
+			if (perPage == 0) {
+				System.err.println("0 tài khoản mỗi trang!");
+				System.err.println("...quay lại");
+				return;
 			}
-		} catch (Exception e) {
-			System.out.println("Loi Hien Thi Admin!");
+			if (total % perPage == 0) {
+				totalPages = total / perPage;
+
+			} else {
+				totalPages = total / perPage + 1;
+			}
+			// Hiển thị tổng số trang
+			System.out.printf("Bạn có [%d] trang để hiển thị\n", totalPages);
+			boolean continueBoolean = true;
+			while (continueBoolean) {
+				System.out.print("Bạn muốn xem trang mấy? ");
+				pageNumber = ScannerUtilities.getInt(1, totalPages);
+				offset = (pageNumber - 1) * perPage;
+
+				String Query = String.format("SELECT * FROM admin LIMIT %s OFFSET %s;", perPage, offset);
+				ResultSet results;
+				try {
+					results = DAO.getConnection().createStatement().executeQuery(Query);
+					while (results.next()) {
+						System.out.println("-------------------------");
+						System.out.println("----ID: " + results.getString("id"));
+						System.out.println("----Ho va Ten: " + results.getString("name"));
+						System.out.println("----Email: " + results.getString("email"));
+						System.out.println("----Mat Khau: " + results.getString("pass"));
+						System.out.println("----Tinh Trang: " + results.getString("status"));
+						System.out.println("----Ngay Tao: " + results.getString("created_at"));
+						System.out.println("----Ngay Sua: " + results.getString("updated_at"));
+					}
+					results.first();
+				} catch (SQLException ex) {
+					System.err.println("Có lỗi xảy ra! " + ex);
+				}
+				continueBoolean = ProductsViews.continueBoolean();
+			}
 		}
 	}
 
@@ -154,7 +202,7 @@ public class AdminsModel {
 				System.out.println("Chọn 1: Đăng nhập lại");
 				System.out.println("Chọn 2: Đóng chương trình");
 				System.out.println("-----------------------------------");
-				int choice = ScannerUtilities.choiceInput(1,2);
+				int choice = ScannerUtilities.choiceInput(1, 2);
 				if (choice == 2) {
 					System.exit(0);
 				}
@@ -180,13 +228,13 @@ public class AdminsModel {
 				System.out.println("--- Tìm kiếm theo email admin ---");
 				column = "email";
 				break;
-                        case 4:
-                                System.out.println("Quay lai Menu Admin!");
-                                column = "";
-                                break;
+			case 4:
+				System.out.println("Quay lai Menu Admin!");
+				column = "";
+				break;
 		}
 		String strQuery = "SELECT * FROM admin WHERE " + column + " LIKE '%"
-			+ keyword + "%';";
+			   + keyword + "%';";
 		ResultSet rs;
 		try {
 			rs = DAO.getConnection().createStatement().executeQuery(strQuery);
