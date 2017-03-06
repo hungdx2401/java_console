@@ -115,7 +115,7 @@ public class ProductsViews {
                     ProductsController.searchProduct();
                     break;
                 case 5:
-                    System.out.println("Đang chờ hoàn thiện...");
+                    ProductsController.productsDelete();
                     break;
                 case 6:
                     break;
