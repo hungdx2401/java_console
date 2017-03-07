@@ -176,17 +176,21 @@ public class AdminsModel {
                     System.out.println("-------------------------");
 
                     System.out.println("------------------------------------------");
-                    System.out.print("Ban muon xoa khong? (y/n): ");
-                    choice = new Scanner(System.in).nextLine();
-                    if (!"yYnN".contains(choice)) {
-                        System.out.println("Ban hay nhap (Y/N)");
-                    } else {
-                        try {
-                            String sqlString = "DELETE FROM admin Where id = " + id;
-                            statement.execute(sqlString);
-                            System.out.println("Xoa thanh cong Admin!");
-                        } catch (Exception e) {
-                            System.out.println("Loi Them Admin!");
+                    if (ProductsViews.continueDelete() == true) {
+                        choice = new Scanner(System.in).nextLine();
+
+                        switch (choice) {
+                            case "y":
+                                try {
+                                    String sqlString = "DELETE FROM admin Where id = " + id;
+                                    statement.execute(sqlString);
+                                    System.out.println("Xoa thanh cong Admin!");
+                                } catch (Exception e) {
+                                    System.out.println("Loi Them Admin!");
+                                }
+                                break;
+                            case "n":
+                                break;
                         }
                     }
                     if (ProductsViews.continueBoolean() == false) {
@@ -277,8 +281,8 @@ public class AdminsModel {
             searchedAdmins.add(rs.getInt("id"));
             searchedAdmins.add(rs.getString("name"));
             searchedAdmins.add(rs.getString("email"));
-            System.out.printf(leftAlignFormat,searchedAdmins.get(0),
-                    searchedAdmins.get(1),searchedAdmins.get(2));
+            System.out.printf(leftAlignFormat, searchedAdmins.get(0),
+                    searchedAdmins.get(1), searchedAdmins.get(2));
         } catch (SQLException ex) {
             System.err.println("Lỗi gì đó! " + ex);
         }

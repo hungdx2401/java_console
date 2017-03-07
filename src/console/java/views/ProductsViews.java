@@ -66,6 +66,23 @@ public class ProductsViews {
         }
         return "yY".contains(choice);
     }
+    
+    public static boolean continueDelete() {
+        String choice = "";
+        boolean loop = true;
+
+        while (true) {
+            System.out.println("------------------------------------------");
+            System.out.print("Bạn có muốn xóa không? (y/n): ");
+            choice = new Scanner(System.in).nextLine();
+            if (!"yYnN".contains(choice) || choice.isEmpty()) {
+                System.err.println("Vui lòng chỉ nhập 'y' hoặc 'n'");
+            } else {
+                break;
+            }
+        }
+        return "yY".contains(choice);
+    }
 
     public static boolean agreementBoolean() {
         String choice = "";
