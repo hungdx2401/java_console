@@ -27,10 +27,11 @@ public class AdminsController {
 
         ResultSet rs;
         Admin admin;
-        int count = 0;
+        
         boolean continueBoolean = true;
 
         while (continueBoolean) {
+            int count = 0;
             AdminViews.searchOption();
             int option = ScannerUtilities.choiceInput(1, 2, 3, 4);
 	     if (option == 4) {
@@ -42,14 +43,14 @@ public class AdminsController {
             try {
                 while (rs.next()) {
                     admin = AdminsModel.getAdminFromResultSet(rs);
-                    AdminViews.printAdmin(admin);
+//                    AdminViews.printAdmin(admin);
                     ++count;
                 }
             } catch (SQLException ex) {
                 System.err.println("Co loi xay ra! " + ex);
             }
             if (count == 0) {
-                System.out.println("Khong tim thay san pham!");
+                System.out.println("Khong tim thay admin nao!");
             } else {
                 System.out.println("Tim thay " + count + " Admin.");
             }
@@ -142,7 +143,7 @@ public class AdminsController {
         return true;
     }
 
-    public static void loginAdmin() throws SQLException {
+    public static void loginAdmin() throws Exception {
         while (true) {
             System.out.println("Name Admin:");
             String name = ScannerUtilities.getString(1);

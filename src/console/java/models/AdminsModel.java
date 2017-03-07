@@ -13,6 +13,7 @@ import java.util.Scanner;
 import console.java.utilities.ScannerUtilities;
 import console.java.utilities.ValidateUtilities;
 import console.java.views.ProductsViews;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,7 +38,7 @@ public class AdminsModel {
         }
     }
 
-    public static void insert() throws Exception{
+    public static void insert() throws Exception {
         String id = "";
         String name = "";
         String email = "";
@@ -124,9 +125,17 @@ public class AdminsModel {
                 try {
                     results = DAO.getConnection().createStatement().executeQuery(Query);
                     while (results.next()) {
-                        System.out.printf(leftAlignFormat, results.getString("id"),
-                                results.getString("name"), results.getString("email"),results.getString("pass"),
-                                results.getString("created_at"), results.getString("updated_at"));
+                        ArrayList adminsList = new ArrayList();
+                        adminsList.add(results.getString("id"));
+                        adminsList.add(results.getString("name"));
+                        adminsList.add(results.getString("email"));
+                        adminsList.add(results.getString("pass"));
+                        adminsList.add(results.getString("created_at"));
+                        adminsList.add(results.getString("updated_at"));
+                        System.out.printf(leftAlignFormat, adminsList.get(0),
+                                adminsList.get(1), adminsList.get(2),
+                                adminsList.get(3), adminsList.get(4),
+                                adminsList.get(5));
                     }
                     results.first();
                 } catch (SQLException ex) {
@@ -225,7 +234,7 @@ public class AdminsModel {
         String column;
         switch (option) {
             case 1:
-                System.out.println("--- Tìm kiếm theo mã admin ---");
+                System.out.println("--- Tìm kiếm theo id admin ---");
                 column = "id";
                 break;
             case 2:
@@ -255,13 +264,25 @@ public class AdminsModel {
 
     public static Admin getAdminFromResultSet(ResultSet rs) {
         Admin admin = new Admin();
+        String leftAlignFormat = "| %-10s | %-30s | %-30s | %n";
+        System.out.println("Danh Sach Admin");
+        System.out.format("--------------------------------------------------------------------------------%n");
+        System.out.format(leftAlignFormat, "ID", "Ten", "Email");
+        System.out.format("--------------------------------------------------------------------------------%n");
         try {
-            admin.setId(rs.getInt("id"));
-            admin.setName(rs.getString("name"));
-            admin.setEmail(rs.getString("email"));
+//            admin.setId(rs.getInt("id"));
+//            admin.setName(rs.getString("name"));
+//            admin.setEmail(rs.getString("email"));
+            ArrayList searchedAdmins = new ArrayList();
+            searchedAdmins.add(rs.getInt("id"));
+            searchedAdmins.add(rs.getString("name"));
+            searchedAdmins.add(rs.getString("email"));
+            System.out.printf(leftAlignFormat,searchedAdmins.get(0),
+                    searchedAdmins.get(1),searchedAdmins.get(2));
         } catch (SQLException ex) {
             System.err.println("Lỗi gì đó! " + ex);
         }
+        System.out.format("--------------------------------------------------------------------------------%n");
         return admin;
     }
 }

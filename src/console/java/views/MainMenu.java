@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class MainMenu {
 
-    public static void mainMenu() throws SQLException {
+    public static void mainMenu() throws SQLException, Exception {
         while (true) {
             System.out.println("-----------------------------------------");
             System.out.println("--Phan mem quan ly san pham va don hang--");
