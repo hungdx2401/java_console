@@ -37,7 +37,7 @@ public class AdminsModel {
         }
     }
 
-    public static void insert() {
+    public static void insert() throws Exception{
         String id = "";
         String name = "";
         String email = "";
@@ -48,7 +48,7 @@ public class AdminsModel {
             do {
                 System.out.println("Nhap Ho va Ten: ");
                 name = ScannerUtilities.getString();
-            } while (ValidateUtilities.checkBlank(name) == false || ValidateUtilities.checkExistance(name) == false);
+            } while (ValidateUtilities.checkBlank(name) == false || ValidateUtilities.checkExistanceAdmin(name) == false);
             do {
                 System.out.println("Nhap Email: ");
                 email = ScannerUtilities.getString();
@@ -116,24 +116,23 @@ public class AdminsModel {
 
                 String Query = String.format("SELECT * FROM admin LIMIT %s OFFSET %s;", perPage, offset);
                 ResultSet results;
-                String leftAlignFormat = "| %-10s | %-30s | %-30s | %-20s | %-10s | %-20s | %-20s | %n";
+                String leftAlignFormat = "| %-10s | %-30s | %-30s | %-20s | %-20s | %-20s | %n";
                 System.out.println("Danh Sach Admin");
-                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
-                System.out.format(leftAlignFormat, "ID", "Name", "Email", "Password", "Status", "Created at", "Updated at");
-                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format(leftAlignFormat, "ID", "Ten", "Email", "Password", "Ngay tao", "Ngay sua");
+                System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 try {
                     results = DAO.getConnection().createStatement().executeQuery(Query);
                     while (results.next()) {
                         System.out.printf(leftAlignFormat, results.getString("id"),
-                                results.getString("name"), results.getString("email"),
-                                results.getString("pass"), results.getString("status"),
+                                results.getString("name"), results.getString("email"),results.getString("pass"),
                                 results.getString("created_at"), results.getString("updated_at"));
                     }
                     results.first();
                 } catch (SQLException ex) {
                     System.err.println("Có lỗi xảy ra! " + ex);
                 }
-                System.out.format("------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format("-----------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 continueBoolean = ProductsViews.continueBoolean();
             }
         }

@@ -60,7 +60,7 @@ public class AdminViews {
         System.out.println("- Email Admin: " + admin.getEmail());
         System.out.println(""); // Dòng trống
     }
-    public static void menuAdmin() {
+    public static void menuAdmin() throws Exception {
         while (true) {
             System.out.println("----------------------------------");
             System.out.println("1.Them admin");

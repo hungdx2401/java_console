@@ -54,7 +54,7 @@ public class AdminsController {
         }
     }
 
-    public static void processInsert() {
+    public static void processInsert() throws Exception {
         AdminsModel.insert();
     }
 
@@ -105,7 +105,7 @@ public class AdminsController {
                 do {
                     System.out.println("Nhap ten moi           :");
                     newName = ScannerUtilities.getString();
-                } while (ValidateUtilities.checkExistance(newName) == false);
+                } while (ValidateUtilities.checkExistanceAdmin(newName) == false);
                 do {
                     System.out.println("Nhap email moi         :");
                     newEmail = ScannerUtilities.getString();
@@ -114,7 +114,7 @@ public class AdminsController {
                     }
                 } while (ValidateUtilities.validateEmail(newEmail) == false);
                 System.out.println("Nhap password moi      :");
-                newPassword = ScannerUtilities.getString(5);
+                newPassword = ScannerUtilities.getString();
                 //Gan gia tri cu neu de trong
                 Admin admin = new Admin();
                 if (newName.isEmpty()) {

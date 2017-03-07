@@ -86,13 +86,11 @@ public class ProducstModel {
 			pstmt.setInt(4, product.getQuantity());
 			pstmt.setFloat(5, product.getPrice());
 			pstmt.setInt(6, product.getCategoryId());
-			int rs = pstmt.executeUpdate();
-			if (rs > 0) {
-				System.out.println("Them thanh cong.");
-			}
+                        pstmt.executeUpdate();
+                        System.out.println("Them thanh cong");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Loi them san pham.");
+			System.err.println("Loi them san pham.");
 		}
 	}
 
