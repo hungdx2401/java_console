@@ -32,7 +32,10 @@ public class AdminsController {
 
         while (continueBoolean) {
             AdminViews.searchOption();
-            int option = ScannerUtilities.choiceInput(1, 2, 3);
+            int option = ScannerUtilities.choiceInput(1, 2, 3, 4);
+	     if (option == 4) {
+		  break;
+	     }
             System.out.print("Nhap vao tu khoa muon tim kiem: ");
             String keywordStr = ScannerUtilities.getString();
             rs = AdminsModel.searchAdmin(keywordStr, option);
