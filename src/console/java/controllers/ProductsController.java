@@ -194,7 +194,7 @@ public class ProductsController {
         System.out.println("Them san pham moi");
         do {
             System.out.println("Nhap ma so san pham ");
-            barCode = ScannerUtilities.getString();
+            barCode = ScannerUtilities.getString(3);
         } while (ValidateUtilities.checkBlank(barCode) == false || ValidateUtilities.checkExistanceProductsBarcode(barCode) == false);
         do {
             System.out.println("Nhap ten ");
