@@ -36,10 +36,40 @@ public class ValidateUtilities {
         return true;
     }
     //Ham kiem tra ton tai 
-    public static boolean checkExistance(String str) {
+    public static boolean checkExistanceAdmin(String str) {
         try {
             Statement statement = DAO.getConnection().createStatement();
             String sqlString1 = "SELECT * FROM admin WHERE name = '" + str + "'";
+            ResultSet rs = statement.executeQuery(sqlString1);
+            if(rs.next() == true){
+                System.out.println("Da ton tai ,vui long nhap lai !!!");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Da co loi :" + e);
+        }
+        return true;
+    }
+    
+    public static boolean checkExistanceProductsName(String str) {
+        try {
+            Statement statement = DAO.getConnection().createStatement();
+            String sqlString1 = "SELECT * FROM products WHERE name = '" + str + "'";
+            ResultSet rs = statement.executeQuery(sqlString1);
+            if(rs.next() == true){
+                System.out.println("Da ton tai ,vui long nhap lai !!!");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Da co loi :" + e);
+        }
+        return true;
+    }
+    
+    public static boolean checkExistanceProductsBarcode(String str) {
+        try {
+            Statement statement = DAO.getConnection().createStatement();
+            String sqlString1 = "SELECT * FROM products WHERE barcode = '" + str + "'";
             ResultSet rs = statement.executeQuery(sqlString1);
             if(rs.next() == true){
                 System.out.println("Da ton tai ,vui long nhap lai !!!");

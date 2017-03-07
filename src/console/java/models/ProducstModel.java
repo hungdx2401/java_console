@@ -74,27 +74,25 @@ public class ProducstModel {
         }
     }
 
-    //Model insert a new product
-    public static void productsInsert(Product product) {
-        try {
-            PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
-                    + "Insert into products(barcode,name,description,quantity"
-                    + ",price,category_id,status) values(?,?,?,?,?,?,'1')");
-            pstmt.setString(1, product.getBarCode());
-            pstmt.setString(2, product.getName());
-            pstmt.setString(3, product.getDescription());
-            pstmt.setInt(4, product.getQuantity());
-            pstmt.setFloat(5, product.getPrice());
-            pstmt.setInt(6, product.getCategoryId());
-            int rs = pstmt.executeUpdate();
-            if (rs > 0) {
-                System.out.println("Them thanh cong.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Loi them san pham.");
-        }
-    }
+	//Model insert a new product
+	public static void productsInsert(Product product) {
+		try {
+			PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
+				+ "Insert into products(barcode,name,description,quantity"
+				+ ",price,category_id,status) values(?,?,?,?,?,?,'1')");
+			pstmt.setString(1, product.getBarCode());
+			pstmt.setString(2, product.getName());
+			pstmt.setString(3, product.getDescription());
+			pstmt.setInt(4, product.getQuantity());
+			pstmt.setFloat(5, product.getPrice());
+			pstmt.setInt(6, product.getCategoryId());
+                        pstmt.executeUpdate();
+                        System.out.println("Them thanh cong");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Loi them san pham.");
+		}
+	}
 
     //Model get all products
     public static ResultSet productsPrintAll() {

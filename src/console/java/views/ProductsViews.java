@@ -24,15 +24,12 @@ public class ProductsViews {
      * @param product
      */
     public static void printProduct(Product product) {
-        System.out.println("----------------------------------------------------");
-        System.out.println("- Mã sản phẩm: " + product.getBarCode());
-        System.out.println("- Tên sản phẩm: " + product.getName());
-        System.out.println("- Mô tả sản phẩm: " + product.getDescription());
-        System.out.println("- Số lượng: " + product.getQuantity());
-        System.out.println("- Giá: " + product.getPrice());
-        System.out.println("- Loại sản phẩm: " + product.getCategoryId());
-        System.out.println("- Giảm giá: " + product.getDiscount());
-        System.out.println(""); // Dòng trống
+        String leftAlignFormat = "| %-20s | %-30s | %-60s | %-10s | %-10s | %-16s | %-10s | %n";
+        System.out.printf(leftAlignFormat, product.getBarCode(),
+                product.getName(), product.getDescription(),
+                product.getQuantity(), product.getPrice(),
+                product.getCategoryId(), product.getDiscount(),
+                product.getDiscount());
     }
 
     /**
@@ -61,7 +58,7 @@ public class ProductsViews {
             System.out.println("------------------------------------------");
             System.out.print("Bạn có muốn tiếp tục không? (y/n): ");
             choice = new Scanner(System.in).nextLine();
-            if (!"yYnN".contains(choice)||choice.isEmpty()) {
+            if (!"yYnN".contains(choice) || choice.isEmpty()) {
                 System.err.println("Vui lòng chỉ nhập 'y' hoặc 'n'");
             } else {
                 break;
@@ -69,7 +66,8 @@ public class ProductsViews {
         }
         return "yY".contains(choice);
     }
-    public static boolean agreementBoolean(){
+
+    public static boolean agreementBoolean() {
         String choice = "";
         boolean loop = true;
 
@@ -77,7 +75,7 @@ public class ProductsViews {
             System.out.println("------------------------------------------");
             System.out.print("Ban co muon xoa khong ? (y/n): ");
             choice = new Scanner(System.in).nextLine();
-            if (!"yYnN".contains(choice)||choice.isEmpty()) {
+            if (!"yYnN".contains(choice) || choice.isEmpty()) {
                 System.err.println("Vui lòng chỉ nhập 'y' hoặc 'n'");
             } else {
                 break;
@@ -88,6 +86,7 @@ public class ProductsViews {
 
     /**
      * Hàm này hiện menu chính để thực hiện các thao tác với sản phẩm
+     *
      * @throws java.sql.SQLException
      */
     public static void productsMenu() throws SQLException {

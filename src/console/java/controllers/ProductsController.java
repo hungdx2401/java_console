@@ -5,10 +5,12 @@
  */
 package console.java.controllers;
 
+import com.mysql.cj.core.util.StringUtils;
 import console.java.entities.Product;
 import console.java.models.DAO;
 import console.java.models.ProducstModel;
 import console.java.utilities.ScannerUtilities;
+import console.java.utilities.ValidateUtilities;
 import console.java.views.ProductsViews;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,6 +72,13 @@ public class ProductsController {
         String oldQuantity = "";
         String oldPrice = "";
         String oldCategoryId = "";
+        String newName = "";
+        String newQuantity = "";
+        String newDescription = "";
+        String newPrice = "";
+        float floatNewPrice = 0;
+        String newCategoryId = "";
+
         boolean continueBoolean = true;
         while (continueBoolean) {
             try {
@@ -102,16 +111,40 @@ public class ProductsController {
                 //Nhap thong tin moi cua san pham
                 System.out.println("Chu y : Neu ban khong muon sua ,"
                         + "hay de trong va tiep tuc !!!");
-                System.out.println("Nhap ten moi           :");
-                String newName = ScannerUtilities.getString();
+                do {
+                    System.out.println("Nhap ten moi           :");
+                    newName = ScannerUtilities.getString();
+                } while (ValidateUtilities.checkExistanceProductsName(newName) == false);
                 System.out.println("Nhap mo ta moi         :");
-                String newDescription = ScannerUtilities.getString();
-                System.out.println("Nhap so luong moi      :");
-                String newQuantity = ScannerUtilities.getString();
-                System.out.println("Nhap gia moi           :");
-                String newPrice = ScannerUtilities.getString();
-                System.out.println("Nhap ma chung loai moi :");
-                String newCategoryId = ScannerUtilities.getString();
+                newDescription = ScannerUtilities.getString();
+                do {
+                    System.out.println("Nhap so luong moi (Vui long nhap so > 0):");
+                    newQuantity = ScannerUtilities.getString();
+                    if (newQuantity.isEmpty()) {
+                        break;
+                    }
+                } while (StringUtils.isStrictlyNumeric(newQuantity) == false);
+                while (true) {
+                    try {
+                        do {
+                            System.out.println("Nhap gia moi (Vui long nhap so > 0) :");
+                            newPrice = ScannerUtilities.getString();
+                            if (newPrice.isEmpty()) {
+                                break;
+                            }
+                            floatNewPrice = Float.parseFloat(newPrice);
+                        } while (floatNewPrice < 0);
+                        break;
+                    } catch (Exception e) {
+                    }
+                }
+                do {
+                    System.out.println("Nhap ma chung loai moi (Vui long nhap so > 0) :");
+                    newCategoryId = ScannerUtilities.getString();
+                    if (newCategoryId.isEmpty()) {
+                        break;
+                    }
+                } while (StringUtils.isStrictlyNumeric(newCategoryId) == false);
                 //Gan gia tri cu neu de trong
                 Product product = new Product();
                 if (newName.isEmpty()) {
@@ -149,26 +182,54 @@ public class ProductsController {
     hàm insert product lấy giá trị từ bàn phím
      */
     public static void productsInsert() {
+        String barCode = "";
+        String name = "";
+        String description = "";
+        String quantity = "";
+        String price = "";
+        float floatPrice;
+        String categoryId = "";
+        int count = 0;
+        int maxTries = 1000;
         System.out.println("Them san pham moi");
-        System.out.println("Nhap ma so san pham ");
-        String barCode = ScannerUtilities.getString();
-        System.out.println("Nhap ten ");
-        String name = ScannerUtilities.getString();
-        System.out.println("Nhap mo ta");
-        String description = ScannerUtilities.getString();
-        System.out.println("Nhap so luong ");
-        int quantity = ScannerUtilities.getInt();
-        System.out.println("Nhap gia ");
-        float price = ScannerUtilities.getFloat();
-        System.out.println("Nhap id chung loai ");
-        int categoryId = ScannerUtilities.getInt();
+        do {
+            System.out.println("Nhap ma so san pham ");
+            barCode = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(barCode) == false || ValidateUtilities.checkExistanceProductsBarcode(barCode) == false);
+        do {
+            System.out.println("Nhap ten ");
+            name = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(name) == false || ValidateUtilities.checkExistanceProductsName(name) == false);
+        do {
+            System.out.println("Nhap mo ta");
+            description = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(description) == false);
+        do {
+            System.out.println("Nhap so luong (Vui long nhap so > 0) ");
+            quantity = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(quantity) == false || StringUtils.isStrictlyNumeric(quantity) == false);
+        while (true) {
+            try {
+                do {
+                    System.out.println("Nhap gia (Vui long nhap so > 0)");
+                    price = ScannerUtilities.getString();
+                    floatPrice = Float.parseFloat(price);
+                } while (ValidateUtilities.checkBlank(price) == false || floatPrice < 0);
+                break;
+            } catch (Exception e) {
+            }
+        }
+        do {
+            System.out.println("Nhap id chung loai (Vui long nhap so > 0)");
+            categoryId = ScannerUtilities.getString();
+        } while (ValidateUtilities.checkBlank(categoryId) == false || StringUtils.isStrictlyNumeric(categoryId) == false);
         Product product = new Product();
         product.setBarCode(barCode);
         product.setName(name);
         product.setDescription(description);
-        product.setQuantity(quantity);
-        product.setPrice(price);
-        product.setCategoryId(categoryId);
+        product.setQuantity(Integer.parseInt(quantity));
+        product.setPrice(Float.parseFloat(price));
+        product.setCategoryId(Integer.parseInt(categoryId));
         ProducstModel.productsInsert(product);
     }
 //hàm controller print all products 
@@ -226,10 +287,16 @@ public class ProductsController {
                 offset = (pageNumber - 1) * perPage;
                 ResultSet results = ProducstModel.pagination(offset, perPage);
 
+                String leftAlignFormat = "| %-20s | %-30s | %-60s | %-10s | %-10s | %-16s | %-10s | %n";
+                System.out.println("Danh Sach Admin");
+                System.out.format("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
+                System.out.format(leftAlignFormat, "Ma so", "Ten", "Mo ta", "So luong", "Gia", "Loai san pham", "Giam gia");
+                System.out.format("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 while (results.next()) {
                     product = ProducstModel.getProductFromResultSet(results);
                     ProductsViews.printProduct(product);
                 }
+                System.out.format("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%n");
                 results.first();
                 continueBoolean = ProductsViews.continueBoolean();
             }

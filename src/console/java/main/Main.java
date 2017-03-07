@@ -13,7 +13,6 @@ import java.sql.SQLException;
  * @author DongHo
  */
 public class Main {
-
     /**
      * @param args the command line arguments
      */
