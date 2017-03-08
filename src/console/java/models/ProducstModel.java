@@ -126,7 +126,6 @@ public class ProducstModel {
             PreparedStatement statement = DAO.getConnection().prepareStatement(pstmt);
                     int rowsDeleted = statement.executeUpdate();
                     if (rowsDeleted > 0) {
-                        System.out.println("da xoa thành công");
                         System.out.println("xoa thanh cong " + rowsDeleted);
                     }
         } catch (SQLException ex) {

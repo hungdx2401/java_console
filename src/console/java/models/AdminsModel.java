@@ -207,7 +207,6 @@ public class AdminsModel {
         int count = 0;
         try {
             String checklogin = String.format("SELECT * FROM admin WHERE name = '%s' AND pass = '%s'", name, password);
-
             ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
             while (rs.next()) {
                 ++count;
