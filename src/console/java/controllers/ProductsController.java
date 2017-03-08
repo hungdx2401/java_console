@@ -31,10 +31,9 @@ public class ProductsController {
 
         ResultSet rs;
         Product product;
-        int count = 0;
         boolean continueBoolean = true;
-
         while (continueBoolean) {
+            int count = 0;
             ProductsViews.searchOption();
             int option = 0;
             while (continueBoolean) {
@@ -267,11 +266,15 @@ public class ProductsController {
         } else {
             System.out.println("Bạn muốn xem bao nhiêu sản phẩm / mỗi trang?");
             perPage = ScannerUtilities.getInt();
+            while (perPage<0) {                
+                System.out.println("Nhap so thuc");
+                perPage = ScannerUtilities.getInt();
+            }
             if (perPage == 0) {
                 System.err.println("0 sản phẩm mỗi trang!");
                 System.err.println("...quay lại");
                 return;
-            }
+            }  
             if (total % perPage == 0) {
                 totalPages = total / perPage;
 
@@ -307,10 +310,10 @@ public class ProductsController {
     public static void productsDelete() {
         ResultSet rs;
         Product product = new Product();
-        int count = 0;
         boolean continueBoolean = true;
         int option = 0;
         while (continueBoolean) {
+            int count = 0;
             ProductsViews.searchOption();
             while (continueBoolean) {
                 option = ScannerUtilities.getInt();
@@ -325,13 +328,7 @@ public class ProductsController {
             rs = ProducstModel.searchProduct(keywordName, option);
             try {
                 while (rs.next()) {
-                    product.setBarCode(rs.getString("barCode"));
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setQuantity(rs.getInt("quantity"));
-                    product.setPrice(rs.getFloat("price"));
-                    product.setDiscount(rs.getFloat("discount"));
-                    product.setCategoryId(rs.getInt("category_id"));
+                    product = ProducstModel.getProductFromResultSet(rs);
                     ProductsViews.printProduct(product);
                     ++count;
                 }
