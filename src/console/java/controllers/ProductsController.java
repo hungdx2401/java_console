@@ -267,12 +267,11 @@ public class ProductsController {
             System.out.println("Bạn muốn xem bao nhiêu sản phẩm / mỗi trang?");
             perPage = ScannerUtilities.getInt();
             while (perPage<0) {                
-                System.out.println("Nhap so thuc");
+                System.out.println("Vui lòng chọn số > 0");
                 perPage = ScannerUtilities.getInt();
             }
             if (perPage == 0) {
-                System.err.println("0 sản phẩm mỗi trang!");
-                System.err.println("...quay lại");
+                System.err.println("0 sản phẩm mỗi trang!...quay lại");
                 return;
             }  
             if (total % perPage == 0) {

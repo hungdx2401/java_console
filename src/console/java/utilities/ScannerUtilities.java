@@ -26,7 +26,7 @@ public class ScannerUtilities {
 				inputInt = new Scanner(System.in).nextInt();
 				break;
 			} catch (Exception e) {
-				System.err.println("Vui long nhap so! ");
+				System.err.println("Vui lòng chỉ nhập số nguyên! ");
 			}
 		}
 		return inputInt;
