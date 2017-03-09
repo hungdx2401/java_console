@@ -8,6 +8,7 @@ package console.java.views;
 import console.java.controllers.ProductsController;
 import console.java.entities.Product;
 import console.java.utilities.ScannerUtilities;
+import console.java.utilities.StringUtilities;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -26,11 +27,12 @@ public class ProductsViews {
     public static void printProduct(Product product) {
         String leftAlignFormat = "| %-20s | %-30s | %-60s | %-10s | %-10s | %-16s | %-10s | %n";
         System.out.printf(leftAlignFormat, product.getBarCode(),
-                product.getName(), product.getDescription(),
+                StringUtilities.truncate(product.getName(), 25), StringUtilities.truncate(product.getDescription(), 50),
                 product.getQuantity(), product.getPrice(),
                 product.getCategoryId(), product.getDiscount(),
                 product.getDiscount());
     }
+    
 
     /**
      * Hàm này thực hiện việc in thông báo để bắt người dùng nhập vào tùy chọn
