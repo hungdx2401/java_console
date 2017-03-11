@@ -119,6 +119,10 @@ public class AdminsController {
                 } while (ValidateUtilities.validateEmail(newEmail) == false);
                 System.out.println("Nhap password moi      :");
                 newPassword = ScannerUtilities.getString();
+                if(!newPassword.isEmpty()){
+                    System.err.println("Vui long nhap lai toi thieu 5 ky tu !");
+                    newPassword = ScannerUtilities.getString(5);
+                }
                 //Gan gia tri cu neu de trong
                 Admin admin = new Admin();
                 if (newName.isEmpty()) {
