@@ -79,7 +79,7 @@ public class ProducstModel {
 		try {
 			PreparedStatement pstmt = DAO.getConnection().prepareStatement(""
 				+ "Insert into products(barcode,name,description,quantity"
-				+ ",price,category_id,status) values(?,?,?,?,?,?,'1')");
+				+ ",price,category_id) values(?,?,?,?,?,?)");
 			pstmt.setString(1, product.getBarCode());
 			pstmt.setString(2, product.getName());
 			pstmt.setString(3, product.getDescription());
