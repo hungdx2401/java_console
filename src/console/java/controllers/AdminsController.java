@@ -109,7 +109,7 @@ public class AdminsController {
                 do {
                     System.out.println("Nhap ten moi           :");
                     newName = ScannerUtilities.getString();
-                } while (ValidateUtilities.checkExistanceAdmin(newName) == false);
+                } while (ValidateUtilities.checkExistanceAdmin(newName) == false || newName.matches("^[a-zA-z0-9]+$") == false || newName.contains(" "));
                 do {
                     System.out.println("Nhap email moi         :");
                     newEmail = ScannerUtilities.getString();
