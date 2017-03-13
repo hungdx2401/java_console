@@ -85,7 +85,7 @@ public class AdminsController {
                 int id = ScannerUtilities.getInt();
                 Statement stt = DAO.getConnection().createStatement();
                 String sql = String.format("SELECT * "
-                        + "FROM admin WHERE id = '%d'", id);
+                        + "FROM admins WHERE id = '%d'", id);
                 ResultSet rs = stt.executeQuery(sql);
                 //In ra thong tin san pham truoc khi sua
                 while (rs.next()) {

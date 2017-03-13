@@ -23,7 +23,7 @@ public class AdminsModel {
 
      public static void update(Admin admin) {
 	  try {
-	       String updateQuery = "UPDATE admin SET name='%s'"
+	       String updateQuery = "UPDATE admins SET name='%s'"
 		       + ",email='%s',pass='%s',updated_at=NOW() "
 		       + "WHERE id =" + admin.getId();
 	       String update = String.format(updateQuery,
@@ -60,7 +60,7 @@ public class AdminsModel {
 		    pass = ScannerUtilities.getString(5);
 	       } while (ValidateUtilities.checkBlank(pass) == false);
 
-	       String sqlString = "INSERT INTO admin (name, email, pass) "
+	       String sqlString = "INSERT INTO admins (name, email, pass) "
 		       + "VALUES('" + name + "', '" + email + "', '" + pass + "')";
 	       statement.execute(sqlString);
 	       System.out.println("Them thanh cong");
@@ -74,7 +74,7 @@ public class AdminsModel {
 	  // LẤY Tổng bản ghi
 	  int total;
 	  try {
-	       rs = DAO.getConnection().createStatement().executeQuery("select count(*) from admin");
+	       rs = DAO.getConnection().createStatement().executeQuery("select count(*) from admins");
 	       rs.next();
 	       total = rs.getInt(1);
 	  } catch (SQLException ex) {
@@ -118,7 +118,7 @@ public class AdminsModel {
 		    pageNumber = ScannerUtilities.getInt(1, totalPages);
 		    offset = (pageNumber - 1) * perPage;
 
-		    String Query = String.format("SELECT * FROM admin LIMIT %s OFFSET %s;", perPage, offset);
+		    String Query = String.format("SELECT * FROM admins LIMIT %s OFFSET %s;", perPage, offset);
 		    ResultSet results;
 		    String leftAlignFormat = "| %-10s | %-30s | %-30s | %-20s | %-20s | %-20s | %n";
 		    System.out.println("Danh Sach Admin");
@@ -161,7 +161,7 @@ public class AdminsModel {
 	       }
 	       try {
 		    Statement statement = DAO.getConnection().createStatement();
-		    String sqlString1 = "SELECT * FROM admin Where id = '" + id + "'";
+		    String sqlString1 = "SELECT * FROM admins Where id = '" + id + "'";
 		    ResultSet rs = statement.executeQuery(sqlString1);
 		    if (rs.next() == false) {
 			 System.out.println("Khong co ID nhu tren!");
@@ -188,7 +188,7 @@ public class AdminsModel {
 			 }
 			 if ("yY".contains(choice)) {
 			      try {
-				   String sqlString = "DELETE FROM admin Where id = " + id;
+				   String sqlString = "DELETE FROM admins Where id = " + id;
 				   statement.execute(sqlString);
 				   System.out.println("Xoa thanh cong Admin!");
 			      } catch (Exception e) {
@@ -208,7 +208,7 @@ public class AdminsModel {
      public static int loginAdmin(String name, String password) {
 	  int count = 0;
 	  try {
-	       String checklogin = String.format("SELECT * FROM admin WHERE name = '%s' AND pass = '%s'", name, password);
+	       String checklogin = String.format("SELECT * FROM admins WHERE name = '%s' AND pass = '%s'", name, password);
 	       ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
 	       while (rs.next()) {
 		    ++count;
@@ -255,7 +255,7 @@ public class AdminsModel {
 		    column = "";
 		    break;
 	  }
-	  String strQuery = "SELECT * FROM admin WHERE " + column + " LIKE '%"
+	  String strQuery = "SELECT * FROM admins WHERE " + column + " LIKE '%"
 		  + keyword + "%';";
 	  ResultSet rs;
 	  try {
