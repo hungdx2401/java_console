@@ -6,7 +6,6 @@
 package console.java.main;
 
 import console.java.controllers.AdminsController;
-import java.sql.SQLException;
 
 /**
  *

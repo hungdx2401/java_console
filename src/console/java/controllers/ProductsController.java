@@ -71,6 +71,7 @@ public class ProductsController {
         String oldQuantity = "";
         String oldPrice = "";
         String oldCategoryId = "";
+        String barCode;
         String newName = "";
         String newQuantity = "";
         String newDescription = "";
@@ -82,8 +83,10 @@ public class ProductsController {
         while (continueBoolean) {
             try {
                 int count = 0;
-                System.out.println("Nhap ma so : ");
-                String barCode = ScannerUtilities.getString();
+                do {
+                    System.out.println("Nhap ma so : ");
+                    barCode = ScannerUtilities.getString();
+                } while (ValidateUtilities.validateStringUpdate(barCode) == false);
                 Statement stt = DAO.getConnection().createStatement();
                 String sql = String.format("SELECT * FROM products "
                         + "WHERE barcode = '%s'", barCode);
@@ -113,37 +116,23 @@ public class ProductsController {
                 do {
                     System.out.println("Nhap ten moi           :");
                     newName = ScannerUtilities.getString();
-                } while (ValidateUtilities.checkExistanceProductsName(newName) == false);
-                System.out.println("Nhap mo ta moi         :");
-                newDescription = ScannerUtilities.getString();
+                } while (ValidateUtilities.checkExistanceProductsName(newName) == false || ValidateUtilities.validateStringUpdate(newName) == false);
+                do {
+                    System.out.println("Nhap mo ta moi         :");
+                    newDescription = ScannerUtilities.getString();
+                } while (ValidateUtilities.validateStringUpdate(newDescription) == false);
                 do {
                     System.out.println("Nhap so luong moi (Vui long nhap so > 0):");
                     newQuantity = ScannerUtilities.getString();
-                    if (newQuantity.isEmpty()) {
-                        break;
-                    }
-                } while (StringUtils.isStrictlyNumeric(newQuantity) == false);
-                while (true) {
-                    try {
-                        do {
-                            System.out.println("Nhap gia moi (Vui long nhap so > 0) :");
-                            newPrice = ScannerUtilities.getString();
-                            if (newPrice.isEmpty()) {
-                                break;
-                            }
-                            floatNewPrice = Float.parseFloat(newPrice);
-                        } while (floatNewPrice < 0);
-                        break;
-                    } catch (Exception e) {
-                    }
-                }
+                } while (ValidateUtilities.validateNumberUpdate(newQuantity) == false);
+                do {
+                    System.out.println("Nhap gia moi (Vui long nhap so > 0) :");
+                    newPrice = ScannerUtilities.getString();
+                } while (ValidateUtilities.validateFloatUpdate(newPrice) == false || Float.parseFloat(newPrice) < 0);
                 do {
                     System.out.println("Nhap ma chung loai moi (Vui long nhap so > 0) :");
                     newCategoryId = ScannerUtilities.getString();
-                    if (newCategoryId.isEmpty()) {
-                        break;
-                    }
-                } while (StringUtils.isStrictlyNumeric(newCategoryId) == false);
+                } while (ValidateUtilities.validateNumberUpdate(newCategoryId) == false);
                 //Gan gia tri cu neu de trong
                 Product product = new Product();
                 if (newName.isEmpty()) {
@@ -266,14 +255,14 @@ public class ProductsController {
         } else {
             System.out.println("Bạn muốn xem bao nhiêu sản phẩm / mỗi trang?");
             perPage = ScannerUtilities.getInt();
-            while (perPage<0) {                
+            while (perPage < 0) {
                 System.out.println("Vui lòng chọn số > 0");
                 perPage = ScannerUtilities.getInt();
             }
             if (perPage == 0) {
                 System.err.println("0 sản phẩm mỗi trang!...quay lại");
                 return;
-            }  
+            }
             if (total % perPage == 0) {
                 totalPages = total / perPage;
 
