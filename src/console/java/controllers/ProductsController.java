@@ -113,7 +113,7 @@ public class ProductsController {
                 do {
                     System.out.println("Nhap ten moi           :");
                     newName = ScannerUtilities.getString();
-                } while (ValidateUtilities.checkExistanceProductsName(newName) == false);
+                } while (ValidateUtilities.checkExistanceProductsName(newName) == false || newName.matches("^[a-zA-z0-9]+$") == false);
                 System.out.println("Nhap mo ta moi         :");
                 newDescription = ScannerUtilities.getString();
                 do {
@@ -122,7 +122,7 @@ public class ProductsController {
                     if (newQuantity.isEmpty()) {
                         break;
                     }
-                } while (StringUtils.isStrictlyNumeric(newQuantity) == false);
+                } while (StringUtils.isStrictlyNumeric(newQuantity) == false || newQuantity.contains(" "));
                 while (true) {
                     try {
                         do {
@@ -132,7 +132,7 @@ public class ProductsController {
                                 break;
                             }
                             floatNewPrice = Float.parseFloat(newPrice);
-                        } while (floatNewPrice < 0);
+                        } while (floatNewPrice < 0 || newPrice.contains(" "));
                         break;
                     } catch (Exception e) {
                     }
@@ -143,7 +143,7 @@ public class ProductsController {
                     if (newCategoryId.isEmpty()) {
                         break;
                     }
-                } while (StringUtils.isStrictlyNumeric(newCategoryId) == false);
+                } while (StringUtils.isStrictlyNumeric(newCategoryId) == false ||newCategoryId.contains(" "));
                 //Gan gia tri cu neu de trong
                 Product product = new Product();
                 if (newName.isEmpty()) {
