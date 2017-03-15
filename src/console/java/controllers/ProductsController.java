@@ -302,7 +302,7 @@ public class ProductsController {
         int option = 0;
         while (continueBoolean) {
             int count = 0;
-            ProductsViews.searchOption();
+            ProductsViews.searchOptionDelete();
             while (continueBoolean) {
                 option = ScannerUtilities.getInt();
                 if (option < 1 || option > 3) {
@@ -312,8 +312,8 @@ public class ProductsController {
                 }
             }
             System.out.print("Nhap vao tu khoa muon tim kiem de xoa : ");
-            String keywordName = ScannerUtilities.getString(3);
-            rs = ProducstModel.searchProduct(keywordName, option);
+            String keywordName = ScannerUtilities.getString(1);
+            rs = ProducstModel.searchProductStan(keywordName, option);
             try {
                 while (rs.next()) {
                     product = ProducstModel.getProductFromResultSet(rs);

@@ -53,6 +53,34 @@ public class ProducstModel {
         }
         return rs;
     }
+    // tìm với chỉ kí tự nhập vào chuẩn;
+    public static ResultSet searchProductStan(String keyword, int option) {
+        String column;
+        switch (option) {
+            case 1:
+                System.out.println("--- Tìm kiếm theo mã sản phẩm ---");
+                column = "barCode";
+                break;
+            case 2:
+                System.out.println("--- Tìm kiếm theo tên sản phẩm ---");
+                column = "name";
+                break;
+            default:
+                System.out.println("--- Tìm kiếm theo mô tả sản phẩm ---");
+                column = "description";
+                break;
+        }
+        String strQuery = "SELECT * FROM products WHERE " + column + " = '"
+                + keyword + "';";
+        ResultSet rs;
+        try {
+            rs = DAO.getConnection().createStatement().executeQuery(strQuery);
+        } catch (SQLException ex) {
+            System.err.println("Có lỗi xảy ra! " + ex);
+            return null;
+        }
+        return rs;
+    }
 
     public static void update(Product product) {
         try {
@@ -126,7 +154,7 @@ public class ProducstModel {
             PreparedStatement statement = DAO.getConnection().prepareStatement(pstmt);
                     int rowsDeleted = statement.executeUpdate();
                     if (rowsDeleted > 0) {
-                        System.out.println("xoa thanh cong " + rowsDeleted);
+                        System.out.println("xoa thanh cong " + rowsDeleted + "san pham");
                     }
         } catch (SQLException ex) {
             System.err.println("Có lỗi xảy ra! " + ex);
