@@ -11,4 +11,5 @@ package console.java.models;
  */
 public interface Table {
      public String getTable();
+     public String getUnique();
 }

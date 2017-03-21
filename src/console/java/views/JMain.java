@@ -8,10 +8,13 @@ package console.java.views;
 import console.java.controllers.JAdminController;
 import console.java.controllers.JProductController;
 import console.java.entities.Admin;
+import console.java.entities.Product;
 import console.java.models.JModel;
-import console.java.models.SessionAdmin;
+import console.java.entities.SessionAdmin;
 import console.java.utilities.JUntilities;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -88,6 +91,9 @@ public class JMain extends javax.swing.JFrame {
           errQuanity = new javax.swing.JLabel();
           errDiscount = new javax.swing.JLabel();
           errProductDescription = new javax.swing.JLabel();
+          jLabel12 = new javax.swing.JLabel();
+          txtProductPrice = new javax.swing.JTextField();
+          errProductPrice = new javax.swing.JLabel();
           btnDel1 = new javax.swing.JButton();
           btnEdit1 = new javax.swing.JButton();
           btnAdd1 = new javax.swing.JButton();
@@ -280,7 +286,7 @@ public class JMain extends javax.swing.JFrame {
                               .addComponent(showResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                          .addGroup(jPanel1Layout.createSequentialGroup()
                               .addComponent(jPanelAddNewAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                               .addComponent(jButton1)
                               .addGap(18, 18, 18)
                               .addComponent(btnAdd)
@@ -387,6 +393,11 @@ public class JMain extends javax.swing.JFrame {
           errProductDescription.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
           errProductDescription.setForeground(new java.awt.Color(255, 0, 51));
 
+          jLabel12.setText("Giá sp");
+
+          errProductPrice.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+          errProductPrice.setForeground(new java.awt.Color(255, 0, 0));
+
           javax.swing.GroupLayout jPanelAddNewAdmin1Layout = new javax.swing.GroupLayout(jPanelAddNewAdmin1);
           jPanelAddNewAdmin1.setLayout(jPanelAddNewAdmin1Layout);
           jPanelAddNewAdmin1Layout.setHorizontalGroup(
@@ -410,7 +421,7 @@ public class JMain extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtProductQuantity)))
+                                        .addComponent(txtProductQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
                               .addGap(12, 12, 12))
                          .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
                               .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,14 +432,16 @@ public class JMain extends javax.swing.JFrame {
                                              .addComponent(txtProductName, javax.swing.GroupLayout.Alignment.LEADING)
                                              .addComponent(errProductDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel11)
+                                        .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                             .addComponent(jLabel11)
+                                             .addComponent(jLabel12))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                              .addComponent(errQuanity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                             .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
-                                                  .addComponent(txtProductDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                  .addGap(0, 0, Short.MAX_VALUE))
-                                             .addComponent(errDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                             .addComponent(errDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                             .addComponent(txtProductPrice)
+                                             .addComponent(errProductPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                             .addComponent(txtProductDiscount)))
                                    .addComponent(errProductBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                               .addContainerGap())
                          .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
@@ -464,18 +477,26 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                          .addComponent(jLabel7)
                          .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
-                              .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addGap(4, 4, 4)
-                              .addComponent(errProductDescription)
+                              .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                   .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
+                                        .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                             .addComponent(jLabel12))
+                                        .addGap(4, 4, 4)
+                                        .addComponent(errProductDescription))
+                                   .addGroup(jPanelAddNewAdmin1Layout.createSequentialGroup()
+                                        .addComponent(txtProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(errProductPrice)))
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                    .addComponent(jComboBoxProductCatalogeId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                    .addComponent(jLabel9))))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(btnAddNewProduct)
                          .addComponent(jButton7))
-                    .addContainerGap())
+                    .addContainerGap(36, Short.MAX_VALUE))
           );
 
           btnDel1.setText("Xóa");
@@ -542,16 +563,16 @@ public class JMain extends javax.swing.JFrame {
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(btnSearchProduct)
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(showResultSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
+                              .addComponent(showResultSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                          .addGroup(jPanel3Layout.createSequentialGroup()
-                              .addComponent(jPanelAddNewAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                              .addComponent(jPanelAddNewAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                               .addComponent(jButton2)
-                              .addGap(18, 18, 18)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(btnAdd1)
-                              .addGap(18, 18, 18)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(btnEdit1)
-                              .addGap(18, 18, 18)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(btnDel1)))
                     .addContainerGap())
           );
@@ -569,14 +590,14 @@ public class JMain extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                         .addComponent(jPanelAddNewAdmin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                          .addGroup(jPanel3Layout.createSequentialGroup()
                               .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                    .addComponent(btnDel1)
                                    .addComponent(btnEdit1)
                                    .addComponent(btnAdd1)
                                    .addComponent(jButton2))
-                              .addGap(0, 276, Short.MAX_VALUE))
-                         .addComponent(jPanelAddNewAdmin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                              .addGap(0, 0, Short.MAX_VALUE)))
                     .addContainerGap())
           );
 
@@ -643,7 +664,8 @@ public class JMain extends javax.swing.JFrame {
 	       jPanelAddNewAdmin1.setVisible(true);
 	       // lấy thông tin ra
 	       TableModel tblModel = jTableProducts.getModel();
-//               SessionAdmin.setIdToAction(Integer.valueOf(tblModel.getValueAt(row, 0).toString()));
+	       SessionAdmin.setIdToAction(0);
+	       SessionAdmin.setStrToAction(tblModel.getValueAt(row, 0).toString());
 	       String barcode = tblModel.getValueAt(row, 0).toString();
 	       String name = tblModel.getValueAt(row, 1).toString();
 	       String description = tblModel.getValueAt(row, 2).toString();
@@ -657,6 +679,7 @@ public class JMain extends javax.swing.JFrame {
 	       txtProductDescriptionArea.setText(description);
 	       txtProductQuantity.setText(quantity);
 	       txtProductDiscount.setText(discount);
+	       txtProductPrice.setText(price);
 	       jComboBoxProductCatalogeId.setSelectedIndex(Integer.valueOf(categoryId) - 1);
 
 	  } else {
@@ -668,10 +691,15 @@ public class JMain extends javax.swing.JFrame {
 	  // TODO add your handling code here:
 	  int row = jTableProducts.getSelectedRow();
 	  if (row != -1) {
-	       String value = jTableProducts.getModel().getValueAt(row, 0).toString();
 	       if (JOptionPane.showConfirmDialog(this, "Bạn có chắc là muốn xóa?") == 0) {
-			 JUntilities.alert("Chức năng đang hoàn thiện...");
-			 return;
+		    try {
+			 SessionAdmin.setStrToAction(jTableProducts.getModel().getValueAt(row, 0).toString());
+			 JModel.delete(new Product(), -1);
+			 JProductController.loadProducts(jTableProducts);
+		    } catch (SQLException ex) {
+			 JUntilities.alert("Lỗi: " + ex);
+		    }
+		    return;
 	       }
 	  } else {
 	       JUntilities.alert("Vui lòng chọn để xóa!");
@@ -694,7 +722,80 @@ public class JMain extends javax.swing.JFrame {
 
      private void btnAddNewProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewProductActionPerformed
 	  // TODO add your handling code here:
-	  JUntilities.alert("Chức năng đang hoàn thiện...");
+	  String barcode = txtProductBarCode.getText();
+	  String name = txtProductName.getText();
+	  String description = txtProductDescriptionArea.getText();
+	  String quantity = txtProductQuantity.getText();
+	  String price = txtProductPrice.getText();
+	  String discount = txtProductDiscount.getText();
+	  int category_id = jComboBoxProductCatalogeId.getSelectedIndex();
+
+	  if (barcode.equals("")) {
+	       errProductBarCode.setText("Nhập mã của sản phẩm!");
+	       return;
+	  } else {
+	       errProductBarCode.setText("");
+	  }
+	  if (!(SessionAdmin.getIdToAction() == 0)) {
+	       if (!JModel.checkExistanceProductsBarcode(barcode)) {
+		    errProductBarCode.setText("Mã sản phẩm đã tồn tại!");
+		    return;
+	       } else {
+		    errProductBarCode.setText("");
+	       }
+	  }
+	  if (name.equals("")) {
+	       errProductName.setText("Sản phẩm phải có tên!");
+	       return;
+	  } else {
+	       errProductName.setText("");
+	  }
+	  if (description.equals("")) {
+	       errProductDescription.setText("Phải có mô tả sản phẩm!");
+	       return;
+	  } else {
+	       errProductDescription.setText("");
+	  }
+	  if (quantity.equals("")) {
+	       errQuanity.setText("Nhập số lượng sản phẩm!");
+	       return;
+	  } else {
+	       errQuanity.setText("");
+	  }
+	  if (price.equals("")) {
+	       errProductPrice.setText("Nhập giá sản phẩm!");
+	       return;
+	  } else {
+	       errProductPrice.setText("");
+	  }
+	  if (discount.equals("")) {
+	       errDiscount.setText("Nhập % giảm giá!");
+	       return;
+	  } else {
+	       errDiscount.setText("");
+	  }
+	  Product product = new Product();
+	  product.setBarCode(barcode);
+	  product.setName(name);
+	  product.setDescription(description);
+	  product.setQuantity(Integer.valueOf(quantity));
+	  product.setPrice(Integer.valueOf(price));
+	  product.setDiscount(Integer.valueOf(discount));
+	  product.setCategoryId(category_id);
+	  try {
+	       JModel.insert(product);
+	  } catch (SQLException ex) {
+	       JUntilities.alert("Lỗi: " + ex);
+	  }
+	  JProductController.loadProducts(jTableProducts);
+	  // reset
+	  txtProductBarCode.setText("");
+	  txtProductName.setText("");
+	  txtProductDescriptionArea.setText("");
+	  txtProductQuantity.setText("");
+	  txtProductPrice.setText("");
+	  txtProductDiscount.setText("");
+	  jComboBoxProductCatalogeId.setSelectedIndex(0);
      }//GEN-LAST:event_btnAddNewProductActionPerformed
 
      private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -800,7 +901,7 @@ public class JMain extends javax.swing.JFrame {
 	  admin.setEmail(txtEmail.getText());
 	  admin.setPassword(new String(txtPasswordCharArray.getPassword()));
 	  try {
-	       JModel.insert(admin, SessionAdmin.getIdToAction());
+	       JModel.insert(admin);
 	  } catch (SQLException ex) {
 	       JUntilities.alert("Lỗi: " + ex);
 	  }
@@ -869,6 +970,7 @@ public class JMain extends javax.swing.JFrame {
      private javax.swing.JLabel errProductBarCode;
      private javax.swing.JLabel errProductDescription;
      private javax.swing.JLabel errProductName;
+     private javax.swing.JLabel errProductPrice;
      private javax.swing.JLabel errQuanity;
      private javax.swing.JButton jButton1;
      private javax.swing.JButton jButton2;
@@ -880,6 +982,7 @@ public class JMain extends javax.swing.JFrame {
      private javax.swing.JLabel jLabel1;
      private javax.swing.JLabel jLabel10;
      private javax.swing.JLabel jLabel11;
+     private javax.swing.JLabel jLabel12;
      private javax.swing.JLabel jLabel2;
      private javax.swing.JLabel jLabel3;
      private javax.swing.JLabel jLabel4;
@@ -909,6 +1012,7 @@ public class JMain extends javax.swing.JFrame {
      private javax.swing.JTextArea txtProductDescriptionArea;
      private javax.swing.JTextField txtProductDiscount;
      private javax.swing.JTextField txtProductName;
+     private javax.swing.JTextField txtProductPrice;
      private javax.swing.JTextField txtProductQuantity;
      // End of variables declaration//GEN-END:variables
 }

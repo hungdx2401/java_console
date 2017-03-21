@@ -5,6 +5,7 @@
  */
 package console.java.models;
 
+import console.java.entities.SessionAdmin;
 import console.java.entities.Admin;
 import console.java.entities.Product;
 import console.java.utilities.JUntilities;
@@ -108,6 +109,7 @@ public class JModel {
 	  }
 	  return adminList;
      }
+
      public static List<Product> getAllProduct() {
 	  List<Product> productList = new ArrayList<>();
 	  ResultSet rs;
@@ -169,7 +171,7 @@ public class JModel {
       * @param id
       * @throws SQLException
       */
-     public static <T> void insert(T obj, int id) throws SQLException {
+     public static <T> void insert(T obj) throws SQLException {
 	  StringBuilder columns = new StringBuilder();
 	  StringBuilder values = new StringBuilder();
 	  StringBuilder joins = new StringBuilder();
@@ -206,10 +208,15 @@ public class JModel {
 	  if ((obj instanceof Table) && (columns.length() != 0) && (values.length() != 0)) {
 	       Table tb = (Table) obj;
 	       String table = tb.getTable();
+	       int id = SessionAdmin.getIdToAction();
+	       String str = SessionAdmin.getStrToAction();
+	       String unique = tb.getUnique();
 	       if (id < 0) {
 		    querry.append("INSERT INTO ").append(table).append(" (").append(columns).append(") VALUES(").append(values).append(");");
+	       } else if (id == 0) {
+		    querry.append("UPDATE ").append(table).append(" SET ").append(joins).append(" WHERE ").append(unique).append(" = '").append(str).append("';");
 	       } else {
-		    querry.append("UPDATE ").append(table).append(" SET ").append(joins).append(" WHERE id = '").append(id).append("';");
+		    querry.append("UPDATE ").append(table).append(" SET ").append(joins).append(" WHERE ").append(unique).append(" = '").append(id).append("';");
 	       }
 	       // Thực thi querry ở đây ....
 	       Statement stt = DAO.getConnection().createStatement();
@@ -225,10 +232,14 @@ public class JModel {
      // Model.delete(Obj);
      public static <T> void delete(T obj, int id) throws SQLException {
 	  StringBuilder querry = new StringBuilder();
-	  if ((obj instanceof Table) && (id >= 0)) {
+	  if (obj instanceof Table) {
 	       Table tb = (Table) obj;
 	       String table = tb.getTable();
-	       querry.append("DELETE FROM ").append(table).append(" WHERE id=").append(id);
+	       if (id > 0) {
+		    querry.append("DELETE FROM ").append(table).append(" WHERE ").append(tb.getUnique()).append("=").append(id);
+	       } else {
+		    querry.append("DELETE FROM ").append(table).append(" WHERE ").append(tb.getUnique()).append("='").append(SessionAdmin.getStrToAction()).append("';");
+	       }
 	  } else {
 	       System.err.println("Lỗi!...");
 	       JUntilities.alert("Lỗi!...");
@@ -236,6 +247,23 @@ public class JModel {
 	  Statement stt = DAO.getConnection().createStatement();
 	  stt.execute(querry.toString());
 	  JUntilities.alert("Xóa thành công!");
+     }
+
+     public static boolean checkExistanceProductsBarcode(String str) {
+	  try {
+	       Statement statement = DAO.getConnection().createStatement();
+	       String sqlString1 = "SELECT * FROM " + GlobalConfig.getPRODUCTS_TABLE() + " WHERE barcode = '" + str + "'";
+	       ResultSet rs = statement.executeQuery(sqlString1);
+	       if (rs.next() == true) {
+		    System.out.println("Da ton tai ,vui long nhap lai !!!");
+//		    JUntilities.alert("Mã sản phẩm bị trùng lặp! vui lòng chọn mã khác!");
+		    return false;
+	       }
+	  } catch (SQLException e) {
+	       System.out.println("Da co loi :" + e);
+	       JUntilities.alert("Da co loi :" + e);
+	  }
+	  return true;
      }
 
 }

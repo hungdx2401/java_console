@@ -16,9 +16,7 @@ import java.sql.SQLException;
 public class DAO {
     
     public static Connection getConnection() throws SQLException {
-        // Bị sai => String connectionString = GlobalConfig.getCONNECTION_URL_PREFIX() + GlobalConfig.getDATABASE() + GlobalConfig.getHOST() + GlobalConfig.getUSERNAME() + GlobalConfig.getPASSWORD();
         String connectionString = GlobalConfig.getCONNECTION_URL_PREFIX() + GlobalConfig.getHOST() + GlobalConfig.getDATABASE();
-        // System.out.println(connectionString);
         return DriverManager.getConnection(connectionString, GlobalConfig.getUSERNAME(), GlobalConfig.getPASSWORD());
     }
 }

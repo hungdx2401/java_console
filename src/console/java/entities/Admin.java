@@ -65,5 +65,10 @@ public class Admin implements ToArray, Table {
      public String getTable() {
 	  return GlobalConfig.getADMINS_TABLE();
      }
+
+     @Override
+     public String getUnique() {
+	  return "id";
+     }
     
 }

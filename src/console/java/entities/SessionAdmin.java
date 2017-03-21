@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package console.java.models;
+package console.java.entities;
 
 /**
  *
@@ -13,8 +13,17 @@ public final class SessionAdmin {
 
      private static int id;
      private static int idToAction;
+     private static String StrToAction;
      private static String name;
      private static String email;
+
+     public static String getStrToAction() {
+	  return StrToAction;
+     }
+
+     public static void setStrToAction(String StrToAction) {
+	  SessionAdmin.StrToAction = StrToAction;
+     }
 
      public static int getIdToAction() {
 	  return idToAction;

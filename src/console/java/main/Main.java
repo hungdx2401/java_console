@@ -5,7 +5,6 @@
  */
 package console.java.main;
 
-import console.java.controllers.AdminsController;
 import console.java.views.JAdminLogin;
 
 /**
@@ -38,10 +37,8 @@ public class Main {
         //</editor-fold>
 
 	  /* Create and display the form */
-	  java.awt.EventQueue.invokeLater(new Runnable() {
-	       public void run() {
-		    new JAdminLogin().setVisible(true);
-	       }
-	  });
+	  java.awt.EventQueue.invokeLater(() -> {
+	       new JAdminLogin().setVisible(true);
+	});
      }
 }
