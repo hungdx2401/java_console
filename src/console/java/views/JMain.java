@@ -962,11 +962,13 @@ public class JMain extends javax.swing.JFrame {
 	  //</editor-fold>
 
 	  /* Create and display the form */
-	  java.awt.EventQueue.invokeLater(new Runnable() {
-	       public void run() {
-		    new JMain().setVisible(true);
-	       }
-	  });
+//	  java.awt.EventQueue.invokeLater(new Runnable() {
+//	       public void run() {
+//		    new JMain().setVisible(true);
+//	       }
+//	  });
+	  JUntilities.alert("Bạn không thể chạy từ đây!");
+	  JUntilities.alert("Hãy bắt đầu từ file Start.java");
      }
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
