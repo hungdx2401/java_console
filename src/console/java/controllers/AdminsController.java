@@ -149,11 +149,11 @@ public class AdminsController {
 
     public static void loginAdmin() throws Exception {
         while (true) {
-            System.out.println("Name Admin:");
-            String name = ScannerUtilities.getString(1);
+            System.out.println("Email Admin:");
+            String email = ScannerUtilities.getString(1);
             System.out.println("Pass Admin:");
             String password = ScannerUtilities.getString(1);
-            int login = AdminsModel.loginAdmin(name, password);
+            int login = AdminsModel.loginAdmin(email, password);
             if (login > 0) {
                 break;
             }

@@ -9,7 +9,7 @@ package console.java.models;
  *
  * @author DongHo
  */
-class SessionAmin {
+public class SessionAmin {
 
 	private static int id;
 	private static String name;
