@@ -91,6 +91,11 @@ public class JMain extends javax.swing.JFrame {
           jScrollPane1.setViewportView(jTableAdmins);
 
           jPanelAddNewAdmin.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm Admin"));
+          jPanelAddNewAdmin.addComponentListener(new java.awt.event.ComponentAdapter() {
+               public void componentShown(java.awt.event.ComponentEvent evt) {
+                    jPanelAddNewAdminComponentShown(evt);
+               }
+          });
 
           jLabel1.setText("Tài khoản");
 
@@ -427,6 +432,11 @@ public class JMain extends javax.swing.JFrame {
 	  // TODO add your handling code here:
 	  JAdminController.loadAdmins(jTableAdmins);
      }//GEN-LAST:event_jButton1ActionPerformed
+
+     private void jPanelAddNewAdminComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanelAddNewAdminComponentShown
+          // TODO add your handling code here:
+	  this.getRootPane().setDefaultButton(btnAddNew);
+     }//GEN-LAST:event_jPanelAddNewAdminComponentShown
 
      /**
       * @param args the command line arguments
