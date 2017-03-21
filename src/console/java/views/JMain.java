@@ -13,8 +13,6 @@ import console.java.models.JModel;
 import console.java.entities.SessionAdmin;
 import console.java.utilities.JUntilities;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -699,7 +697,6 @@ public class JMain extends javax.swing.JFrame {
 		    } catch (SQLException ex) {
 			 JUntilities.alert("Lỗi: " + ex);
 		    }
-		    return;
 	       }
 	  } else {
 	       JUntilities.alert("Vui lòng chọn để xóa!");
@@ -886,6 +883,9 @@ public class JMain extends javax.swing.JFrame {
 	  }
 	  if (!txtEmail.getText().matches("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z")) {
 	       errEmail.setText("Email trống hoặc không đúng định dạng!");
+	       return;
+	  } else if (JModel.checkExistanceEmail(txtEmail.getText())) {
+	       errEmail.setText("Email đã được sử dụng!");
 	       return;
 	  } else {
 	       errEmail.setText("");

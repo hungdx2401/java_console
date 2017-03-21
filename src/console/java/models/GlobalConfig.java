@@ -7,7 +7,7 @@ package console.java.models;
 
 /**
  *
- * @author tuana
+ * @author DongHo
  */
 public class GlobalConfig {
 

@@ -11,12 +11,12 @@ import java.sql.SQLException;
 
 /**
  *
- * @author tuana
+ * @author DongHo
  */
 public class DAO {
-    
-    public static Connection getConnection() throws SQLException {
-        String connectionString = GlobalConfig.getCONNECTION_URL_PREFIX() + GlobalConfig.getHOST() + GlobalConfig.getDATABASE();
-        return DriverManager.getConnection(connectionString, GlobalConfig.getUSERNAME(), GlobalConfig.getPASSWORD());
-    }
+
+     public static Connection getConnection() throws SQLException {
+	  String connectionString = GlobalConfig.getCONNECTION_URL_PREFIX() + GlobalConfig.getHOST() + GlobalConfig.getDATABASE();
+	  return DriverManager.getConnection(connectionString, GlobalConfig.getUSERNAME(), GlobalConfig.getPASSWORD());
+     }
 }

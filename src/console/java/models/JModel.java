@@ -23,7 +23,7 @@ import java.util.List;
 public class JModel {
 
      /**
-      * DongHo: đã sửa hàm này để dùng trong SWING
+      * Hàm này để đăng nhập vào chương trình.
       *
       * @param email
       * @param password
@@ -60,7 +60,6 @@ public class JModel {
      public static List<Admin> getAllAdmin() {
 	  List<Admin> adminList = new ArrayList<>();
 	  ResultSet rs;
-	  // LẤY Tổng bản ghi
 	  int total;
 	  try {
 	       rs = DAO.getConnection().createStatement().executeQuery("select count(*) from " + GlobalConfig.getADMINS_TABLE());
@@ -71,15 +70,10 @@ public class JModel {
 	       JUntilities.alert("Có lỗi! " + ex);
 	       return adminList;
 	  }
-	  // Số bản ghi mỗi trang
 	  int perPage = GlobalConfig.getNUMBER_ADMINS_PER_PAGE();
-	  // TÍNH Số trang theo perPage
 	  int totalPages;
-	  // offset
 	  int offset;
-	  // strQuery
 	  String strQuery;
-	  // Nhập trang muốn xem
 	  int pageNumber = 1;
 	  Admin admin;
 	  if (total == 0) {
@@ -110,10 +104,15 @@ public class JModel {
 	  return adminList;
      }
 
+     /**
+      * Hàm này lấy tất cả danh sách sản phẩm trong database và trả về một List
+      * các sản phẩm.
+      *
+      * @return
+      */
      public static List<Product> getAllProduct() {
 	  List<Product> productList = new ArrayList<>();
 	  ResultSet rs;
-	  // LẤY Tổng bản ghi
 	  int total;
 	  try {
 	       rs = DAO.getConnection().createStatement().executeQuery("select count(*) from " + GlobalConfig.getPRODUCTS_TABLE());
@@ -124,15 +123,10 @@ public class JModel {
 	       JUntilities.alert("Có lỗi! " + ex);
 	       return productList;
 	  }
-	  // Số bản ghi mỗi trang
 	  int perPage = GlobalConfig.getNUMBER_ADMINS_PER_PAGE();
-	  // TÍNH Số trang theo perPage
 	  int totalPages;
-	  // offset
 	  int offset;
-	  // strQuery
 	  String strQuery;
-	  // Nhập trang muốn xem
 	  int pageNumber = 1;
 	  Product product;
 	  if (total == 0) {
@@ -164,11 +158,10 @@ public class JModel {
      }
 
      /**
-      * Model xịn
+      * Model xịn, đa năng và chuyên dụng...
       *
       * @param <T>
       * @param obj
-      * @param id
       * @throws SQLException
       */
      public static <T> void insert(T obj) throws SQLException {
@@ -181,13 +174,11 @@ public class JModel {
 	       String pre2 = "'";
 	       for (Field f : fields) {
 		    f.setAccessible(true);
-		    // bỏ qua id
 		    if (f.getName().equals("id")) {
 			 continue;
 		    }
 		    columns.append(pre1).append(f.getName());
 		    joins.append(pre1).append(f.getName()).append(" = '").append(f.get(obj)).append("'");
-		    // xử lý boolean
 		    if (f.getType().toString().equals("boolean")) {
 			 if (f.get(obj).toString().equals("true")) {
 			      values.append(pre2).append("1");
@@ -218,7 +209,6 @@ public class JModel {
 	       } else {
 		    querry.append("UPDATE ").append(table).append(" SET ").append(joins).append(" WHERE ").append(unique).append(" = '").append(id).append("';");
 	       }
-	       // Thực thi querry ở đây ....
 	       Statement stt = DAO.getConnection().createStatement();
 	       stt.execute(querry.toString());
 	       System.out.println("Thao tác thành công!");
@@ -229,7 +219,14 @@ public class JModel {
 	  }
      }
 
-     // Model.delete(Obj);
+     /**
+      * Model xịn xóa bất cứ một đối tượng theo id
+      *
+      * @param <T>
+      * @param obj
+      * @param id
+      * @throws SQLException
+      */
      public static <T> void delete(T obj, int id) throws SQLException {
 	  StringBuilder querry = new StringBuilder();
 	  if (obj instanceof Table) {
@@ -249,14 +246,19 @@ public class JModel {
 	  JUntilities.alert("Xóa thành công!");
      }
 
+     /**
+      * Hàm này kiểm tra xem có trùng mã sản phẩm hay ko.
+      *
+      * @param str
+      * @return
+      */
      public static boolean checkExistanceProductsBarcode(String str) {
 	  try {
 	       Statement statement = DAO.getConnection().createStatement();
 	       String sqlString1 = "SELECT * FROM " + GlobalConfig.getPRODUCTS_TABLE() + " WHERE barcode = '" + str + "'";
 	       ResultSet rs = statement.executeQuery(sqlString1);
 	       if (rs.next() == true) {
-		    System.out.println("Da ton tai ,vui long nhap lai !!!");
-//		    JUntilities.alert("Mã sản phẩm bị trùng lặp! vui lòng chọn mã khác!");
+		    System.out.println("Da ton tai!!!");
 		    return false;
 	       }
 	  } catch (SQLException e) {
@@ -264,6 +266,28 @@ public class JModel {
 	       JUntilities.alert("Da co loi :" + e);
 	  }
 	  return true;
+     }
+
+     /**
+      * Hàm này kiểm tra email đã được sử dụng chưa.
+      *
+      * @param email
+      * @return
+      */
+     public static boolean checkExistanceEmail(String email) {
+	  try {
+	       Statement statement = DAO.getConnection().createStatement();
+	       String sqlString1 = "SELECT * FROM " + GlobalConfig.getADMINS_TABLE() + " WHERE email = '" + email + "'";
+	       ResultSet rs = statement.executeQuery(sqlString1);
+	       if (rs.next() == true) {
+		    System.out.println("Da ton tai!!");
+		    return true;
+	       }
+	  } catch (SQLException e) {
+	       System.out.println("Da co loi :" + e);
+	       JUntilities.alert("Da co loi :" + e);
+	  }
+	  return false;
      }
 
 }
