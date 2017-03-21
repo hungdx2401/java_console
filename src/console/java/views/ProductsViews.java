@@ -45,7 +45,17 @@ public class ProductsViews {
         System.out.println("3. Tìm theo mô tả sản phẩm");
         System.out.print("--- Vui lòng chọn (1/2/3): ");
     }
-
+    /**
+     * Hàm này thực hiện việc in thông báo để bắt người dùng nhập vào tùy chọn
+     * tìm xoa
+     */
+     public static void searchOptionDelete(){
+        System.out.println("--------------------- TÙY CHỌN XOA -------------------------------");
+        System.out.println("1. Xóa theo mã sản phẩm");
+        System.out.println("2. Xóa theo tên sản phẩm");
+        System.out.println("3. Xóa theo mô tả sản phẩm");
+        System.out.print("--- Vui lòng chọn (1/2/3): ");
+     }
     /**
      * Hàm này hiện ra câu hỏi "Bạn có muốn tiếp tục không? (y/n)" và trả về
      * [(y)? true : false]
