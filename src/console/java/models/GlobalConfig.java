@@ -17,6 +17,14 @@ public class GlobalConfig {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
+    private static final int NUMBER_ADMINS_PER_PAGE = 50;
+    
+    private static final String ADMINS_TABLE = "admins";
+
+     public static String getADMINS_TABLE() {
+	  return ADMINS_TABLE;
+     }
+    
     public static String getCONNECTION_URL_PREFIX() {
         return CONNECTION_URL_PREFIX;
 
@@ -37,5 +45,10 @@ public class GlobalConfig {
     public static String getPASSWORD() {
         return PASSWORD;
     }
+
+     public static int getNUMBER_ADMINS_PER_PAGE() {
+	  return NUMBER_ADMINS_PER_PAGE;
+     }
+    
 
 }

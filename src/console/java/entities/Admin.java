@@ -5,16 +5,19 @@
  */
 package console.java.entities;
 
+import console.java.models.GlobalConfig;
+import console.java.models.Table;
+
 /**
  *
  * @author Thang
  */
-public class Admin {
+public class Admin implements ToArray, Table {
 
     private int id;
     private String name;
     private String email;
-    private String password;
+    private String pass;
 
     public int getId() {
         return id;
@@ -41,10 +44,26 @@ public class Admin {
     }
 
     public String getPassword() {
-        return password;
+        return pass;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.pass = password;
     }
+
+     @Override
+     public String toString() {
+	  return "Admin{" + "id=" + id + ", name=" + name + ", email=" + email + '}';
+     }
+
+     @Override
+     public String[] toArray() {
+	  return new String[]{Integer.toString(id), name, email};
+     }
+
+     @Override
+     public String getTable() {
+	  return GlobalConfig.getADMINS_TABLE();
+     }
+    
 }

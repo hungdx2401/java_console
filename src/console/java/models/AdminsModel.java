@@ -155,7 +155,7 @@ public class AdminsModel {
 	  while (true) {
 	       System.out.println("Nhap ID Admin muon xoa: ");
 	       id = ScannerUtilities.getInt();
-	       if (id == SessionAmin.getId()) {
+	       if (id == SessionAdmin.getId()) {
 		    System.err.println("Bạn không thể xóa chính mình!");
 		    return;
 	       }
@@ -211,16 +211,16 @@ public class AdminsModel {
       * @param password
       * @return 
       */
-     public static int loginAdmin(String name, String password) {
+     public static int loginAdmin(String email, String password) {
 	  int count = 0;
 	  try {
-	       String checklogin = String.format("SELECT * FROM admins WHERE name = '%s' AND pass = '%s'", name, password);
+	       String checklogin = String.format("SELECT * FROM admins WHERE email = '%s' AND pass = '%s'", email, password);
 	       ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
 	       while (rs.next()) {
 		    ++count;
-		    SessionAmin.setId(rs.getInt("id"));
-		    SessionAmin.setName(rs.getString("name"));
-		    SessionAmin.setEmail(rs.getString("email"));
+		    SessionAdmin.setId(rs.getInt("id"));
+		    SessionAdmin.setName(rs.getString("name"));
+		    SessionAdmin.setEmail(rs.getString("email"));
 	       }
 	       if (count > 0) {
 		    System.out.println("Đăng nhập thành công.");
