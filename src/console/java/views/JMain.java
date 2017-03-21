@@ -13,8 +13,6 @@ import console.java.models.JModel;
 import console.java.entities.SessionAdmin;
 import console.java.utilities.JUntilities;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
@@ -67,6 +65,7 @@ public class JMain extends javax.swing.JFrame {
           showResult = new javax.swing.JLabel();
           jComboBoxOptionSearch = new javax.swing.JComboBox<>();
           jButton1 = new javax.swing.JButton();
+          errSearchAdmin = new javax.swing.JLabel();
           jPanel3 = new javax.swing.JPanel();
           jScrollPane2 = new javax.swing.JScrollPane();
           jTableProducts = new javax.swing.JTable();
@@ -103,6 +102,7 @@ public class JMain extends javax.swing.JFrame {
           showResultSearchProduct = new javax.swing.JLabel();
           jComboBoxOptionSearchProduct = new javax.swing.JComboBox<>();
           jButton2 = new javax.swing.JButton();
+          errSearchProduct = new javax.swing.JLabel();
 
           setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
           addWindowListener(new java.awt.event.WindowAdapter() {
@@ -266,6 +266,9 @@ public class JMain extends javax.swing.JFrame {
                }
           });
 
+          errSearchAdmin.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+          errSearchAdmin.setForeground(new java.awt.Color(255, 0, 51));
+
           javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
           jPanel1.setLayout(jPanel1Layout);
           jPanel1Layout.setHorizontalGroup(
@@ -275,16 +278,6 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                          .addComponent(jScrollPane1)
                          .addGroup(jPanel1Layout.createSequentialGroup()
-                              .addComponent(jLabel4)
-                              .addGap(18, 18, 18)
-                              .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(jComboBoxOptionSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                              .addComponent(btnSearch)
-                              .addGap(18, 18, 18)
-                              .addComponent(showResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                         .addGroup(jPanel1Layout.createSequentialGroup()
                               .addComponent(jPanelAddNewAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                               .addComponent(jButton1)
@@ -293,7 +286,19 @@ public class JMain extends javax.swing.JFrame {
                               .addGap(18, 18, 18)
                               .addComponent(btnEdit)
                               .addGap(18, 18, 18)
-                              .addComponent(btnDel)))
+                              .addComponent(btnDel))
+                         .addGroup(jPanel1Layout.createSequentialGroup()
+                              .addComponent(jLabel4)
+                              .addGap(18, 18, 18)
+                              .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                   .addComponent(errSearchAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                   .addComponent(txtKeyword, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                              .addComponent(jComboBoxOptionSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                              .addComponent(btnSearch)
+                              .addGap(18, 18, 18)
+                              .addComponent(showResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addContainerGap())
           );
           jPanel1Layout.setVerticalGroup(
@@ -306,7 +311,9 @@ public class JMain extends javax.swing.JFrame {
                          .addComponent(btnSearch)
                          .addComponent(showResult)
                          .addComponent(jComboBoxOptionSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(errSearchAdmin)
+                    .addGap(6, 6, 6)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +323,7 @@ public class JMain extends javax.swing.JFrame {
                               .addComponent(btnAdd)
                               .addComponent(jButton1))
                          .addComponent(jPanelAddNewAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(68, Short.MAX_VALUE))
+                    .addContainerGap(73, Short.MAX_VALUE))
           );
 
           jTabbedPane1.addTab("Quản lý Admins", jPanel1);
@@ -496,7 +503,7 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(btnAddNewProduct)
                          .addComponent(jButton7))
-                    .addContainerGap(36, Short.MAX_VALUE))
+                    .addContainerGap(45, Short.MAX_VALUE))
           );
 
           btnDel1.setText("Xóa");
@@ -546,6 +553,9 @@ public class JMain extends javax.swing.JFrame {
                }
           });
 
+          errSearchProduct.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+          errSearchProduct.setForeground(new java.awt.Color(255, 0, 0));
+
           javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
           jPanel3.setLayout(jPanel3Layout);
           jPanel3Layout.setHorizontalGroup(
@@ -555,16 +565,6 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                          .addComponent(jScrollPane2)
                          .addGroup(jPanel3Layout.createSequentialGroup()
-                              .addComponent(jLabel8)
-                              .addGap(18, 18, 18)
-                              .addComponent(txtKeywordSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(jComboBoxOptionSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(btnSearchProduct)
-                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(showResultSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                         .addGroup(jPanel3Layout.createSequentialGroup()
                               .addComponent(jPanelAddNewAdmin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                               .addComponent(jButton2)
@@ -573,7 +573,19 @@ public class JMain extends javax.swing.JFrame {
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(btnEdit1)
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                              .addComponent(btnDel1)))
+                              .addComponent(btnDel1))
+                         .addGroup(jPanel3Layout.createSequentialGroup()
+                              .addComponent(jLabel8)
+                              .addGap(18, 18, 18)
+                              .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                   .addComponent(errSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                   .addComponent(txtKeywordSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                              .addComponent(jComboBoxOptionSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                              .addComponent(btnSearchProduct)
+                              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                              .addComponent(showResultSearchProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addContainerGap())
           );
           jPanel3Layout.setVerticalGroup(
@@ -586,7 +598,9 @@ public class JMain extends javax.swing.JFrame {
                          .addComponent(btnSearchProduct)
                          .addComponent(showResultSearchProduct)
                          .addComponent(jComboBoxOptionSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGap(2, 2, 2)
+                    .addComponent(errSearchProduct)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -640,8 +654,9 @@ public class JMain extends javax.swing.JFrame {
      private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
 	  // TODO add your handling code here:
 	  if (txtKeywordSearchProduct.getText().equals("")) {
-	       JUntilities.alert("Hãy nhập từ khóa để tìm!");
+	       errSearchProduct.setText("Hãy nhập từ khóa để tìm!");
 	  } else {
+	       errSearchProduct.setText("");
 	       showResultSearchProduct.setText("Tìm thấy " + JProductController.searchProduct(txtKeywordSearchProduct.getText(), jComboBoxOptionSearchProduct.getSelectedIndex() + 1, jTableProducts) + " kết quả!");
 	  }
      }//GEN-LAST:event_btnSearchProductActionPerformed
@@ -699,7 +714,6 @@ public class JMain extends javax.swing.JFrame {
 		    } catch (SQLException ex) {
 			 JUntilities.alert("Lỗi: " + ex);
 		    }
-		    return;
 	       }
 	  } else {
 	       JUntilities.alert("Vui lòng chọn để xóa!");
@@ -806,8 +820,9 @@ public class JMain extends javax.swing.JFrame {
      private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 	  // TODO add your handling code here:
 	  if (txtKeyword.getText().equals("")) {
-	       JUntilities.alert("Hãy nhập từ khóa để tìm!");
+	       errSearchAdmin.setText("Hãy nhập từ khóa để tìm!");
 	  } else {
+	       errSearchAdmin.setText("");
 	       showResult.setText("Tìm thấy " + JAdminController.searchAdmin(txtKeyword.getText(), jComboBoxOptionSearch.getSelectedIndex() + 1, jTableAdmins) + " kết quả!");
 	  }
      }//GEN-LAST:event_btnSearchActionPerformed
@@ -886,6 +901,9 @@ public class JMain extends javax.swing.JFrame {
 	  }
 	  if (!txtEmail.getText().matches("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z")) {
 	       errEmail.setText("Email trống hoặc không đúng định dạng!");
+	       return;
+	  } else if (JModel.checkExistanceEmail(txtEmail.getText())) {
+	       errEmail.setText("Email đã được sử dụng!");
 	       return;
 	  } else {
 	       errEmail.setText("");
@@ -972,6 +990,8 @@ public class JMain extends javax.swing.JFrame {
      private javax.swing.JLabel errProductName;
      private javax.swing.JLabel errProductPrice;
      private javax.swing.JLabel errQuanity;
+     private javax.swing.JLabel errSearchAdmin;
+     private javax.swing.JLabel errSearchProduct;
      private javax.swing.JButton jButton1;
      private javax.swing.JButton jButton2;
      private javax.swing.JButton jButton6;

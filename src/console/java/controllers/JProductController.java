@@ -5,7 +5,6 @@
  */
 package console.java.controllers;
 
-import console.java.entities.Admin;
 import console.java.entities.Product;
 import console.java.models.DAO;
 import console.java.models.GlobalConfig;
