@@ -41,6 +41,11 @@ public class JAdminLogin extends javax.swing.JFrame {
 
           setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
           setTitle("Đăng nhập");
+          addWindowListener(new java.awt.event.WindowAdapter() {
+               public void windowOpened(java.awt.event.WindowEvent evt) {
+                    formWindowOpened(evt);
+               }
+          });
 
           jLabel1.setText("Email");
 
@@ -109,7 +114,7 @@ public class JAdminLogin extends javax.swing.JFrame {
      }// </editor-fold>//GEN-END:initComponents
 
      private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+	  
 	  if (!txtAccount.getText().matches("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z")) {
 	       errAccount.setText("Hãy nhập định dạng Email!");
 	       return;
@@ -134,6 +139,11 @@ public class JAdminLogin extends javax.swing.JFrame {
 	  }
 
      }//GEN-LAST:event_jButton1ActionPerformed
+
+     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+          // TODO add your handling code here:
+	  this.getRootPane().setDefaultButton(jButton1);
+     }//GEN-LAST:event_formWindowOpened
 
      /**
       * @param args the command line arguments
