@@ -5,24 +5,27 @@
  */
 package console.java.entities;
 
+import console.java.models.GlobalConfig;
+import console.java.models.Table;
+
 /**
  *
  * @author Thang
  */
-public class Product {
+public class Product implements ToArray, Table{
     private String barCode;
     private String name;
     private String description;
     private int quantity;
-    private float price;
-    private float discount;
+    private int price;
+    private int discount;
     private int categoryId;
 
     public float getDiscount() {
         return discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
     
@@ -63,7 +66,7 @@ public class Product {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -74,4 +77,20 @@ public class Product {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+
+     @Override
+     public String toString() {
+	  return "Product{" + "barCode=" + barCode + ", name=" + name + ", description=" + description + ", quantity=" + quantity + ", price=" + price + ", discount=" + discount + ", categoryId=" + categoryId + '}';
+     }
+    
+
+     @Override
+     public String[] toArray() {
+	  return new String[]{barCode, name, description, Integer.toString(quantity), Integer.toString(price), Integer.toString(discount), Integer.toString(categoryId)};
+     }
+
+     @Override
+     public String getTable() {
+	  return GlobalConfig.getPRODUCTS_TABLE();
+     }
 }
