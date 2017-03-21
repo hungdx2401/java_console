@@ -6,6 +6,7 @@
 package console.java.views;
 
 import console.java.models.JModel;
+import console.java.utilities.JUntilities;
 import javax.swing.JOptionPane;
 
 /**
@@ -114,7 +115,7 @@ public class JAdminLogin extends javax.swing.JFrame {
      }// </editor-fold>//GEN-END:initComponents
 
      private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-	  
+
 	  if (!txtAccount.getText().matches("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z")) {
 	       errAccount.setText("Hãy nhập định dạng Email!");
 	       return;
@@ -141,7 +142,7 @@ public class JAdminLogin extends javax.swing.JFrame {
      }//GEN-LAST:event_jButton1ActionPerformed
 
      private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-          // TODO add your handling code here:
+	  // TODO add your handling code here:
 	  this.getRootPane().setDefaultButton(jButton1);
      }//GEN-LAST:event_formWindowOpened
 
@@ -150,30 +151,32 @@ public class JAdminLogin extends javax.swing.JFrame {
       */
      public static void main(String args[]) {
 	  /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+	  //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+	  /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JAdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+	   */
+	  try {
+	       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+		    if ("Nimbus".equals(info.getName())) {
+			 javax.swing.UIManager.setLookAndFeel(info.getClassName());
+			 break;
+		    }
+	       }
+	  } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+	       java.util.logging.Logger.getLogger(JAdminLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	  }
 	  //</editor-fold>
-	  
-        //</editor-fold>
+
+	  //</editor-fold>
 
 	  /* Create and display the form */
-	  java.awt.EventQueue.invokeLater(new Runnable() {
-	       public void run() {
-		    new JAdminLogin().setVisible(true);
-	       }
-	  });
+//	  java.awt.EventQueue.invokeLater(new Runnable() {
+//	       public void run() {
+//		    new JAdminLogin().setVisible(true);
+//	       }
+//	  });
+	  JUntilities.alert("Bạn không thể chạy từ đây!");
+	  JUntilities.alert("Hãy bắt đầu từ file Start.java");
      }
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
