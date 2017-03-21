@@ -6,6 +6,7 @@
 package console.java.models;
 
 import console.java.entities.Admin;
+import console.java.entities.Product;
 import console.java.utilities.JUntilities;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
@@ -106,6 +107,58 @@ public class JModel {
 	       }
 	  }
 	  return adminList;
+     }
+     public static List<Product> getAllProduct() {
+	  List<Product> productList = new ArrayList<>();
+	  ResultSet rs;
+	  // LẤY Tổng bản ghi
+	  int total;
+	  try {
+	       rs = DAO.getConnection().createStatement().executeQuery("select count(*) from " + GlobalConfig.getPRODUCTS_TABLE());
+	       rs.next();
+	       total = rs.getInt(1);
+	  } catch (SQLException ex) {
+	       System.err.println("Có lỗi! " + ex);
+	       JUntilities.alert("Có lỗi! " + ex);
+	       return productList;
+	  }
+	  // Số bản ghi mỗi trang
+	  int perPage = GlobalConfig.getNUMBER_ADMINS_PER_PAGE();
+	  // TÍNH Số trang theo perPage
+	  int totalPages;
+	  // offset
+	  int offset;
+	  // strQuery
+	  String strQuery;
+	  // Nhập trang muốn xem
+	  int pageNumber = 1;
+	  Product product;
+	  if (total == 0) {
+	       System.out.println("Không có dữ liệu!");
+	       JUntilities.alert("Không có dữ liệu!");
+	  } else {
+	       if (total % perPage == 0) {
+		    totalPages = total / perPage;
+	       } else {
+		    totalPages = total / perPage + 1;
+	       }
+	       offset = (pageNumber - 1) * perPage;
+
+	       String Query = String.format("SELECT * FROM " + GlobalConfig.getPRODUCTS_TABLE() + " LIMIT %s OFFSET %s;", perPage, offset);
+	       ResultSet results;
+	       try {
+		    results = DAO.getConnection().createStatement().executeQuery(Query);
+		    while (results.next()) {
+			 product = JUntilities.getProductFromResults(results);
+			 productList.add(product);
+		    }
+		    results.first();
+	       } catch (SQLException ex) {
+		    System.err.println("Có lỗi xảy ra! " + ex);
+		    JUntilities.alert("Có lỗi xảy ra! " + ex);
+	       }
+	  }
+	  return productList;
      }
 
      /**

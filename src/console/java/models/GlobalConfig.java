@@ -20,6 +20,11 @@ public class GlobalConfig {
     private static final int NUMBER_ADMINS_PER_PAGE = 50;
     
     private static final String ADMINS_TABLE = "admins";
+    private static final String PRODUCTS_TABLE = "products";
+
+     public static String getPRODUCTS_TABLE() {
+	  return PRODUCTS_TABLE;
+     }
 
      public static String getADMINS_TABLE() {
 	  return ADMINS_TABLE;

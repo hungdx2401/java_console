@@ -22,59 +22,61 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author DongHo
  */
-public class JAdminController {
+public class JProductController {
+     
+     
 
      /**
-      * Hàm này load danh sách Admin vào bảng
-      *
+      * Hàm này load danh sách products vào bảng
       * @param table
       */
-     public static void loadAdmins(JTable table) {
+     public static void loadProducts(JTable table) {
 	  DefaultTableModel model = (DefaultTableModel) table.getModel();
 	  model.setRowCount(0);
-	  List<Admin> listAdmin = JModel.getAllAdmin();
-	  listAdmin.forEach((admin) -> {
-	       model.addRow(admin.toArray());
+	  List<Product> listProducts = JModel.getAllProduct();
+	  listProducts.forEach((product) -> {
+	       model.addRow(product.toArray());
 	  });
+
      }
 
-     public static int searchAdmin(String keyword, int option, JTable table) {
-	  List<Admin> listAdmin = new ArrayList<>();
-	  Admin admin;
+     public static int searchProduct(String keyword, int option, JTable table) {
+	  List<Product> listProduct = new ArrayList<>();
+	  Product product;
 	  String column;
 	  switch (option) {
 	       case 1:
-		    System.out.println("--- Tìm kiếm theo id admin ---");
-		    column = "id";
+		    System.out.println("--- Tìm kiếm mã sản phẩm ---");
+		    column = "barcode";
 		    break;
 	       case 2:
-		    System.out.println("--- Tìm kiếm theo tên admin ---");
+		    System.out.println("--- Tìm kiếm theo tên sản phẩm ---");
 		    column = "name";
 		    break;
 	       default:
-		    System.out.println("--- Tìm kiếm theo email admin ---");
-		    column = "email";
+		    System.out.println("--- Tìm kiếm theo mô tả sản phẩm ---");
+		    column = "description";
 		    break;
 	  }
-	  String strQuery = "SELECT * FROM " + GlobalConfig.getADMINS_TABLE() + " WHERE " + column + " LIKE '%"
+	  String strQuery = "SELECT * FROM " + GlobalConfig.getPRODUCTS_TABLE() + " WHERE " + column + " LIKE '%"
 		  + keyword + "%';";
 	  ResultSet rs;
 	  try {
 	       rs = DAO.getConnection().createStatement().executeQuery(strQuery);
 	       while (rs.next()) {
-		    admin = JUntilities.getAdminFromResults(rs);
-		    listAdmin.add(admin);
+		    product = JUntilities.getProductFromResults(rs);
+		    listProduct.add(product);
 	       }
 	       DefaultTableModel model = (DefaultTableModel) table.getModel();
 	       model.setRowCount(0);
-	       listAdmin.forEach((admin1) -> {
-		    model.addRow(admin1.toArray());
+	       listProduct.forEach((pro1) -> {
+		    model.addRow(pro1.toArray());
 	       });
 	  } catch (SQLException ex) {
 	       System.err.println("Có lỗi xảy ra! " + ex);
 	       JUntilities.alert("Lỗi: " + ex);
 	       return -1;
 	  }
-	  return listAdmin.size();
+	  return listProduct.size();
      }
 }
