@@ -205,6 +205,12 @@ public class AdminsModel {
 	  }
      }
 
+     /**
+      * DongHo: đã sửa hàm này để dùng trong SWING
+      * @param name
+      * @param password
+      * @return 
+      */
      public static int loginAdmin(String name, String password) {
 	  int count = 0;
 	  try {
@@ -220,14 +226,7 @@ public class AdminsModel {
 		    System.out.println("Đăng nhập thành công.");
 	       } else {
 		    System.out.println("Thông tin không chính xác!");
-		    System.out.println("-----------------------------------");
-		    System.out.println("Chọn 1: Đăng nhập lại");
-		    System.out.println("Chọn 2: Đóng chương trình");
-		    System.out.println("-----------------------------------");
-		    int choice = ScannerUtilities.choiceInput(1, 2);
-		    if (choice == 2) {
-			 System.exit(0);
-		    }
+		    return -1;
 	       }
 	  } catch (SQLException e) {
 	       System.out.println("Loi kiem tra Admin");
