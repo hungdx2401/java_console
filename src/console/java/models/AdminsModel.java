@@ -205,10 +205,10 @@ public class AdminsModel {
 	  }
      }
 
-     public static int loginAdmin(String name, String password) {
+     public static int loginAdmin(String email, String password) {
 	  int count = 0;
 	  try {
-	       String checklogin = String.format("SELECT * FROM admins WHERE name = '%s' AND pass = '%s'", name, password);
+	       String checklogin = String.format("SELECT * FROM admins WHERE email = '%s' AND pass = '%s'", email, password);
 	       ResultSet rs = DAO.getConnection().createStatement().executeQuery(checklogin);
 	       while (rs.next()) {
 		    ++count;
