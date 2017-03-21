@@ -19,7 +19,7 @@ public class Product implements ToArray, Table{
     private int quantity;
     private int price;
     private int discount;
-    private int categoryId;
+    private int category_id;
 
     public float getDiscount() {
         return discount;
@@ -71,26 +71,31 @@ public class Product implements ToArray, Table{
     }
 
     public int getCategoryId() {
-        return categoryId;
+        return category_id;
     }
 
     public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+        this.category_id = categoryId;
     }
 
      @Override
      public String toString() {
-	  return "Product{" + "barCode=" + barCode + ", name=" + name + ", description=" + description + ", quantity=" + quantity + ", price=" + price + ", discount=" + discount + ", categoryId=" + categoryId + '}';
+	  return "Product{" + "barCode=" + barCode + ", name=" + name + ", description=" + description + ", quantity=" + quantity + ", price=" + price + ", discount=" + discount + ", categoryId=" + category_id + '}';
      }
     
 
      @Override
      public String[] toArray() {
-	  return new String[]{barCode, name, description, Integer.toString(quantity), Integer.toString(price), Integer.toString(discount), Integer.toString(categoryId)};
+	  return new String[]{barCode, name, description, Integer.toString(quantity), Integer.toString(price), Integer.toString(discount), Integer.toString(category_id)};
      }
 
      @Override
      public String getTable() {
 	  return GlobalConfig.getPRODUCTS_TABLE();
+     }
+
+     @Override
+     public String getUnique() {
+	  return "barcode";
      }
 }
