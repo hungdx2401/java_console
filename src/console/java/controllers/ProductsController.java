@@ -154,7 +154,7 @@ public class ProductsController {
                 product.setName(newName);
                 product.setDescription(newDescription);
                 product.setQuantity(Integer.parseInt(newQuantity));
-                product.setPrice(Float.parseFloat(newPrice));
+//                product.setPrice(Float.parseFloat(newPrice));
                 product.setCategoryId(Integer.parseInt(newCategoryId));
                 //Goi den model va hoi co muon tiep tuc khong
                 ProducstModel.update(product);
@@ -216,7 +216,7 @@ public class ProductsController {
         product.setName(name);
         product.setDescription(description);
         product.setQuantity(Integer.parseInt(quantity));
-        product.setPrice(Float.parseFloat(price));
+//        product.setPrice(Float.parseFloat(price));
         product.setCategoryId(Integer.parseInt(categoryId));
         ProducstModel.productsInsert(product);
     }

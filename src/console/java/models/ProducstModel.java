@@ -146,8 +146,8 @@ public class ProducstModel {
             product.setName(rs.getString("name"));
             product.setDescription(rs.getString("description"));
             product.setQuantity(rs.getInt("quantity"));
-            product.setPrice(rs.getFloat("price"));
-            product.setDiscount(rs.getFloat("discount"));
+//            product.setPrice(rs.getFloat("price"));
+//            product.setDiscount(rs.getFloat("discount"));
             product.setCategoryId(rs.getInt("category_id"));
         } catch (SQLException ex) {
             System.err.println("Lỗi gì đó! " + ex);
