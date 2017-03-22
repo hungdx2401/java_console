@@ -88,8 +88,15 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAccount">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="admin@admin.com"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtPasswordCharArray">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="admin"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

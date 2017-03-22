@@ -164,7 +164,7 @@ public class JModel {
       * @param obj
       * @throws SQLException
       */
-     public static <T> void insert(T obj) throws SQLException {
+     public static <T> void insert(T obj, int id) throws SQLException {
 	  StringBuilder columns = new StringBuilder();
 	  StringBuilder values = new StringBuilder();
 	  StringBuilder joins = new StringBuilder();
@@ -199,7 +199,7 @@ public class JModel {
 	  if ((obj instanceof Table) && (columns.length() != 0) && (values.length() != 0)) {
 	       Table tb = (Table) obj;
 	       String table = tb.getTable();
-	       int id = SessionAdmin.getIdToAction();
+//	       int id = SessionAdmin.getIdToAction();
 	       String str = SessionAdmin.getStrToAction();
 	       String unique = tb.getUnique();
 	       if (id < 0) {

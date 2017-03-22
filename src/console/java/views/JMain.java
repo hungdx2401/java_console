@@ -103,8 +103,15 @@ public class JMain extends javax.swing.JFrame {
           jComboBoxOptionSearchProduct = new javax.swing.JComboBox<>();
           jButton2 = new javax.swing.JButton();
           errSearchProduct = new javax.swing.JLabel();
+          alertInfo = new javax.swing.JLabel();
+          alertError = new javax.swing.JLabel();
 
           setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+          addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+               public void mouseMoved(java.awt.event.MouseEvent evt) {
+                    formMouseMoved(evt);
+               }
+          });
           addWindowListener(new java.awt.event.WindowAdapter() {
                public void windowOpened(java.awt.event.WindowEvent evt) {
                     formWindowOpened(evt);
@@ -125,6 +132,11 @@ public class JMain extends javax.swing.JFrame {
 
                public Class getColumnClass(int columnIndex) {
                     return types [columnIndex];
+               }
+          });
+          jTableAdmins.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+               public void mouseMoved(java.awt.event.MouseEvent evt) {
+                    jTableAdminsMouseMoved(evt);
                }
           });
           jScrollPane1.setViewportView(jTableAdmins);
@@ -323,7 +335,7 @@ public class JMain extends javax.swing.JFrame {
                               .addComponent(btnAdd)
                               .addComponent(jButton1))
                          .addComponent(jPanelAddNewAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(73, Short.MAX_VALUE))
+                    .addContainerGap(79, Short.MAX_VALUE))
           );
 
           jTabbedPane1.addTab("Quản lý Admins", jPanel1);
@@ -342,6 +354,11 @@ public class JMain extends javax.swing.JFrame {
 
                public Class getColumnClass(int columnIndex) {
                     return types [columnIndex];
+               }
+          });
+          jTableProducts.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+               public void mouseMoved(java.awt.event.MouseEvent evt) {
+                    jTableProductsMouseMoved(evt);
                }
           });
           jScrollPane2.setViewportView(jTableProducts);
@@ -503,7 +520,7 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(jPanelAddNewAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(btnAddNewProduct)
                          .addComponent(jButton7))
-                    .addContainerGap(45, Short.MAX_VALUE))
+                    .addContainerGap(51, Short.MAX_VALUE))
           );
 
           btnDel1.setText("Xóa");
@@ -617,21 +634,42 @@ public class JMain extends javax.swing.JFrame {
 
           jTabbedPane1.addTab("Quản lý Products", jPanel3);
 
+          alertInfo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+          alertInfo.setForeground(new java.awt.Color(0, 102, 255));
+          alertInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+          alertError.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+          alertError.setForeground(new java.awt.Color(255, 0, 51));
+          alertError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
           javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
           getContentPane().setLayout(layout);
           layout.setHorizontalGroup(
                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                         .addComponent(jTabbedPane1)
+                         .addComponent(alertInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
+               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                         .addContainerGap()
+                         .addComponent(alertError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                         .addContainerGap()))
           );
           layout.setVerticalGroup(
                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
+                    .addComponent(alertInfo)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jTabbedPane1)
                     .addContainerGap())
+               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                         .addGap(10, 10, 10)
+                         .addComponent(alertError)
+                         .addContainerGap(652, Short.MAX_VALUE)))
           );
 
           pack();
@@ -698,7 +736,7 @@ public class JMain extends javax.swing.JFrame {
 	       jComboBoxProductCatalogeId.setSelectedIndex(Integer.valueOf(categoryId) - 1);
 
 	  } else {
-	       JUntilities.alert("Vui lòng chọn để sửa!");
+	       alertError.setText("Vui lòng chọn để sửa!");
 	  }
      }//GEN-LAST:event_btnEdit1ActionPerformed
 
@@ -712,11 +750,12 @@ public class JMain extends javax.swing.JFrame {
 			 JModel.delete(new Product(), -1);
 			 JProductController.loadProducts(jTableProducts);
 		    } catch (SQLException ex) {
-			 JUntilities.alert("Lỗi: " + ex);
+			 alertError.setText("Lỗi: " + ex);
 		    }
 	       }
 	  } else {
-	       JUntilities.alert("Vui lòng chọn để xóa!");
+	       alertError.setText("Vui lòng chọn để xóa!");
+
 	  }
      }//GEN-LAST:event_btnDel1ActionPerformed
 
@@ -742,7 +781,7 @@ public class JMain extends javax.swing.JFrame {
 	  String quantity = txtProductQuantity.getText();
 	  String price = txtProductPrice.getText();
 	  String discount = txtProductDiscount.getText();
-	  int category_id = jComboBoxProductCatalogeId.getSelectedIndex();
+	  int category_id = jComboBoxProductCatalogeId.getSelectedIndex() + 1;
 
 	  if (barcode.equals("")) {
 	       errProductBarCode.setText("Nhập mã của sản phẩm!");
@@ -797,9 +836,10 @@ public class JMain extends javax.swing.JFrame {
 	  product.setDiscount(Integer.valueOf(discount));
 	  product.setCategoryId(category_id);
 	  try {
-	       JModel.insert(product);
+	       JModel.insert(product, SessionAdmin.getIdToAction());
 	  } catch (SQLException ex) {
-	       JUntilities.alert("Lỗi: " + ex);
+//	       JUntilities.alert("Lỗi: " + ex);
+	       alertError.setText("Lỗi: " + ex);
 	  }
 	  JProductController.loadProducts(jTableProducts);
 	  // reset
@@ -845,7 +885,8 @@ public class JMain extends javax.swing.JFrame {
 	       jPanelAddNewAdmin.setVisible(true);
 	       // lấy thông tin ra
 	       TableModel tblModel = jTableAdmins.getModel();
-	       SessionAdmin.setIdToAction(Integer.valueOf(tblModel.getValueAt(row, 0).toString()));
+	       SessionAdmin.setIdToAction(0);
+	       SessionAdmin.setStrToAction(tblModel.getValueAt(row, 0).toString());
 	       String name = tblModel.getValueAt(row, 1).toString();
 	       String email = tblModel.getValueAt(row, 2).toString();
 	       // thêm vào textField
@@ -853,7 +894,7 @@ public class JMain extends javax.swing.JFrame {
 	       txtEmail.setText(email);
 
 	  } else {
-	       JUntilities.alert("Vui lòng chọn để sửa!");
+	       alertError.setText("Vui lòng chọn để sửa!");
 	  }
      }//GEN-LAST:event_btnEditActionPerformed
 
@@ -864,18 +905,18 @@ public class JMain extends javax.swing.JFrame {
 	       String value = jTableAdmins.getModel().getValueAt(row, 0).toString();
 	       if (JOptionPane.showConfirmDialog(this, "Bạn có chắc là muốn xóa?") == 0) {
 		    if (Integer.valueOf(value) == SessionAdmin.getId()) {
-			 JUntilities.alert("Bạn không thể xóa chính mình!");
+			 alertError.setText("Bạn không thể xóa chính mình!");
 			 return;
 		    }
 		    try {
 			 JModel.delete(new Admin(), Integer.valueOf(value));
 			 JAdminController.loadAdmins(jTableAdmins);
 		    } catch (SQLException ex) {
-			 JUntilities.alert("Lỗi: " + ex);
+			 alertError.setText("Lỗi: " + ex);
 		    }
 	       }
 	  } else {
-	       JUntilities.alert("Vui lòng chọn để xóa!");
+	       alertError.setText("Vui lòng chọn để xóa!");
 	  }
      }//GEN-LAST:event_btnDelActionPerformed
 
@@ -902,12 +943,22 @@ public class JMain extends javax.swing.JFrame {
 	  if (!txtEmail.getText().matches("\\A([^@\\s]+)@((?:[-a-z0-9]+\\.)+[a-z]{2,})\\z")) {
 	       errEmail.setText("Email trống hoặc không đúng định dạng!");
 	       return;
-	  } else if (JModel.checkExistanceEmail(txtEmail.getText())) {
-	       errEmail.setText("Email đã được sử dụng!");
-	       return;
-	  } else {
-	       errEmail.setText("");
+//	  } else if (JModel.checkExistanceEmail(txtEmail.getText())) {
+//	       errEmail.setText("Email đã được sử dụng!");
+//	       return;
+//	  } else {
+//	       errEmail.setText("");
+//	  }
 	  }
+	  if (!(SessionAdmin.getIdToAction() == 0)) {
+	       if (JModel.checkExistanceEmail(txtEmail.getText())) {
+		    errEmail.setText("Email đã được sử dụng!");
+		    return;
+	       } else {
+		    errEmail.setText("");
+	       }
+	  }
+	  
 	  if (txtPasswordCharArray.getPassword().length == 0) {
 	       errPass.setText("Không để trống Mật khẩu!");
 	       return;
@@ -919,9 +970,9 @@ public class JMain extends javax.swing.JFrame {
 	  admin.setEmail(txtEmail.getText());
 	  admin.setPassword(new String(txtPasswordCharArray.getPassword()));
 	  try {
-	       JModel.insert(admin);
+	       JModel.insert(admin, SessionAdmin.getIdToAction());
 	  } catch (SQLException ex) {
-	       JUntilities.alert("Lỗi: " + ex);
+	       alertError.setText("Lỗi: " + ex);
 	  }
 	  JAdminController.loadAdmins(jTableAdmins);
 	  // reset
@@ -933,6 +984,26 @@ public class JMain extends javax.swing.JFrame {
      private void jComboBoxOptionSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOptionSearchProductActionPerformed
 	  // TODO add your handling code here:
      }//GEN-LAST:event_jComboBoxOptionSearchProductActionPerformed
+
+     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+          // TODO add your handling code here:
+     }//GEN-LAST:event_formMouseMoved
+
+     private void jTableAdminsMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAdminsMouseMoved
+          // TODO add your handling code here:
+	  alertError.setText("");
+	  alertInfo.setText("");
+	  errSearchAdmin.setText("");
+	  errSearchProduct.setText("");
+     }//GEN-LAST:event_jTableAdminsMouseMoved
+
+     private void jTableProductsMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductsMouseMoved
+          // TODO add your handling code here:
+	  alertError.setText("");
+	  alertInfo.setText("");
+	  errSearchAdmin.setText("");
+	  errSearchProduct.setText("");
+     }//GEN-LAST:event_jTableProductsMouseMoved
 
      /**
       * @param args the command line arguments
@@ -972,6 +1043,8 @@ public class JMain extends javax.swing.JFrame {
      }
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
+     private javax.swing.JLabel alertError;
+     private javax.swing.JLabel alertInfo;
      private javax.swing.JButton btnAdd;
      private javax.swing.JButton btnAdd1;
      private javax.swing.JButton btnAddNew;
