@@ -52,6 +52,11 @@ public class JAdminLogin extends javax.swing.JFrame {
 
           jLabel2.setText("Mật khẩu");
 
+          txtAccount.setText("admin@admin.com");
+          txtAccount.setToolTipText("");
+
+          txtPasswordCharArray.setText("admin");
+
           jButton1.setText("Đăng nhập");
           jButton1.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +136,7 @@ public class JAdminLogin extends javax.swing.JFrame {
 
 	  int login = JModel.loginAdmin(txtAccount.getText(), new String(txtPasswordCharArray.getPassword()));
 	  if (login > 0) {
-	       JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+//	       JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
 	       this.setVisible(false);
 	       new JMain().setVisible(true);
 	  } else {

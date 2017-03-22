@@ -9,6 +9,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="formMouseMoved"/>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
   </Events>
   <AuxValues>
@@ -26,19 +27,37 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  <Component id="alertInfo" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="alertError" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <Component id="alertInfo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jTabbedPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="alertError" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="652" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,7 +138,7 @@
                           </Group>
                           <Component id="jPanelAddNewAdmin" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="73" max="32767" attributes="0"/>
+                      <EmptySpace pref="79" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -164,6 +183,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="jTableAdminsMouseMoved"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -551,6 +573,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="jTableProductsMouseMoved"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -690,7 +715,7 @@
                               <Component id="btnAddNewProduct" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="45" max="32767" attributes="0"/>
+                          <EmptySpace pref="51" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -938,5 +963,27 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="alertInfo">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="13" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="66" red="0" type="rgb"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="alertError">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="13" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
